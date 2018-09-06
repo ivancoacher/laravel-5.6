@@ -1,0 +1,7 @@
+name = Family Space Search
+core = 7.x
+version = 7.x-1.0-dev
+package = Family Space
+
+files[] = fs_search.pages.inc
+files[] = fs_search.inc

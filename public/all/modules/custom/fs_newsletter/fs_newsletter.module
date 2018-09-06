@@ -1,0 +1,201 @@
+<?php
+
+/**
+ * Implements hook_block_info().
+ */
+function fs_newsletter_block_info() {
+
+  $blocks['fs_newsletter_subscribe'] = array(
+    'info' => t('FS Newsletter subscribe'),
+  );
+
+  return $blocks;
+}
+
+/**
+ * Implements hook_block_view().
+ */
+function fs_newsletter_block_view($delta = '') {
+  $block = array();
+  switch ($delta) {
+    case 'fs_newsletter_subscribe':
+      $block['subject'] = t('Newsletter subscribe');
+      $block['content'] = drupal_get_form('fs_newsletter_subscribe_form');
+      break;
+  }
+
+  return $block;
+}
+
+function fs_newsletter_subscribe_form($form, &$form_state) {
+
+  $form['inline-messages'] = array("#markup" => "<div class='form-group form-group-inline-messages'><div id='inline-messages'></div></div>");
+
+  $form['mail'] = array(
+    '#type' => 'textfield',
+    //    '#title' => 'mail',
+    '#attributes' => array('placeholder' => t('Enter email address')),
+  );
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Subscribe'),
+    '#ajax' => array(
+      'callback' => 'ajax_fs_newsletter_subscribe_form_submit_callback',
+    ),
+  );
+
+  /*
+    honeypot_add_form_protection($form, $form_state, array(
+    'honeypot',
+    'time_restriction'
+    ));
+   */
+
+  return $form;
+}
+
+function fs_newsletter_subscribe_form_validate($form, &$form_state) {
+  $values = $form_state['values'];
+  $mail = trim($values['mail']);
+
+  if (!valid_email_address($mail) || empty($mail)) {
+    form_set_error('mail', t('Please input a valid email!'));
+  }
+}
+
+
+function ajax_fs_newsletter_subscribe_form_submit_callback($form, &$form_state) {
+
+  drupal_validate_form('fs_newsletter_subscribe_form', $form, $form_state);
+  // if there are errors, return the form to display the error messages
+  $errors = form_get_errors();
+  if (!empty($errors)) {
+    $messages = theme('status_messages');
+    $commands[] = ajax_command_html('#inline-messages', $messages);
+  }
+  else {
+    drupal_set_message(t('Thank you for your subscription.'));
+    $messages = theme('status_messages');
+    $commands[] = ajax_command_html('#inline-messages', $messages);
+  }
+
+  return array('#type' => 'ajax', '#commands' => $commands);
+}
+
+function fs_newsletter_form_user_register_form_alter(&$form, $form_state) {
+
+  array_push($form['#submit'], '_fs_newsletter_register_subscribe');
+}
+
+function _fs_newsletter_register_subscribe($form, &$form_state) {
+  $values = $form_state['values'];
+
+  if ($values['field_user_family_newsletter']['und'][0]['value']) {
+    $info = [
+      'address' => $values['mail'],
+      'fullname' =>  $values['name'] ,
+      'var1' => 'registered'
+    ];
+    module_load_include('inc', 'fs_umail', 'fs_umail');
+    $umail = new UMail();
+    $result  = $umail->fs_umail_newsletter_subscribe($info);
+    if ($result['error']!="") {
+      form_set_error('form', t('There is something wrong with your registration, Please try later'));
+    }
+    else {
+
+      if ($values['field_user_family_newsletter']['und'][0]['value']) {
+        $info = [
+          'email' => $values['mail']
+        ];
+       // $umail->fs_umail_newsletter_confirmation($info);
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_menu().
+ */
+function fs_newsletter_menu() {
+  $file_path = drupal_get_path('module', 'fs_newsletter');
+  $items = [];
+  $items['unsubscribe'] = [
+    'page callback' => 'fs_newsletter_unsubscribe',
+    'file' => 'fs_newsletter.module',
+    'file_path' => $file_path,
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+  ];
+  return $items;
+}
+function fs_newsletter_unsubscribe() {
+  module_load_include('module', 'fs_user', 'fs_user');
+  $user = user_load_by_mail($_POST['email']);
+  $result = [];
+  if(is_object($user)&&fs_user_basic_auth($_POST['name'],$_POST['pass'])&& in_array('administrator', $user->roles)) {
+    $edit = []; 
+    $edit['field_user_family_newsletter']['und'][0]['value'] = 0;
+    user_save($user, $edit);
+    if($user){
+      watchdog('fs_newsletter', 'Unsubscribe from optput user successfully.');
+      $result['success'] = TRUE;
+      $result['message'] = $_POST['email'];//t('Unsubscribe user successfully.');
+    }else{
+      watchdog('fs_newsletter', 'There is a error when Unsubscribe from optput user.', WATCHDOG_ERROR);
+      $result['success'] = FALSE;
+      $result['message'] = t('Can\'t save user from optput');
+    }
+  }
+  else {
+    $result['success'] = FALSE;
+    $result['message'] = t('Can\'t find user from optput');
+  }
+  drupal_json_output($result);
+}
+
+function fs_newsletter_subscribe_form_submit($form, &$form_state) {
+  $values = $form_state['values'];
+  global $base_url;
+  $user = user_load_by_mail($values['mail']);
+  if (is_object($user)) {
+    $user_registration_status = 'registered';
+    $username = $user->name;
+  }
+  else {
+    $user_registration_status = 'not registered';
+    $username = $values['mail'] ;
+  }
+  $info = [
+    'address' => $values['mail'],
+    'fullname' => $username,
+    'var1' => $user_registration_status
+  ];
+
+
+  module_load_include('inc', 'fs_umail', 'fs_umail');
+  $umail = new UMail();
+  $result = $umail->fs_umail_newsletter_subscribe($info);
+
+  if($result["error"]==""){
+
+    if(user_is_anonymous()) {
+      $fill_in_my_profile = $base_url . '/user/' . $user->uid . '/edit';
+    } else {
+      $fill_in_my_profile = $base_url . '/user/register';
+    }
+    $info = [
+      'address' => $values['mail'],
+      'var1' => $fill_in_my_profile,
+      'fullname' => $values['mail'],
+    ];
+    $umail->fs_umail_newsletter_confirmation($info);
+
+  }else{
+    form_set_error('form', t('Please try later'));
+  }
+}
+
+
+

@@ -1,0 +1,333 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Aug 18, 2016, 9:34:10 AM
+    Author     : ringiersh
+*/
+#gallery .highlight {
+    background-color: #f7f7f7;
+    font-family: 'pompiere_regular';
+}
+#gallery .highlight .container div:first-child {
+    font-size: 45px;
+    margin-top: 25px;
+    margin-bottom: 75px;
+    padding-left: 40px;
+}
+#gallery .highlight .container div:last-child {
+    font-size: 15px;
+    margin-top: 40px;
+    text-align: right;
+    padding-right: 40px;
+}
+.main-gallery .wrapper {
+    -moz-box-shadow: 0px 5px 20px -5px #969696;
+    -webkit-box-shadow: 0px 5px 20px -5px #969696;
+    box-shadow: 0px 5px 20px -5px #969696;
+    margin-top: -50px;
+    background-color: white;
+    padding-top: 25px;
+}
+.main-gallery .wrapper .item_list .item {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.main-gallery .wrapper .item_list .item img {
+    height: 200px;
+    width: 100%;
+    border: 3px solid transparent;
+    border-radius: 5px;
+}
+.main-gallery .wrapper .item_list .item .text-white {
+    font-size: 16px;
+    font-weight: normal;
+}
+.main-gallery .wrapper .item_list .item .date {
+    font-size: 12px;
+    color: white;
+    font-weight: normal;
+}
+.main-gallery .wrapper .item_list .item .description {
+    font-size: 12px;
+    color: white;
+    font-weight: normal;
+    padding-left: 3px;
+    padding-right: 5px;
+}
+.main-gallery .wrapper .item_list .item .number {
+    font-size: 20px;
+    font-weight: normal;
+    color: white;
+    border: 2px solid white;
+    border-radius: 50px;
+    width: 50px;
+    height: 50px;
+    margin: auto;
+    line-height: 41px;
+}
+.main-gallery .wrapper .item_list .item .inline {
+    height: 2px;
+    width: 30%;
+    background-color: white;
+    margin: auto;
+    margin-top: 2px;
+    margin-bottom: 5px;
+}
+.main-gallery .wrapper .item_list .item_1 img,
+.main-gallery .wrapper .item_list .item_5 img,
+.main-gallery .wrapper .item_list .item_9 img {
+    border: 3px solid #2a93d9;
+    border-radius: 5px;
+}
+.main-gallery .wrapper .item_list .item_2 img,
+.main-gallery .wrapper .item_list .item_4 img,
+.main-gallery .wrapper .item_list .item_6 img,
+.main-gallery .wrapper .item_list .item_8 img {
+    border: 3px solid #facfd7;
+    border-radius: 5px;
+}
+.main-gallery .wrapper .item_list .item_3 img,
+.main-gallery .wrapper .item_list .item_7 img {
+    border: 3px solid yellow ;
+    border-radius: 5px;
+}
+/* Hover Blur Effect */
+.text-white {
+    color: #fff;
+}
+.hover-blur a {
+    display: block;
+    position: relative;
+    overflow: hidden;
+}
+.hover-blur a h2 {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    height: 100%;
+    width: 100%;
+    padding-top: 10% ;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    /*background dotted*/
+    background-size: 3px 3px;
+    -webkit-transition: all 0.5s linear;
+    transition: all 0.5s linear;
+    -ms-filter: "progid: DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    filter: alpha(opacity=0);
+    opacity: 0;
+}
+.hover-blur:hover a h2 {
+    -ms-filter: "progid: DXImageTransform.Microsoft.Alpha(Opacity=100)";
+    filter: alpha(opacity=100);
+    opacity: 1;
+}
+.hover-blur .text-white {
+    -webkit-transform: scale(0);
+    transform: scale(0);
+    -webkit-transition: all 0.5s linear;
+    transition: all 0.5s linear;
+    -ms-filter: "progid: DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    filter: alpha(opacity=0);
+    opacity: 0;
+}
+.hover-blur:hover .text-white {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    -webkit-transition: all 0.5s linear;
+    transition: all 0.5s linear;
+    -ms-filter: "progid: DXImageTransform.Microsoft.Alpha(Opacity=1)";
+    filter: alpha(opacity=1);
+    opacity: 1;
+}
+.main-gallery .pagination-content .wrapper_page {
+    border-top: 1px solid #ccc;
+    text-align: right;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+.main-gallery .pagination-content .wrapper_page .item-list .pager {
+    text-align: right;
+    margin: 0px;
+}
+.main-gallery .pagination-content .wrapper_page .item-list .pager .pager-current {
+    border: 1px solid #337ab7;
+    display: inline-block;
+    padding: 5px 14px;
+    background-color: #337ab7;
+    color: white;
+}
+.main-gallery .pagination-content .wrapper_page .item-list .pager li a {
+    border-radius: 0px;
+    color: #337ab7;
+}
+.main-gallery .pagination-content .wrapper_page .item-list ul li {
+    padding: 0px;
+    margin: 0px;
+}
+#main-gallery-details #owl-family .item {
+    margin: 3px;
+}
+
+#main-gallery-details .row {
+    padding-right: 0px;
+}
+
+#main-gallery-details .content-details-gallery {
+    margin-top: 15px;
+}
+#main-gallery-details .content-details-gallery .st-content {
+    padding: 0px!important;
+    margin: 0px!important;
+}
+#main-gallery-details .content-details-gallery #st-trigger-effects {
+    padding: 0px!important;
+    margin: 0px!important;
+}
+#main-gallery-details .content-details-gallery .st-content-inner {
+    padding: 0px!important;
+    margin: 0px!important;
+}
+
+#main-gallery-details .carousel-inner .item div {
+    padding: 0px;
+    margin: 0px;
+    overflow: hidden;
+}
+#main-gallery-details button {
+    position: absolute;
+    z-index: 100;
+    border: none;
+    bottom: 40px;
+    left: 1%;
+    background-color: transparent;
+    color: white;
+}
+#main-gallery-details .carousel {
+    right: -50px;
+    margin-left: -50px;
+}
+#main-gallery-details .st-menu {
+    text-align: center;
+}
+#main-gallery-details .st-menu .text {
+    font-size: 20px;
+}
+#main-gallery-details .st-menu .inline {
+    height: 3px;
+    background-color: gray;
+    width: 70px;
+    margin: auto;
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+#main-gallery-details .st-menu .date {
+    font-size: 15px;
+}
+#main-gallery-details .st-menu .description {
+    font-size: 16px;
+}
+#main-gallery-details .carousel-control {
+    width: 55px;
+}
+#main-gallery-details .carousel-control i {
+    font-size: 50px;
+}
+#main-gallery-details .carousel-control.right {
+    margin-right: 40px;
+}
+#main-gallery-details .effects .img {
+    width: initial;
+}
+.bs-family-gallery-details .carousel-control-family-left{
+    display: inline-block;
+    font-size: 20px;
+    left: 15px;
+    position: absolute;
+    top: 43%;
+    z-index: 5;
+    color: black;
+    background-color: white;
+    border-radius: 50%;
+    padding: 10px;
+
+}
+.bs-family-gallery-details .carousel-control-family-right {
+    display: inline-block;
+    font-size: 20px;
+    position: absolute;
+    right: 15px;
+    top: 43%;
+    z-index: 5;
+    background-color: white;
+    border-radius: 50%;
+    padding: 10px;
+}
+/*#main-gallery-details .content-details-gallery {
+    min-width:450px;
+    }*/
+#main-gallery-details .main{
+min-height:350px;
+}
+@media  (max-width: 992px) {
+    #main-gallery-details .main{
+    min-height:initial;
+    }
+}
+
+/*#main-gallery-details .content-details-gallery img {
+    height: 520px;
+}*/
+#main-gallery-details .inline{
+    background-color: gray;
+    height: 3px;
+    width: 170px;
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.content-details-gallery{
+    border-top: 1px solid gray;
+}
+.content-details-gallery .main{
+    position: relative;
+}
+.content-details-gallery .back_gallery{
+    position: absolute;
+    bottom: 100px;
+    padding: 15px 30px;
+    background: #1FAFB1;
+    left:8%;
+    text-decoration: none;
+    color: white;
+
+}
+.content-details-gallery .text-back{
+    font-size: 18px;
+}
+.content-details-gallery .mobal_gallery{
+    display:none;
+    position: absolute;
+    bottom: 10%;
+    right: 9%;
+    z-index: 10;
+    background-color: transparent;
+    padding: 15px 19px;
+    border-radius: 50%;
+    border: 1px solid gray;
+    color: white;
+}
+.content-details-gallery .item:hover .mobal_gallery{
+    display:block;
+}
+.content-details-gallery  .mobal_gallery:focus,.content-details-gallery  .mobal_gallery:hover{
+    cursor:pointer;
+}
+
+.node-type-gallery #back-to-top{display:none!important;}

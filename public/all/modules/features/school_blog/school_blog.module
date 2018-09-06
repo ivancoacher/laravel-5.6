@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the School Blog feature.
+ */
+
+include_once 'school_blog.features.inc';

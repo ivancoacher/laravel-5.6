@@ -1,0 +1,899 @@
+<?php
+
+/**
+ * Implements hook_menu().
+ */
+module_load_include('inc', 'fs_school', 'fs_school.pages');
+
+function fs_school_menu() {
+  $file_path = drupal_get_path('module', 'fs_school');
+  $items = [];
+//  $items['school/%'] = [
+//    'title' => 'School',
+//    'page callback' => 'fs_school_detail_page',
+//    'page arguments' => [1],
+//    'access callback' => TRUE,
+//    'file' => 'fs_school.pages.inc',
+//    'file_path' => $file_path,
+//  ];
+  $items['school/contact_school'] = [
+    'title' => 'school contact form',
+    'page callback' => 'fs_school_contact_school_callback',
+    'access callback' => TRUE,
+    'file' => 'fs_school.pages.inc',
+    'file_path' => $file_path,
+  ];
+  $cities = _fs_city_get_cities();
+  foreach ($cities as $city) {
+    $items[$city . '-schools/compare'] = [
+      'title' => 'School compare',
+      'page callback' => 'fs_school_compare_page',
+      'page arguments' => [0],
+      'access callback' => TRUE,
+      'file' => 'fs_school.pages.inc',
+      'file_path' => $file_path,
+    ];
+    $items[$city . '/school/compare'] = [
+      'title' => 'School compare',
+      'page callback' => 'fs_school_compare_page',
+      'page arguments' => [0],
+      'access callback' => TRUE,
+      'file' => 'fs_school.pages.inc',
+      'file_path' => $file_path,
+    ];
+  }
+
+  $items['school_compare/autocomplete/%'] = [
+    'page callback' => 'fs_school_compare_autocomplete',
+    'page arguments' => [2],
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+    'file' => 'fs_school.pages.inc',
+    'file_path' => $file_path,
+  ];
+   $items['school_compare/autocomplete'] = [
+    'page callback' => 'fs_school_compare_autocomplete_default',
+    'page arguments' => [0],
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+    'file' => 'fs_school.pages.inc',
+    'file_path' => $file_path,
+  ];
+
+  $items['school/get/%'] = [
+    'page callback' => 'fs_school_get_by_id',
+    'page arguments' => [2],
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+    'file' => 'fs_school.pages.inc',
+    'file_path' => $file_path,
+  ];
+
+  $items['school/detail_pdf/%'] = [
+    'page callback' => 'fs_school_detail_pdf',
+    'page arguments' => [2],
+    'access arguments' => array('access content'),
+    'access callback' => TRUE,
+    'file' => 'fs_school.pages.inc',
+    'file_path' => $file_path,
+  ];
+
+  $items['school_autocomplete'] = array(
+    'page callback' => 'school_autocomplete_custom',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+  );
+
+  return $items;
+}
+
+/**
+ * Implements hook_theme().
+ */
+function fs_school_theme() {
+  $module_path = drupal_get_path('module', 'fs_school');
+
+  return [
+    'fs_school_detail_page' => [
+      'variables' => ['item' => NULL],
+      'template' => 'fs_school_detail_page',
+      'path' => $module_path . '/templates',
+    ],
+    'fs_school_compare_page' => [
+      'variables' => ['items' => NULL],
+      'template' => 'fs_school_compare_page',
+      'path' => $module_path . '/templates',
+    ],
+    'fs_school_related_schools' => [
+      'variables' => ['items' => NULL],
+      'template' => 'fs_school_related_schools',
+      'path' => $module_path . '/templates',
+    ],
+    'fs_school_related_videos' => [
+      'variables' => ['items' => NULL],
+      'template' => 'fs_school_related_videos',
+      'path' => $module_path . '/templates',
+    ],
+    'fs_school_related_gallery' => [
+      'variables' => ['items' => NULL],
+      'template' => 'fs_school_related_gallery',
+      'path' => $module_path . '/templates',
+    ],
+    'fs_school_related_blogs' => [
+      'variables' => ['items' => NULL],
+      'template' => 'fs_school_related_blogs',
+      'path' => $module_path . '/templates',
+    ],
+    'fs_home_schools' => [
+      'variables' => ['items' => NULL],
+      'template' => 'fs_home_schools',
+      'path' => $module_path . '/templates',
+    ],
+    'fs_school_similar_schools' => [
+      'variables' => ['items' => NULL],
+      'template' => 'fs_school_similar_schools',
+      'path' => $module_path . '/templates',
+    ],
+    'fs_school_testimonials' => [
+      'variables' => ['items' => NULL],
+      'template' => 'fs_school_testimonials',
+      'path' => $module_path . '/templates',
+    ],
+    'fs_school_blog' => [
+      'variables' => ['items' => NULL],
+      'template' => 'fs_school_blog',
+      'path' => $module_path . '/templates',
+    ],
+  ];
+}
+
+/**
+ * Implements hook_block_info().
+ */
+function fs_school_block_info() {
+  $blocks = [];
+
+  $blocks['fs_school_related_schools'] = [
+    'info' => t('FS Related Schools'),
+    'cache' => DRUPAL_CACHE_PER_PAGE,
+  ];
+
+  $blocks['fs_school_related_videos'] = [
+    'info' => t('FS School Related Videos'),
+    'cache' => DRUPAL_CACHE_PER_PAGE,
+  ];
+
+  $blocks['fs_school_related_gallery'] = [
+    'info' => t('FS School Related Gallery'),
+    'cache' => DRUPAL_CACHE_PER_PAGE,
+  ];
+
+  $blocks['fs_school_related_blogs'] = [
+    'info' => t('FS School Related Blogs'),
+    'cache' => DRUPAL_CACHE_PER_PAGE,
+  ];
+
+  $blocks['fs_home_schools'] = [
+    'info' => t('FS Home Schools'),
+    'cache' => DRUPAL_CACHE_PER_PAGE,
+  ];
+
+  $blocks['fs_school_similar_schools'] = [
+    'info' => t('FS School Similar Schools'),
+    'cache' => DRUPAL_CACHE_PER_PAGE,
+  ];
+
+  $blocks['fs_school_testimonials'] = [
+    'info' => t('FS School Testimonials'),
+    'cache' => DRUPAL_CACHE_PER_PAGE,
+  ];
+
+  return $blocks;
+}
+
+/**
+ * Implements hook_block_view().
+ */
+function fs_school_block_view($delta = '') {
+  $block = [];
+  //$school_url = $_GET['q'];
+  if (is_numeric(arg(1))) {
+    $nid = arg(1);
+    $node = node_load($nid);
+    $type = 'school';
+    switch ($delta) {
+//    case 'fs_school_related_schools':
+//      $block['subject'] = t('Related items');
+//     // $block['content'] = '';
+//
+//        $cw_api_base_url = variable_get('cw_api_base_url');
+//        $url = $cw_api_base_url . '/fs_api/school_related_items';
+//        $options = [
+//          'query' => [
+//            'nid' => $nid,
+//            'type' => $type,
+//          ],
+//        ];
+//
+//        $response = drupal_http_request(url($url, $options));
+//        $response_items = drupal_json_decode($response->data);
+//
+//        $items = [];
+//        foreach ($response_items as $response_item) {
+//          $item = [];
+//          $item['nid'] = $response_item['nid'];
+//          $item['title'] = $response_item['title'];
+//          $item['image'] = $response_item['image'];
+//          $item['address'] = $response_item['address'];
+//          $item['url'] = url('school/' . $item['nid']);
+//          $items[] = $item;
+//        }
+//
+//        $variables = [
+//          'items' => $items,
+//        ];
+//
+//        $block['content'] = theme('fs_school_related_schools', $variables);
+//      break;
+//      
+////School Related Videos Block View
+//      case 'fs_school_related_videos':
+//       // dpm($node);
+//       // $block['content'] = '';
+//          
+//        foreach ($node->field_school_videos['und'] as $video){
+//          var_dump($video);
+//          $video_items =  entity_load('field_collection_item', array($video['value']));
+//           foreach ($video_items as $video_item){
+//             $items[] = array(
+//            'image_url' => file_create_url($video_item->field_main_image['und'][0]['uri']),
+//            'video_url' => $video_item->field_video_link['und'][0]['url'],
+//          );
+//          }
+//        }
+//    $block['content'] = theme('fs_school_related_videos',array(
+//    'items' => $items
+//    ));
+//    break;
+//School Related Gallery Block View
+      case 'fs_school_related_gallery':
+        $block['content'] = '';
+        $results = fs_school_get_related_gallery($nid);
+        $items = [];
+        if (!empty($results)) {
+          foreach ($results as $result) {
+            $url = drupal_get_path_alias('node/' . $result['entity_id']);
+            $field_gallery_main_image = $result['field_gallery_main_image_fid'];
+            $image_url = file_load($field_gallery_main_image);
+            $items[] = array(
+              'url' => $url,
+              'image_url' => image_style_url('fs_school_video_gallery', $image_url->uri),
+            );
+          }
+        }
+        if ($items) {
+          $block['content'] .= theme('fs_school_related_gallery', array(
+            'items' => $items
+          ));
+        }
+        else {
+          $block['content'] = '';
+        }
+        break;
+      //School Related Blogs Block View
+      case 'fs_school_related_blogs' :
+        $block['content'] = '';
+        $results = fs_school_get_related_blog($nid);
+        $items = [];
+        if (!empty($results)) {
+          foreach ($results as $result) {
+            $url = url('node/' . $result['entity_id'], array('absolute' => FALSE));
+            $field_blog_main_image = $result['field_main_image_fid'];
+            $image_url = file_load($field_blog_main_image);
+         
+            $title = $result['title'];
+            $body = $result['field_article_body_value'];
+            $items[] = array(
+              'url' => $url,
+              'title' => $title,
+              'body' => $body,
+              'image_url' => image_style_url('gallery_home_gallery', $image_url->uri),
+            );
+          }
+        }
+        if ($items) {
+          $block['content'] .= theme('fs_school_related_blogs', array(
+            'items' => $items
+          ));
+        }
+        else {
+          $block['content'] = '';
+        }
+
+
+        //$school_manager = $node->field_school_manager['und'][0]['target_id'];
+//        var_dump($school_manager);
+//        $query = new EntityFieldQuery();
+//        $query->entityCondition('entity_type', 'node')
+//          ->entityCondition('bundle', 'school_blog')
+//          ->propertyCondition('status', NODE_PUBLISHED)
+//          ->propertyCondition('uid', $school_manager)
+//          ->propertyOrderBy('created', 'DESC');
+//
+//          $result = $query->execute();
+//          $nodes = [];
+//          if (isset($result['node'])) {
+//            $nids = array_keys($result['node']);
+//            $nodes = entity_load('node', $nids);
+//          }          
+//          $items = [];
+//            if (!empty($nodes)) {
+//              foreach ($nodes as $node) {
+//                $node_wrapper = entity_metadata_wrapper('node', $node);
+//                $title = $node_wrapper->title->value();
+//                $url = $node_wrapper->url->value();
+//                $field_article_main_image = $node_wrapper->field_main_image->value();
+//                $field_article_summary = $node_wrapper->field_article_body->value();
+//                  $items[] = array(
+//                    'title' => $title,
+//                    'image_url' => file_create_url($field_article_main_image['uri']),
+//                    'summery' => $field_article_summary ,
+//                    'url' => $url,
+//                  );
+//              }
+//            }
+//        $block['content'] .= theme('fs_school_related_blogs',array(
+//          'items' => $items
+//        ));
+        break;
+      //School Similar Schools Block View
+      case 'fs_school_similar_schools' :
+        $block['content'] = '';
+        $type_tid = $node->field_school_type['und'][0]['tid'];
+        $query = new EntityFieldQuery();
+        $query->entityCondition('entity_type', 'node')
+            ->entityCondition('bundle', 'Schools')
+            ->propertyCondition('status', NODE_PUBLISHED)
+            ->fieldCondition('field_school_premium', 'value', 1)
+            ->fieldCondition('field_school_type', 'tid', $type_tid)
+            ->entityCondition('entity_id', $node->nid, '!=')
+            ->addTag('random')
+            ->range(0, 3);
+
+        $result = $query->execute();
+        $nodes = [];
+        if (isset($result['node'])) {
+          //all node id from entity result
+          $nids = array_keys($result['node']);
+          $node_count = count($result['node']);
+          //if premium related school count < 3 
+          if ($node_count < 3) {
+            if ($node_count == 2) {
+              $nids = array_merge($nids, fs_school_getRandomSchools($node->nid, $type_tid, 1));
+            }if ($node_count == 1) {
+              $nids = array_merge($nids, fs_school_getRandomSchools($node->nid, $type_tid, 2));
+            }if ($node_count == 0) {
+              $nids = array_merge($nids, fs_school_getRandomSchools($node->nid, $type_tid, 3));
+            }
+          }
+          $nodes = entity_load('node', $nids);
+        }
+        else {
+          $nids = fs_school_getRandomSchools($node->nid, $type_tid, 3);
+          if (isset($nids)) {
+            $nodes = entity_load('node', $nids);
+          }
+        }
+
+        $items = [];
+        if (!empty($nodes)) {
+          foreach ($nodes as $node) {
+            $node_wrapper = entity_metadata_wrapper('node', $node);
+            $title = $node_wrapper->title->value();
+            $url = $node_wrapper->url->value();
+            $field_logo_image = $node_wrapper->field_school_logo->value();
+            $field_school_type = $node_wrapper->field_school_type->value();
+            $field_address = $node_wrapper->field_address_in_english->value();
+            $field_school_admission_inquiry = $node_wrapper->field_school_admission_inquiry->value();
+            $items[] = array(
+              'title' => $title,
+              'image_url' => file_create_url($field_logo_image['uri']),
+              'address' => $field_address,
+              'school_type' => $field_school_type,
+              'url' => $url,
+              'inquiry' => addhttp($field_school_admission_inquiry['url']),
+            );
+          }
+        }
+        $block['content'] .= theme('fs_school_similar_schools', array(
+          'items' => $items
+        ));
+        break;
+
+      case 'fs_school_testimonials':
+        $block['content'] = '';
+        $results = fs_school_get_testimonials($nid);
+        $items = [];
+        if (!empty($results)) {
+          foreach ($results as $result) {
+            // $url = drupal_get_path_alias('node/'.$result['entity_id']);
+            $message = $result['field_testimonial_message_value'];
+            $signature = $result['field_testimonial_signature_value'];
+            $items[] = array(
+              'message' => $message,
+              'signature' => $signature,
+                //   'url' => $url,
+            );
+          }
+        }
+        if ($items) {
+          $block['content'] .= theme('fs_school_testimonials', array(
+            'items' => $items
+          ));
+        }
+        else {
+          $block['content'] = '';
+        }
+        break;
+    }
+  }
+
+  if ($delta == 'fs_home_schools') {
+    $block['content'] = '';
+    $query = new EntityFieldQuery();
+    $query->entityCondition('entity_type', 'node')
+        ->entityCondition('bundle', 'Schools')
+        ->propertyCondition('status', NODE_PUBLISHED)
+        ->fieldCondition('field_school_premium', 'value', 1)
+        ->addTag('random')
+        ->range(0, 3);
+
+    $result = $query->execute();
+    $nodes = [];
+    if (isset($result['node'])) {
+      $nids = array_keys($result['node']);
+      $nodes = entity_load('node', $nids);
+    }
+    $items = [];
+    if (!empty($nodes)) {
+      foreach ($nodes as $node) {
+        $node_wrapper = entity_metadata_wrapper('node', $node);
+        $title = $node_wrapper->title->value();
+        $url = $node_wrapper->url->value();
+        $field_logo_image = $node_wrapper->field_school_logo->value();
+        $field_school_type = $node_wrapper->field_school_type->value();
+        $field_address = $node_wrapper->field_address_in_english->value();
+        $field_school_admission_inquiry = $node_wrapper->field_school_admission_inquiry->value();
+        $items[] = array(
+          'title' => $title,
+          'image_url' => file_create_url($field_logo_image['uri']),
+          'address' => $field_address,
+          'school_type' => $field_school_type,
+          'url' => $url,
+          'inquiry' => addhttp($field_school_admission_inquiry['url']),
+        );
+      }
+    }
+    $block['content'] .= theme('fs_home_schools', array(
+      'items' => $items
+    ));
+  }
+
+
+
+
+
+  return $block;
+}
+
+function fs_school_compare_add_school_form($form, &$form_state) {
+  $cid = fs_city_get_selected_city_id();
+  $form['keyword'] = [
+    '#type' => 'textfield',
+    '#autocomplete_path' => "school_compare/autocomplete/{$cid}",
+    '#maxlength' => 128,
+    '#required' => TRUE,
+  ];
+
+  $form['submit'] = [
+    '#type' => 'submit',
+    '#value' => t('Add A School'),
+  ];
+
+  return $form;
+}
+
+/**
+ * Implements template_preprocess_node().
+ */
+function fs_school_preprocess_node(&$variables) {
+  $node = $variables['node'];
+  $view_mode = $variables['view_mode'];
+  if ($node->type == 'school_blog' && $view_mode == 'full') {
+    $variables["item"] = fs_school_blog_detail_page($node);
+  }
+  if ($node->type == 'schools' && $view_mode == 'full') {
+    module_load_include('inc', 'fs_sailthru', 'fs_sailthru');
+    fs_sailthru_meta_tags($node);
+    $path_family = drupal_get_path('theme', 'family');
+    drupal_add_css($path_family . '/css/components/listing.css', array('group' => CSS_THEME));
+    drupal_add_css($path_family . '/lib/fancybox/jquery.fancybox.css', array('group' => CSS_THEME));
+    drupal_add_css($path_family . '/lib/bootstrap-notify/css/bootstrap-notify.css', array('group' => CSS_THEME));
+    drupal_add_js('http://webapi.amap.com/maps?v=1.3&key=265b2136b0c369e4cded2a18d7662236', 'external');
+    drupal_add_js('http://cache.amap.com/lbs/static/addToolbar.js', 'external');
+    drupal_add_js(variable_get("path_theme", NULL) . '/lib/amap/amap_school.js', array('scope' => 'footer'));
+
+    drupal_add_js($path_family . '/lib/fancybox/jquery.fancybox.min.js', array('scope' => 'header'));
+    drupal_add_js($path_family . '/lib/bootstrap-notify/js/bootstrap-notify.js', array('scope' => 'header'));
+
+    drupal_add_js(drupal_get_path("module", "fs_school") . '/js/fs_school_details_page.js', array('scope' => 'header'));
+    drupal_add_css($path_family . '/lib/owl-carousel/owl.carousel.css', array('group' => CSS_THEME));
+    drupal_add_js($path_family . '/lib/owl-carousel/owl.carousel.min.js');
+
+    module_load_include('inc', 'fs_base', 'fs_base');
+    module_load_include('inc', 'fs_search_school', 'fs_search_school');
+
+    module_load_include('inc', 'fs_school', 'fs_school');
+    $item = fs_base_load($node, "school");
+
+//    $item["field_main_image"] = image_style_url("main_image", $uri);
+//    if (!file_exists($item["field_main_image"])) {
+//      $item["field_main_image"] = file_create_url($uri);
+//    }
+
+    $item["main_image"] = image_style_url("fs_school_main_image", $item["field_main_image"]);
+    $json_directory = "var json_directory=[";
+    $img = variable_get("path_theme", NULL) . '/lib/amap/pin.png';
+    if (!empty($item['field_school_campuses'])) {
+      $maps = $item['field_school_campuses'];
+      foreach ($maps as $map) {
+        $lat = $map['lat'];
+        $lon = $map['lng'];
+        $url = "";
+        //if ($item['main_image']) {
+        //  $img = $item['main_image'];
+        // }
+        //else {
+        //}     
+        $json_directory .= "{'lat':'" . $lat . "','long':'" . $lon . "','img':'" . $img . "','url':'" . $url . "','title':'" . $map["title"] . "'},";
+      }
+    }
+    $url = "";
+    $json_directory .= "{'lat':'" . $item["field_map"]["lat"] . "','long':'" . $item["field_map"]["lon"] . "','img':'" . $img . "','url':'','title':''},";
+
+    $json_directory .= "];";
+    drupal_add_js($json_directory, array('type' => 'inline'));
+
+    drupal_set_title($item['title']);
+    $variables["item"] = $item;
+  }
+}
+
+// hook field_school_campuses 
+function fs_school_field_school_campuses_custom($field) {
+  if (!empty($field['und'])) {
+
+    foreach ($field['und'] as $key => $camp) {
+      $collects = field_collection_item_load($camp["value"]);
+      $item[] = array(
+        "title" => fs_base_field($collects, 'field_school_campuse_title')[0]["value"],
+        "email" => fs_base_field($collects, 'field_email')[0]["email"],
+        "phone" => fs_base_field($collects, 'field_telephone')[0]["value"],
+        "adress_eng" => fs_base_field($collects, 'field_address_in_english')[0]["value"],
+        "adress_cn" => fs_base_field($collects, 'field_address_in_chinese')[0]["value"],
+        "lat" => fs_base_field($collects, 'field_map')[0]["lat"],
+        "lng" => fs_base_field($collects, 'field_map')[0]["lng"],
+      );
+    }
+    return $item;
+  }
+  else {
+    return null;
+  }
+}
+
+// hook field_school_videos 
+function fs_school_field_school_videos_custom($field) {
+  if (!empty($field['und'])) {
+    $item = [];
+    $style_name = "video_school";
+    foreach ($field['und'] as $key => $collection) {
+      $collects = field_collection_item_load($collection["value"]);
+      $item[] = array(
+        "url" => (isset(fs_base_field($collects, 'field_video_link')[0]["url"]) ? fs_base_field($collects, 'field_video_link')[0]["url"] : ""),
+        "image" => image_style_url('fs_school_video_gallery', fs_base_field($collects, 'field_main_image')[0]["uri"])
+      );
+    }
+    return $item;
+  }
+  else {
+    return null;
+  }
+}
+
+//fs_home_schools Random query
+function fs_school_query_random_alter($query) {
+  $query->orderRandom();
+}
+
+/*
+  function fs_school_make_call() {
+  module_load_include('inc', 'fs_school', 'fs_school.pages');
+  $data = [
+  'name' => 'ivanzhu',
+  'email' => 'wenhua.lr@qq.com',
+  'subject' => 'subject',
+  'message' => 'message',
+  'contact_email' => 'ivan.zhu@ringierchina.com',
+  'contact_name' => 'contact_name',
+  ];
+  _fs_school_contact_school_send_mail_by_sailthru($data);
+ * call my function to generate pdf
+ * drupal_exit()
+ */
+
+function fs_school_detail_pdf($id) {
+  libraries_load('fpdf');
+  require 'fpdf/fs_school_detail_pdf.php';
+  $nid = $id;
+  $nodes = entity_load('node', array($nid));
+  $item = [];
+  if (!empty($nodes)) {
+    foreach ($nodes as $node) {
+      $node_wrapper = entity_metadata_wrapper('node', $node);
+      $title = $node_wrapper->title->value();
+      $url = $node_wrapper->url->value();
+      $field_main_image = $node_wrapper->field_main_image->value();
+      $field_editor_description = $node_wrapper->field_editor_description->value();
+      $field_address = $node_wrapper->field_address_in_english->value();
+      $field_website = $node_wrapper->field_website->value();
+      $field_email = $node_wrapper->field_email->value();
+      $field_school_type = $node_wrapper->field_school_type->value();
+      $field_school_foundation_date = $node_wrapper->field_school_foundation_date->value();
+      $field_school_campuses = $node_wrapper->field_school_campuses->value();
+      $field_school_curriculum = $node_wrapper->field_school_curriculum->value();
+      $field_school_academic_program = $node_wrapper->field_school_academic_program->value();
+      $field_school_taught_languages = $node_wrapper->field_school_taught_languages->value();
+      $field_school_maximum_tuition = $node_wrapper->field_school_maximum_tuition->value();
+      $field_school_minimum_tuition = $node_wrapper->field_school_minimum_tuition->value();
+      $field_school_other_payments = $node_wrapper->field_school_other_payments->value();
+      $field_neighborhood = $node_wrapper->field_neighborhood->value();
+      $field_school_logo = $node_wrapper->field_school_logo->value();
+      $field_school_mission_statement = $node_wrapper->field_school_mission_statement->value();
+      $field_school_admission_inquiry = $node_wrapper->field_school_admission_inquiry->value();
+      $field_telephone = $node_wrapper->field_telephone->value();
+      $item[] = array(
+        'title' => $title,
+        'image' => file_create_url($field_main_image['uri']),
+        'logo' => file_create_url($field_school_logo['uri']),
+        'description' => $field_editor_description,
+        'url' => $url,
+        'address' => $field_address,
+        'website' => $field_website['url'],
+        'inquiry' => $field_school_admission_inquiry['url'],
+        'email' => $field_email,
+        'school_type' => $field_school_type,
+        'foundation_date' => $field_school_foundation_date,
+        'campuses' => $field_school_campuses,
+        'curriculum' => $field_school_curriculum,
+        'academic_program' => $field_school_academic_program,
+        'taught_languages' => $field_school_taught_languages,
+        'maximum_tuition' => $field_school_maximum_tuition,
+        'minimum_tuition' => $field_school_minimum_tuition,
+        'other_payments' => $field_school_other_payments,
+        'neighborhood' => $field_neighborhood,
+        'mission' => $field_school_mission_statement,
+        'phone' => $field_telephone,
+      );
+    }
+    generate_pdf($item[0]);
+  }
+}
+
+//Get all related gallery for school
+function fs_school_get_related_gallery($nid) {
+  $query = "Select mi.`field_gallery_main_image_fid`, rs.`entity_id`  from "
+      . "field_data_field_gallery_main_image mi "
+      . "LEFT JOIN field_data_field_related_school rs on rs.entity_id = mi.entity_id "
+      . "WHERE rs.`field_related_school_target_id` =" . $nid;
+  $results = db_query($query);
+  $records = array();
+  while ($record = $results->fetchAssoc()) {
+    $records[] = $record;
+  }
+  return $records;
+}
+
+//Get all related Blog for school
+function fs_school_get_related_blog($nid) {
+  $query = "Select ab.`entity_id`,n.title,ab.field_article_body_value,mi.field_main_image_fid from node n LEFT JOIN
+        field_data_field_article_body ab on n.nid = ab.entity_id LEFT JOIN field_data_field_main_image mi on n.nid = mi.entity_id LEFT JOIN `field_data_field_related_school` rs on n.nid = rs.entity_id where 
+        rs.`field_related_school_target_id` = '.$nid.' and n.`type` = 'school_blog'";
+  $results = db_query($query);
+  $records = array();
+  while ($record = $results->fetchAssoc()) {
+    $records[] = $record;
+  }
+  return $records;
+}
+
+//Get all related gallery for school
+function fs_school_get_testimonials($nid) {
+  $query = "SELECT `field_testimonial_message_value`,`field_testimonial_signature_value`"
+      . " from field_data_field_testimonial_message ftm "
+      . "LEFT JOIN `field_data_field_testimonials` ft "
+      . "on ftm.`entity_id` = ft.`field_testimonials_value` "
+      . "LEFT JOIN `field_data_field_testimonial_signature` fts "
+      . "on fts.`entity_id` = ft.`field_testimonials_value` where ft.`entity_id` = " . $nid;
+  $results = db_query($query);
+  $records = array();
+  while ($record = $results->fetchAssoc()) {
+    $records[] = $record;
+  }
+  return $records;
+}
+
+//Get Non premium Schools for similar schools block
+function fs_school_getRandomSchools($nid, $type_id, $range) {
+  $query = new EntityFieldQuery();
+  $query->entityCondition('entity_type', 'node')
+      ->entityCondition('bundle', 'Schools')
+      ->entityCondition('entity_id', intval($nid), '!=')
+      ->propertyCondition('status', NODE_PUBLISHED)
+      ->fieldCondition('field_school_premium', 'value', 0)
+      ->fieldCondition('field_school_type', 'tid', intval($type_id))
+      ->addTag('random')
+      ->range(0, $range);
+  $result = $query->execute();
+  $nids = array_keys($result['node']);
+  return $nids;
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function fs_school_form_alter(&$form, &$form_state, $form_id) {
+  if ($form_id == 'school_blog_node_form' || $form_id == 'gallery_node_form') {
+    global $user;
+    $roles = $user->roles;
+    if (!in_array('administrator', $roles) && !in_array('editor', $roles)) {
+      $field_name = 'field_related_school'; // Change this to your user reference field's machine name.
+      if (!isset($form[$field_name])) {
+        return;
+      }
+      // Attach a custom autocomplete path to our user's field so we can search
+      // by address field first and last names.
+      foreach ($form[$field_name]['und'] as $delta => $element) {
+        if (!is_numeric($delta)) {
+          continue;
+        }
+        $form[$field_name]['und'][$delta]['target_id']['#autocomplete_path'] = 'school_autocomplete';
+      }
+    }
+  }
+}
+
+function school_autocomplete_custom($keyword) {
+  global $user;
+  $results = array();
+  $query = db_select('node', 'n');
+  $query->condition('n.type', 'schools', '=');
+  $query->condition('n.title', '%' . db_like($keyword) . '%', 'LIKE');
+  $query->join('field_data_field_school_manager', 'v', 'v.entity_id = n.nid');
+  $query->condition('v.field_school_manager_target_id', $user->uid, '=');
+  $query->fields('n', array('nid', 'title'));
+  $nodes = $query->execute()->fetchAllAssoc('nid');
+  foreach ($nodes as $node) {
+    $key = $node->title . "($node->nid)";
+    $results[$key] = check_plain($node->title);
+  }
+  drupal_json_output($results);
+}
+
+function fs_school_blog_detail_page($node) {
+  $node_wrapper = entity_metadata_wrapper('node', $node);
+  $nid = $node_wrapper->getIdentifier();
+  $title = $node_wrapper->title->value();
+  $item['title'] = $title;
+  $author = $node_wrapper->author->value();
+  $item['author'] = $author->name;
+//  $item['author_uid'] = $author->uid;
+//  $item['author_profile_url'] = url('profile-editor/' . $author->uid);
+//
+//  $profile = profile2_load_by_user($author, 'editor');
+//
+//  if (isset($profile->field_pe_photo['und']) && !empty($profile->field_pe_photo['und'])) {
+//    $item['author_photo'] = image_style_Url('editor_thumbnail', $profile->field_pe_photo['und'][0]['uri']);
+//  }
+//  else {
+//    $item['author_photo'] = null;
+//  }
+
+  $created = $node_wrapper->created->value();
+  $item['date'] = format_date($created, 'custom', 'D, F d, Y');
+  $field_article_main_image = $node_wrapper->field_main_image->value();
+  if (!empty($field_article_main_image)) {
+    $item['image'] = file_create_url($field_article_main_image['uri']);
+  }
+  else {
+    $item['image'] = '';
+  }
+  $field_article_body = $node_wrapper->field_article_body->value();
+  $item['body'] = $field_article_body['value'];
+  // $item['school'] =  $node_wrapper->field_related_school->value();
+
+
+  return $item;
+}
+
+function addhttp($url) {
+  if (!preg_match("~^(?:f|ht)tps?://~i", $url)) {
+    $url = "http://" . $url;
+  }
+  return $url;
+}
+
+/**
+ * Implements hook_node_insert().
+ */
+function fs_school_node_insert($node) {
+  if (isset($node->type)&&$node->type == "schools") {
+    generate_image_schools($node);
+    entity_get_controller('node')->resetCache(array($node->nid));
+  }
+}
+
+/**
+ * Implements hook_node_update().
+ */
+function fs_school_node_update($node) {
+  if (isset($node->type)&&$node->type == "schools") {
+    generate_image_schools($node);
+    entity_get_controller('node')->resetCache(array($node->nid));
+  }
+}
+
+function generate_image_schools($node) {
+  module_load_include('inc', 'fs_base', 'fs_base');
+  $uri = fs_base_image_storage($node->nid, "field_school_logo");
+  $styles = array('school_list_item');
+  try {
+    foreach ($styles as $key => $value) {
+      fs_base_generate_image($value, $uri);
+    }
+    //School Video Gallery image style
+    foreach ($node->field_school_videos['und'] as $school_video) {
+      $collects = field_collection_item_load($school_video['value']);
+      $uri_gal_vid = (fs_base_field($collects, 'field_main_image')[0]["uri"]);
+      $style = 'fs_school_video_gallery';
+      fs_base_generate_image($style, $uri_gal_vid);
+    }
+
+    //School main image style
+
+    $uri_main_image = fs_base_image_storage($node->nid, "field_main_image");
+    $style1 = 'fs_school_main_image';
+    fs_base_generate_image($style1, $uri_main_image);
+  }
+  catch (Exception $e) {
+    //echo 'Caught exception: ', $e->getMessage(), "\n";
+  }
+}
+
+function fs_school_image_default_styles() {
+  $styles = array();
+  $styles['school_list_item'] = array(
+    'effects' => array(
+      array(
+        'name' => 'image_scale_and_crop',
+        'data' => array(
+          'width' => 125,
+          'height' => 125,
+        ),
+        'weight' => 0,
+      ),
+    ),
+  );
+ 
+  return $styles;
+}

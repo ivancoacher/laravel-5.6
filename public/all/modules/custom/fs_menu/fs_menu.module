@@ -1,0 +1,198 @@
+<?php
+
+/**
+ * Implements hook_block_info().
+ */
+function fs_menu_block_info() {
+  $blocks = [];
+
+  $blocks['fs_menu_mobile_mega_menu'] = [
+    'info' => t('FS Mobile Mega Menu'),
+    'cache' => DRUPAL_CACHE_PER_PAGE,
+  ];
+  
+  $blocks['fs_menu_footer'] = [
+    'info' => t('FS  Footer Menu'),
+    'context' => MENU_CONTEXT_INLINE,
+    'cache' => DRUPAL_CACHE_PER_PAGE,
+  ];
+
+
+  return $blocks;
+}
+
+/**
+ * Implements hook_block_view().
+ */
+function fs_menu_block_view($delta = '') {
+  $block = [];
+  switch($delta) {
+    case 'fs_menu_footer':
+    global $base_url;
+    $path_logo= $base_url."/".drupal_get_path("theme","family");
+    $menu_footer_one=menu_tree("menu-footer-menu-one");
+    $menu_footer_two=menu_tree("menu-footer-menu-two");
+    $variables = [
+        'path_logo' => $path_logo,
+        'menu_footer_one' => $menu_footer_one,
+        'menu_footer_two' => $menu_footer_two,
+    ];
+    $block['content'] = theme('fs_menu_footer', $variables);
+    break;
+    case 'fs_menu_mobile_mega_menu':
+      $block['subject'] = t('Mobile mega menu');
+
+      $cid = fs_city_get_selected_city_id();
+      $cities = _fs_city_get_cities();
+      $city = $cities[$cid];
+
+      $block_city_navigation = module_invoke('fs_city','block_view','fs_city_navigation');
+      $city_navigation = render($block_city_navigation['content']);
+
+      $sign_in = l(t('Sign In'), 'user/login');
+
+      // $home_link = l(t('Home'), $city);
+
+      $terms = [];
+
+      switch($city) {
+        case 'beijing':
+          $menu_name = 'menu-beijing-main-menu';
+          // $vocab = taxonomy_vocabulary_machine_name_load('article_category_bj');
+          // $vid = $vocab->vid;
+          break;
+        default:
+          // $vocab = taxonomy_vocabulary_machine_name_load('article_category_sh');
+          // $vid = $vocab->vid;
+          $menu_name = 'menu-shanghai-main-menu';
+          break;
+      }
+
+
+      $menu = menu_tree($menu_name);
+
+      /*
+      $terms_tree = taxonomy_get_tree($vid, 0, 1);
+      if(!empty($terms_tree)) {
+        foreach($terms_tree as $term_tree) {
+          $term_tree_wrapper = entity_metadata_wrapper('taxonomy_term', $term_tree->tid);
+          $field_term_show_in_dropdown_menu = $term_tree_wrapper->field_term_show_in_dropdown_menu->value();
+          if($field_term_show_in_dropdown_menu) {
+            $terms[$term_tree->tid]['id'] = $term_tree->tid;
+            $terms[$term_tree->tid]['name'] = $term_tree_wrapper->name->value();
+            $terms[$term_tree->tid]['url'] = $term_tree_wrapper->url->value();
+          }
+        }
+      }
+
+
+      $directory_link = l(t('Directory'), $city.'/directory');
+      $event_link = l(t('Events'), $city . '/event');
+      $gallery_link = l(t('Pictures'), $city . '/gallery');
+      $school_link = l(t('School'), $city . '/school');
+      */
+
+
+      $facebook = variable_get('fs_base_social_facebook', '');
+      $twitter = variable_get('fs_base_social_twitter', '');
+      $email = variable_get('fs_base_social_email', '');
+      $weichat = variable_get('fs_base_social_weichat', '');
+
+      $variables = [
+        'city_navigation' => $city_navigation,
+        'sign_in' => $sign_in,
+        'menu' => $menu,
+        'facebook' => $facebook,
+        'twitter' => $twitter,
+        'email' => $email,
+        'weichat' => $weichat,
+      ];
+
+      $block['content'] = theme('fs_menu_mobile_mega_menu', $variables);
+
+      break;
+  }
+  return $block ;
+}
+
+/**
+ * Implements hook_theme().
+ */
+function fs_menu_theme() {
+  $module_path = drupal_get_path('module', 'fs_menu');
+
+  return [
+    'fs_menu_dropdown_items' => [
+      'variables' => ['items' => NULL],
+      'template' => 'fs_menu_dropdown_items',
+      'path' => $module_path . '/templates',
+    ],
+    'fs_menu_mobile_mega_menu' => [
+      'variables' => ['items' => NULL],
+      'template' => 'fs_menu_mobile_mega_menu',
+      'path' => $module_path . '/templates',
+    ], 
+     'fs_menu_footer' => [
+      'variables' => ['items' => NULL],
+      'template' => 'fs_menu_footer',
+      'path' => $module_path . '/templates',
+    ],
+  ];
+}
+
+function fs_menu_generate_dropdown_items($term) {
+  $children = taxonomy_get_children($term->tid, $term->vid);
+
+  $items = [];
+  if (!empty($children)) {
+    $cid = fs_city_get_selected_city_id();
+    foreach ($children as $term_child) {
+      $tid_child = $term_child->tid;
+      $query = new EntityFieldQuery();
+
+      $query->entityCondition('entity_type', 'node')
+        ->entityCondition('bundle', 'article')
+        ->propertyCondition('status', NODE_PUBLISHED)
+        ->fieldCondition('og_group_ref', 'target_id', $cid)
+        ->fieldCondition('field_article_category', 'target_id', $tid_child, '=')
+        ->propertyOrderBy('created', 'desc')
+        ->range(0, 4)
+        ->addMetaData('account', user_load(1)); // Run the query as user 1.
+
+      $result = $query->execute();
+
+      $articles = [];
+
+      if (isset($result['node'])) {
+        $nids = array_keys($result['node']);
+        $nodes = entity_load('node', $nids);
+        $article = [];
+        foreach ($nodes as $node) {
+          $node_wrapper = entity_metadata_wrapper('node', $node);
+          $article['title'] = $node_wrapper->title->value();
+          $article['url'] = $node_wrapper->url->value();
+            $field_article_main_image = $node_wrapper->field_article_main_image->value();
+
+            if (!empty($field_article_main_image)) {
+              $article['image'] = image_style_url('article_dropdown_menu', $field_article_main_image['uri']);
+            }
+            else {
+              $article['image'] = '';
+            }
+          $articles[] = $article;
+        }
+      }
+
+      $items[$tid_child]['tid'] = $tid_child;
+      $items[$tid_child]['name'] = $term_child->name;
+      $items[$tid_child]['link'] = url('taxonomy/term/'. $tid_child);
+      $items[$tid_child]['articles'] = $articles;
+    }
+  }
+
+  $variables = [
+    'items' => $items,
+  ];
+
+  return theme('fs_menu_dropdown_items', $variables);
+}

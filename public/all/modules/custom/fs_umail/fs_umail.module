@@ -1,0 +1,21 @@
+<?php
+
+
+/**
+ * Implements hook_menu().
+ */
+function fs_umail_menu() {
+    $file_path = drupal_get_path('module', 'fs_umail');
+    $items = [];
+    $items['admin/config/fs/umail'] = [
+        'title' => 'Family Space umail',
+        'page callback' => 'drupal_get_form',
+        'page arguments' => ['fs_base_umail_settings_form'],
+        'access arguments' => ['administer site configuration'],
+        'type' => MENU_NORMAL_ITEM,
+        'file' => 'fs_umail.admin.inc',
+        'file path' => $file_path,
+    ];
+
+    return $items;
+}

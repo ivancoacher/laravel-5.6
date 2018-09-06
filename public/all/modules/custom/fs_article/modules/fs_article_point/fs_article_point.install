@@ -1,0 +1,39 @@
+<?php
+
+function fs_article_point_schema() {
+  $schema['fs_article_point'] = array(
+    'description' => 'Article Point',
+    'fields' => array(
+      'nid' => array(
+        'type' => 'serial',
+        'not null' => TRUE,
+        'description' => 'Primary Key: Unique node ID.',
+      ),
+      'point' => array(
+        'description' => 'The total number of point the {node} has been viewed.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+        'size' => 'big',
+      ),
+      'timestamp' => array(
+        'description' => 'The most update time.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+    ),
+    'primary key' => array('nid'),
+  );
+
+  return $schema;
+}
+
+function fs_article_point_install() {
+  db_update('system')
+    ->fields(array('weight' => 130))
+    ->condition('name', 'fs_article_point', '=')
+    ->execute();
+}

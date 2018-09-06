@@ -1,0 +1,890 @@
+<?php
+
+module_load_include('inc', 'fs_article', 'fs_article');
+
+/**
+ * Implements hook_menu().
+ */
+function fs_article_menu() {
+  $file_path = drupal_get_path('module', 'fs_article');
+  $items = [];
+
+  $items['api/fs_get_trending_now/%/%'] = [
+    'page callback' => 'fs_get_trending_now',
+    'page arguments' => [2, 3],
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+    'file' => 'fs_article.pages.inc',
+    'file_path' => $file_path,
+  ];
+
+  $items['api/fs_get_what_new/%/%'] = [
+    'page callback' => 'fs_get_what_new',
+    'page arguments' => [2, 3],
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+    'file' => 'fs_article.pages.inc',
+    'file_path' => $file_path,
+  ];
+
+  return $items;
+}
+
+/**
+ * Implements hook_theme().
+ */
+function fs_article_theme() {
+  $module_path = drupal_get_path('module', 'fs_article');
+
+  return [
+    'fs_home_slider' => [
+      'variables' => ['items' => NULL],
+      'template' => 'fs_home_slider',
+      'path' => $module_path . '/templates',
+    ],
+    'fs_trending_now' => [
+      'variables' => ['items' => NULL],
+      'template' => 'fs_trending_now',
+      'path' => $module_path . '/templates',
+    ],
+    'fs_what_new' => [
+      'variables' => ['items' => NULL],
+      'template' => 'fs_what_new',
+      'path' => $module_path . '/templates',
+    ],
+    'fs_most_read_and_pop' => [
+      'variables' => ['items_most_read' => NULL, 'items_most_pop' => NULL],
+      'template' => 'fs_most_read_and_pop',
+      'path' => $module_path . '/templates',
+    ],
+    'fs_editor_pick' => [
+      'variables' => ['items' => NULL],
+      'template' => 'fs_editor_pick',
+      'path' => $module_path . '/templates',
+    ],
+    'fs_article_related_articles' => [
+      'variables' => ['items' => NULL],
+      'template' => 'fs_article_related_articles',
+      'path' => $module_path . '/templates',
+    ],
+    'fs_article_ds_default' => [
+      'variables' => ['item' => NULL],
+      'template' => 'fs_article_ds_default',
+      'path' => $module_path . '/templates',
+    ],
+    'fs_article_item_small' => [
+      'variables' => ['item' => NULL],
+      'template' => 'fs_article_item_small',
+      'path' => $module_path . '/templates',
+    ],
+  ];
+}
+
+/**
+ * Implements hook_block_info().
+ */
+function fs_article_block_info() {
+  $blocks = [];
+
+  $blocks['fs_home_slider'] = [
+    'info' => t('FS Home Slider'),
+    'cache' => DRUPAL_CACHE_PER_PAGE,
+  ];
+
+  $blocks['fs_trending_now'] = [
+    'info' => t('FS Trending Now'),
+    'cache' => DRUPAL_CACHE_PER_PAGE,
+  ];
+
+  $blocks['fs_what_new'] = [
+    'info' => t('FS What\'s New'),
+    'cache' => DRUPAL_CACHE_PER_PAGE,
+  ];
+
+  $blocks['fs_most_read_and_pop'] = [
+    'info' => t('FS Most Read And Pop'),
+    'cache' => DRUPAL_CACHE_PER_PAGE,
+  ];
+
+  $blocks['fs_editor_pick'] = [
+    'info' => t('FS Editor\'s Pick'),
+    'cache' => DRUPAL_CACHE_PER_PAGE,
+  ];
+
+  $blocks['fs_article_related_articles'] = [
+    'info' => t('Related Articles'),
+    'cache' => DRUPAL_CACHE_PER_PAGE,
+  ];
+
+  return $blocks;
+}
+
+/**
+ * Implements hook_block_view().
+ */
+function fs_article_block_view($delta = '') {
+  $block = [];
+
+  switch ($delta) {
+    case 'fs_home_slider' :
+      $block['subject'] = t('Home Slider');
+
+      $cid = fs_city_get_selected_city_id();
+
+      $query = new EntityFieldQuery();
+
+      $query->entityCondition('entity_type', 'node')
+          ->entityCondition('bundle', 'article')
+          ->propertyCondition('status', NODE_PUBLISHED)
+          ->fieldCondition('field_article_slider_push', 'value', '1', '=')
+          ->fieldCondition('og_group_ref', 'target_id', $cid)
+          ->propertyOrderBy('created', 'desc')
+          ->fieldOrderBy('field_article_slider_pin', 'value', 'DESC')
+          ->fieldOrderBy('field_article_slider_weight', 'value', 'DESC')
+          ->range(0, 8)
+          ->addMetaData('account', user_load(1)); // Run the query as user 1.
+
+      $result = $query->execute();
+
+      $nodes = [];
+      if (isset($result['node'])) {
+        $nids = array_keys($result['node']);
+        $nodes = entity_load('node', $nids);
+      }
+
+      $items = [];
+
+      if (!empty($nodes)) {
+        foreach ($nodes as $node) {
+          $node_wrapper = entity_metadata_wrapper('node', $node);
+          $nid = $node_wrapper->getIdentifier();
+          $title = $node_wrapper->title->value();
+          $url = $node_wrapper->url->value();
+          $field_article_body = $node_wrapper->field_article_body->value();
+          $field_article_main_image = $node_wrapper->field_article_main_image->value();
+          $field_article_win = $node_wrapper->field_article_win->value();
+          $field_article_sponsored = $node_wrapper->field_article_sponsored->value();
+          $field_article_editor_pick_push = $node_wrapper->field_article_editor_pick_push->value();
+
+          $items[$nid]['title'] = $title;
+          $items[$nid]['summary'] = $field_article_body;
+          $items[$nid]['url'] = $url;
+
+          if (!empty($field_article_main_image)) {
+               $items[$nid]['image'] = image_style_url('home_slider_image', $field_article_main_image['uri']);                 
+            if($data = @getimagesize($items[$nid]['image'])){   
+            }else{        
+                $items[$nid]['image'] = image_style_url('fs_home_slider_image', $field_article_main_image['uri']);               
+            }
+         }
+          else {
+            $items[$nid]['image'] = '';
+          }
+          $items[$nid]['win'] = $field_article_win;
+          $items[$nid]['sponsored'] = $field_article_sponsored;
+          $items[$nid]['editor_pick'] = $field_article_editor_pick_push;
+        }
+      }
+
+      $variables = [
+        'items' => $items,
+      ];
+
+      $block['content'] = theme('fs_home_slider', $variables);
+
+      break;
+
+    case 'fs_trending_now':
+      //in order to get more nodes. call to 'api/fs_get_trending_now/%/%' first parm is cid, seccond parm is pager(0,1,2,3).
+      $block['subject'] = t('Trending Now');
+
+      $cid = fs_city_get_selected_city_id();
+
+      /*
+        $query = new EntityFieldQuery();
+
+        $date = new DateTime();
+        $date->modify('-2 week');
+        $time = $date->getTimestamp();
+
+        $query->entityCondition('entity_type', 'node')
+        ->entityCondition('bundle', 'article')
+        ->propertyCondition('status', NODE_PUBLISHED)
+        ->propertyCondition('created', $time, '>')
+        ->fieldCondition('og_group_ref', 'target_id', $cid)
+        ->fieldOrderBy('field_article_trending_pin', 'value', 'DESC')
+        ->fieldOrderBy('field_article_trending_weight', 'value', 'DESC')
+        ->range(0, 7)
+        ->addMetaData('account', user_load(1)); // Run the query as user 1.
+
+
+        if (isset($result['node'])) {
+        //   $nids = array_keys($result['node']);
+        //   $nodes = entity_load('node', $nids);
+        // }
+        //
+       */
+
+      $query = db_select('node', 'n')
+          ->fields('n', array('nid'));
+      $query->leftJoin('field_data_field_article_trending_push', 'atp', 'n.nid=atp.entity_id and atp.bundle= :bundle', array(':bundle' => 'article'));
+      $query->leftJoin('og_membership', 'om', 'n.nid = om.etid and om.entity_type = :entity_type', array(':entity_type' => 'node'));
+
+      $query->leftJoin('fs_article_point', 'fap', 'n.nid = fap.nid');
+      $query->condition('n.status', 1)
+          ->condition('n.type', 'article')
+          ->condition('om.gid', $cid);
+
+      $query->orderBy('atp.field_article_trending_push_value', 'DESC')
+          ->orderBy('fap.point', 'DESC')
+          ->orderBy('n.created', 'DESC');
+
+      $query->range(0, 10)
+          ->addTag('node_access');
+
+
+      $result = $query->execute()->fetchAll(PDO::FETCH_ASSOC);
+
+      $nodes = [];
+      if (!empty($result)) {
+        $nids = [];
+        foreach ($result as $result_item) {
+          $nids[] = $result_item['nid'];
+        }
+
+        $nodes = entity_load('node', $nids);
+      }
+      $items = [];
+
+      if (!empty($nodes)) {
+        $index = 0;
+        foreach ($nodes as $node) {
+          $item = [];
+          $node_wrapper = entity_metadata_wrapper('node', $node);
+          $nid = $node_wrapper->getIdentifier();
+          $item['nid'] = $nid;
+
+          $url = $node_wrapper->url->value();
+          $item['url'] = $url;
+          $title = $node_wrapper->title->value();
+          $field_article_main_image = $node_wrapper->field_article_main_image->value();
+
+          $item['title'] = $title;
+
+          if ($index == 0) {
+            if (!empty($field_article_main_image)) {
+              $item['image'] = image_style_url('article_main_image', $field_article_main_image['uri']);
+            }
+            else {
+              $item['image'] = '';
+            }
+          }
+          else {
+            if (!empty($field_article_main_image)) {
+              $item['image'] = image_style_url('article_trending_now_normal', $field_article_main_image['uri']);
+            }
+            else {
+              $item['image'] = '';
+            }
+          }
+
+          $field_article_editor_pick_push = $node_wrapper->field_article_editor_pick_push->value();
+          $item['editor_pick'] = $field_article_editor_pick_push;
+
+          $tids_root = [];
+          foreach ($node_wrapper->field_article_category->getIterator() as $delta => $taxonomy_wrapper) {
+            $tid = $taxonomy_wrapper->getIdentifier();
+            $parents = taxonomy_get_parents_all($tid);
+            $term = end($parents);
+            if (isset($term->tid)) {
+              $tids_root[] = $term->tid;
+            }
+          }
+
+          $tids_root = array_unique($tids_root);
+
+          $categories = [];
+          if (!empty($tids_root)) {
+            foreach ($tids_root as $tid) {
+              $term_wrapper = entity_metadata_wrapper('taxonomy_term', $tid);
+              $categories[] = $term_wrapper->name->value();
+            }
+          }
+
+          $item['categories'] = $categories;
+
+          $field_article_win = $node_wrapper->field_article_win->value();
+          $item['win'] = $field_article_win;
+
+          $field_article_sponsored = $node_wrapper->field_article_sponsored->value();
+          $item['sponsored'] = $field_article_sponsored;
+
+          $field_article_editor_pick_push = $node_wrapper->field_article_editor_pick_push->value();
+          $item['editor_pick'] = $field_article_editor_pick_push;
+
+
+          $items[] = $item;
+
+          $index++;
+        }
+      }
+
+      $variables['items'] = $items;
+      $variables['cid'] = $cid;
+      $block['content'] = theme('fs_trending_now', $variables);
+
+      break;
+
+    case 'fs_what_new':
+      //in order to get more nodes. call to 'api/fs_get_what_new/%/%' first parm is cid, seccond parm is pager(0,1,2,3).
+      $block['subject'] = t('What\'s New');
+
+      $cid = fs_city_get_selected_city_id();
+
+      $query = new EntityFieldQuery();
+
+      // $date = new DateTime();
+      // $date->modify('-2 week');
+      // $time = $date->getTimestamp();
+
+      $query->entityCondition('entity_type', 'node')
+          ->entityCondition('bundle', 'article')
+          ->propertyCondition('status', NODE_PUBLISHED)
+          // ->propertyCondition('created', $time, '>')
+          ->fieldCondition('og_group_ref', 'target_id', $cid)
+          ->fieldOrderBy('field_article_what_new', 'value', 'DESC')
+          // ->fieldOrderBy('field_article_trending_weight', 'value', 'DESC')
+          ->propertyOrderBy('created', 'desc')
+          ->range(0, 10)
+          ->addMetaData('account', user_load(1)); // Run the query as user 1.
+
+      $result = $query->execute();
+
+      $nodes = [];
+      if (isset($result['node'])) {
+        $nids = array_keys($result['node']);
+        $nodes = entity_load('node', $nids);
+      }
+
+      // shuffle($nodes);
+
+      $items = [];
+
+      if (!empty($nodes)) {
+        $index = 0;
+        foreach ($nodes as $node) {
+          $item = [];
+          $node_wrapper = entity_metadata_wrapper('node', $node);
+          $nid = $node_wrapper->getIdentifier();
+          $item['nid'] = $nid;
+
+          $url = $node_wrapper->url->value();
+          $item['url'] = $url;
+          $title = $node_wrapper->title->value();
+          $field_article_main_image = $node_wrapper->field_article_main_image->value();
+
+          $item['title'] = $title;
+
+          if ($index == 0) {
+            if (!empty($field_article_main_image)) {
+              $item['image'] = image_style_url('article_main_image', $field_article_main_image['uri']);
+            }
+            else {
+              $item['image'] = '';
+            }
+          }
+          else {
+            if (!empty($field_article_main_image)) {
+              $item['image'] = image_style_url('article_trending_now_normal', $field_article_main_image['uri']);
+            }
+            else {
+              $item['image'] = '';
+            }
+          }
+
+          $field_article_editor_pick_push = $node_wrapper->field_article_editor_pick_push->value();
+          $item['editor_pick'] = $field_article_editor_pick_push;
+
+          $tids_root = [];
+          foreach ($node_wrapper->field_article_category->getIterator() as $delta => $taxonomy_wrapper) {
+            $tid = $taxonomy_wrapper->getIdentifier();
+            $parents = taxonomy_get_parents_all($tid);
+            $term = end($parents);
+            if (isset($term->tid)) {
+              $tids_root[] = $term->tid;
+            }
+          }
+
+          $tids_root = array_unique($tids_root);
+
+          $categories = [];
+          if (!empty($tids_root)) {
+            foreach ($tids_root as $tid) {
+              $term_wrapper = entity_metadata_wrapper('taxonomy_term', $tid);
+              $categories[] = $term_wrapper->name->value();
+            }
+          }
+
+          $item['categories'] = $categories;
+
+          $field_article_win = $node_wrapper->field_article_win->value();
+          $item['win'] = $field_article_win;
+
+          $field_article_sponsored = $node_wrapper->field_article_sponsored->value();
+          $item['sponsored'] = $field_article_sponsored;
+
+          $field_article_editor_pick_push = $node_wrapper->field_article_editor_pick_push->value();
+          $item['editor_pick'] = $field_article_editor_pick_push;
+
+          $items[] = $item;
+
+          $index++;
+        }
+      }
+
+      $variables['items'] = $items;
+      $variables['cid'] = $cid;
+      $block['content'] = theme('fs_what_new', $variables);
+      break;
+
+    case 'fs_most_read_and_pop':
+      $block['subject'] = t('Article Most');
+
+      $nodes_most_read = fs_article_get_most_read_list();
+      $items_most_read = [];
+      if (!empty($nodes_most_read)) {
+        foreach ($nodes_most_read as $node_most_read) {
+          $item = [];
+          $node_most_read_wrapper = entity_metadata_wrapper('node', $node_most_read);
+          $nid = $node_most_read_wrapper->getIdentifier();
+          $item['nid'] = $nid;
+
+          $url = $node_most_read_wrapper->url->value();
+          $item['url'] = $url;
+
+          $created = $node_most_read_wrapper->created->value();
+          $item['date'] = format_date($created, 'custom', 'D, M Y');
+
+          $title = $node_most_read_wrapper->title->value();
+          $item['title'] = $title;
+
+          $tags = [];
+          foreach ($node_most_read_wrapper->field_article_tags->getIterator() as $delta => $taxonomy_wrapper) {
+            $name = $taxonomy_wrapper->name->value();
+            $tags[] = $name;
+          }
+          $item['tags'] = $tags;
+
+          $field_article_main_image = $node_most_read_wrapper->field_article_main_image->value();
+          if (!empty($field_article_main_image)) {
+            $item['image'] = image_style_url('article_most_read_and_pop', $field_article_main_image['uri']);
+          }
+          else {
+            $item['image'] = '';
+          }
+
+          $items_most_read[] = $item;
+        }
+      }
+
+      $nodes_most_pop = fs_article_get_most_pop_list();
+      $items_most_pop = [];
+      if (!empty($nodes_most_pop)) {
+        foreach ($nodes_most_pop as $node_most_pop) {
+          $item = [];
+          $node_most_pop_wrapper = entity_metadata_wrapper('node', $node_most_pop);
+          $nid = $node_most_pop_wrapper->getIdentifier();
+          $item['nid'] = $nid;
+
+          $url = $node_most_pop_wrapper->url->value();
+          $item['url'] = $url;
+
+          $title = $node_most_pop_wrapper->title->value();
+          $item['title'] = $title;
+
+          $created = $node_most_pop_wrapper->created->value();
+          $item['date'] = format_date($created, 'custom', 'D, M Y');
+
+          $tags = [];
+          // dpm($node_most_pop_wrapper->field_article_tags->count());
+          foreach ($node_most_pop_wrapper->field_article_tags->getIterator() as $delta => $taxonomy_wrapper) {
+            $name = $taxonomy_wrapper->name->value();
+            $tags[] = $name;
+          }
+          $item['tags'] = $tags;
+
+          $field_article_main_image = $node_most_pop_wrapper->field_article_main_image->value();
+
+          if (!empty($field_article_main_image)) {
+            $item['image'] = image_style_url('article_most_read_and_pop', $field_article_main_image['uri']);
+          }
+          else {
+            $item['image'] = '';
+          }
+
+          $items_most_pop[] = $item;
+        }
+      }
+
+      $variables = [
+        'items_most_read' => $items_most_read,
+        'items_most_pop' => $items_most_pop,
+      ];
+
+      $block['content'] = theme('fs_most_read_and_pop', $variables);
+      break;
+
+    case 'fs_editor_pick':
+      $terms = fs_article_get_editor_pick_term_list();
+      $items = [];
+      if (!empty($terms)) {
+        $cid = fs_city_get_selected_city_id();
+        foreach ($terms as $term) {
+          $tid = $term->tid;
+          $query = new EntityFieldQuery();
+
+          $query->entityCondition('entity_type', 'node')
+              ->entityCondition('bundle', 'article')
+              ->propertyCondition('status', NODE_PUBLISHED)
+              ->fieldCondition('og_group_ref', 'target_id', $cid)
+              ->fieldCondition('field_article_category', 'target_id', $tid, '=')
+              ->fieldCondition('field_article_editor_pick_push', 'value', '1', '=')
+              ->fieldOrderBy('field_article_editor_pick_pin', 'value', 'DESC')
+              ->fieldOrderBy('field_article_editor_pick_weight', 'value', 'DESC')
+              ->range(0, 4)
+              ->addMetaData('account', user_load(1)); // Run the query as user 1.
+
+          $result = $query->execute();
+
+          $articles = [];
+
+          if (isset($result['node'])) {
+            $nids = array_keys($result['node']);
+            $nodes = entity_load('node', $nids);
+            $article = [];
+            $index = 1;
+            foreach ($nodes as $node) {
+              $node_wrapper = entity_metadata_wrapper('node', $node);
+              $article['title'] = $node_wrapper->title->value();
+              $article['url'] = $node_wrapper->url->value();
+              if ($index == 1) {
+                $field_article_main_image = $node_wrapper->field_article_main_image->value();
+
+                if (!empty($field_article_main_image)) {
+                  $article['image'] = image_style_url('article_editor_pick_top', $field_article_main_image['uri']);
+                }
+                else {
+                  $article['image'] = '';
+                }
+              }
+              else {
+                $field_article_main_image = $node_wrapper->field_article_main_image->value();
+
+                if (!empty($field_article_main_image)) {
+                  $article['image'] = image_style_url('article_editor_pick_normal', $field_article_main_image['uri']);
+                }
+                else {
+                  $article['image'] = '';
+                }
+              }
+
+              $index++;
+
+              $articles[] = $article;
+            }
+          }
+
+          $items[$tid]['tid'] = $tid;
+          $items[$tid]['name'] = $term->name;
+          $items[$tid]['articles'] = $articles;
+        }
+      }
+
+      $variables['items'] = $items;
+
+      $block['content'] = theme('fs_editor_pick', $variables);
+      break;
+
+    case 'fs_article_related_articles':
+      $block['subject'] = t('Related Articles');
+      $items = [];
+      if (arg(0) == 'node' && is_numeric(arg(1))) {
+        $node = node_load(arg(1));
+        if ($node->type == 'article' && node_is_page($node)) {
+          $node_wrapper = entity_metadata_wrapper('node', $node);
+          // dpm($node_wrapper->getPropertyInfo());
+          $field_article_related_articles = $node_wrapper->field_article_related_articles->value();
+          if (!empty($field_article_related_articles)) {
+            foreach ($field_article_related_articles as $article_item) {
+              $field_collection_item_wrapper = entity_metadata_wrapper('field_collection_item', $article_item);
+              $field_fc_ara_article = $field_collection_item_wrapper->field_fc_ara_article->value();
+
+              if (is_object($field_fc_ara_article)) {
+                $field_fc_ara_label = $field_collection_item_wrapper->field_fc_ara_label->value();
+
+                $field_fc_ara_article_wrapper = entity_metadata_wrapper('node', $field_fc_ara_article);
+                if (!empty($field_fc_ara_label)) {
+                  $item['title'] = $field_fc_ara_label;
+                }
+                else {
+                  $item['title'] = $field_fc_ara_article_wrapper->title->value();
+                }
+
+                $item['url'] = $field_fc_ara_article_wrapper->url->value();
+
+                $field_article_main_image = $field_fc_ara_article_wrapper->field_article_main_image->value();
+
+                if (!empty($field_article_main_image)) {
+                  $item['image'] = image_style_url('article_trending_now_normal', $field_article_main_image['uri']);
+                }
+                else {
+                  $item['image'] = NULL;
+                }
+
+                $items[] = $item;
+              }
+            }
+          }
+        }
+      }
+
+      if (!empty($items)) {
+        $block['content'] = theme('fs_article_related_articles', ['items' => $items]);
+      }
+      else {
+        $block['content'] = NULL;
+      }
+      break;
+  }
+
+  return $block;
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function fs_article_form_article_node_form_alter(&$form, &$form_state, $form_id) {
+  $groups = og_get_groups_by_user();
+  //TODO: now is hard-coding...
+  if (!in_array(1, $groups['node'])) {
+    unset($form['field_article_category']['und']['#options']['Article Category Shanghai']);
+  }
+  if (!in_array(2, $groups['node'])) {
+    unset($form['field_article_category']['und']['#options']['Article Category Beijing']);
+  }
+}
+
+/**
+ * Implements hook_entityreference_prepopulate_providers_info().
+ */
+function fs_article_entityreference_prepopulate_providers_info() {
+  return [
+    'fs_vocabulary' => [
+      'title' => t('Family Space Vocabulary'),
+      'description' => t('Prepopulate from Vocabulary'),
+      'callback' => 'fs_article_entityreference_prepopulate_get_values_from_vocabulary',
+    ],
+  ];
+}
+
+/**
+ * Helper function for entityreference prepopulate provider
+ *
+ * @param $field
+ * @param $instance
+ *
+ * @return array
+ */
+function fs_article_entityreference_prepopulate_get_values_from_vocabulary($field, $instance) {
+  //TODO: hard-coding now..
+  if ($instance['bundle'] == 'article_category_sh') {
+    return [1];
+  }
+  else {
+    return [2];
+  }
+}
+
+function fs_article_ds_default($entity) {
+  $module_path = drupal_get_path('module', 'fs_article');
+  //add sailthru metatags inside head section
+  fs_article_add_sailthru_metatags($entity);
+  $node_wrapper = entity_metadata_wrapper('node', $entity);
+  // dpm($node_wrapper->getPropertyInfo());
+  $item = [];
+
+  $nid = $node_wrapper->getIdentifier();
+  $item['nid'] = $nid;
+
+  $title = $node_wrapper->title->value();
+  $item['title'] = $title;
+
+  $author = $node_wrapper->author->value();
+  $item['author'] = $author->name;
+  $item['author_uid'] = $author->uid;
+  $item['author_profile_url'] = url('profile-editor/' . $author->uid);
+
+  $profile = profile2_load_by_user($author, 'editor');
+
+  if (isset($profile->field_pe_photo['und']) && !empty($profile->field_pe_photo['und'])) {
+    $item['author_photo'] = image_style_Url('editor_thumbnail', $profile->field_pe_photo['und'][0]['uri']);
+  }
+  else {
+    $item['author_photo'] = null;
+  }
+
+  $created = $node_wrapper->created->value();
+  $item['date'] = format_date($created, 'custom', 'D, F d, Y');
+
+  // $field_article_slide_images = $node_wrapper->field_article_slide_images->value();
+  // if (!empty($field_article_slide_images)) {
+  //   foreach ($field_article_slide_images as $image_item) {
+  //     $info['image'] = image_style_url('article_default_slider', $image_item['uri']);
+  //     $info['alter'] = $image_item['alt'];
+  //     $item['images'][] = $info;
+  //   }
+  // }
+  // else {
+  //   $item['images'] = NULL;
+  // }
+
+  $field_article_main_image = $node_wrapper->field_article_main_image->value();
+  if (empty($node_wrapper->field_checkbox) || $node_wrapper->field_checkbox->value() == 0) {
+
+    if (!empty($field_article_main_image)) {
+      //  $item['image'] = image_style_url('article_default_main_image', $field_article_main_image['uri']);
+      $item['image'] = file_create_url($field_article_main_image['uri']);
+    }
+    else {
+      $item['image'] = '';
+    }
+  }
+
+  $field_article_sub_headline = $node_wrapper->field_article_sub_headline->value();
+  $item['sub_headline'] = $field_article_sub_headline;
+
+  $field_article_tags = $node_wrapper->field_article_tags->value();
+  if (!empty($field_article_tags)) {
+    foreach ($field_article_tags as $tag_item) {
+      $item['tags'][] = $tag_item->name;
+    }
+  }
+  else {
+    $item['tags'] = NULL;
+  }
+
+  $field_article_category = $node_wrapper->field_article_category->value();
+
+  if (!empty($field_article_category)) {
+    foreach ($field_article_category as $category_item) {
+      if (is_object($category_item)) {
+        $item['category'][] = $category_item->name;
+      }
+    }
+  }
+  else {
+    $item['category'] = NULL;
+  }
+
+
+  $field_article_body = $node_wrapper->field_article_body->value();
+  $item['body'] = $field_article_body['value'];
+
+  $item['qrcode'] = url('api/qrcode/node/' . $nid, ['absolute' => TRUE]);
+
+  $item['num_comments'] = db_query("SELECT COUNT(cid) AS count FROM {comment} WHERE nid =:nid", array(":nid" => $nid))->fetchField();
+
+
+  if ($node_wrapper->field_qr_code_sf->value()) {
+    $item['qr_code_sf'] = url($module_path . '/images/qr_sf.png', ['absolute' => TRUE]);
+  }
+
+  if ($node_wrapper->field_qr_code_pk->value()) {
+    $item['qr_code_pk'] = url($module_path . '/images/qr_pk.png', ['absolute' => TRUE]);
+  }
+
+  $variables = [
+    'item' => $item,
+  ];
+
+  return theme('fs_article_ds_default', $variables);
+}
+
+/**
+ * Implements template_preprocess_node().
+ */
+function fs_article_preprocess_node(&$variables) {
+  $node = $variables['node'];
+  $view_mode = $variables['view_mode'];
+  if ($node->type == 'article' && $view_mode == 'article_win') {
+    global $base_url;
+    $path_theme = $base_url . "/" . drupal_get_path('theme', 'family');
+
+    $uri = fs_base_field($node, 'field_article_main_image')[0];
+    if (!empty($uri)) {
+      $image_item = image_style_url('article_trending_now_normal', $uri['uri']);
+      $variables['image'] = $image_item;
+    }
+    else {
+      $variables['image'] = $path_theme . "/images/default.jpeg";
+    }
+    $author = user_load($node->uid);
+    $profile = profile2_load_by_user($author, 'editor');
+    if (isset($profile->field_pe_photo['und'][0]['uri'])) {
+      $variables['user_picture'] = image_style_url('editor_thumbnail', $profile->field_pe_photo['und'][0]['uri']);
+    }
+    else {
+      $variables['user_picture'] = $path_theme . "/images/default.jpeg";
+      
+    }
+    $variables['url'] = url(drupal_get_path_alias('node/' . $node->nid));
+    $variables['author_url'] = "/profile-editor/" . $node->uid;
+    $variables['author_name'] = $node->name;
+    $variables['post_date'] = $node->created;
+
+  }
+}
+
+/**
+ * Implements hook_node_insert().
+ */
+function fs_article_node_insert($node) {
+  if (isset($node->type)&&$node->type == "article") {
+     generate_image_article($node);
+     entity_get_controller('node')->resetCache(array($node->nid));
+  }
+}
+
+/**
+ * Implements hook_node_update().
+ */
+function fs_article_entity_update($node) {
+
+  if (isset($node->type)&&$node->type == "article") {
+     generate_image_article($node);
+     entity_get_controller('node')->resetCache(array($node->nid));
+  }
+}
+
+function generate_image_article($node) {
+   module_load_include('inc', 'fs_base', 'fs_base');
+  $uri = fs_base_image_storage($node->nid,"field_article_main_image");
+  
+  $styles = array('home_slider_image','fs_home_slider_image','article_main_image');
+  
+  try {
+    foreach ($styles as $key => $value) {
+     $r = fs_base_imageinfo_cache_image_generate('field_article_main_image',$value,$uri);
+     if(!empty($r)) {       
+        watchdog('fs_base', '!style success image generate', [
+        '!style' => $value,
+        ]);
+        }else{       
+            watchdog('fs_base', "error image generate ".$value, [], WATCHDOG_ERROR);
+       }
+    }  
+  }
+  catch (Exception $e) {
+    echo 'Caught exception: ', $e->getMessage(), "\n";
+  }
+}

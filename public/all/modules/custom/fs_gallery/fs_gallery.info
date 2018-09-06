@@ -1,0 +1,6 @@
+name = Family Space Gallery
+core = 7.x
+version = 7.x-1.0-dev
+package = Family Space
+
+files[] = fs_gallery.inc

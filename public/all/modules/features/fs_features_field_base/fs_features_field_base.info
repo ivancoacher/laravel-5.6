@@ -1,0 +1,10 @@
+name = FS Features Field Base
+core = 7.x
+package = Content type
+version = 7.x-1.0-dev
+dependencies[] = entityreference
+dependencies[] = features
+dependencies[] = list
+features[features_api][] = api:2
+features[field_base][] = group_group
+features[field_base][] = og_group_ref

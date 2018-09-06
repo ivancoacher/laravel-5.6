@@ -1,0 +1,1412 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/*
+    Created on : Aug 11, 2016, 10:16:21 AM
+    Author     : ringiersh
+*/
+
+@media  (max-width: 1200px) {
+    .wrapper_logo{
+        width: 100%!important;
+    }
+    .title-footer-new h2{
+        font-size: 16px!important;
+    }
+    .title_editor h1{
+        font-size:30px;
+        font-family: 'karla-blod';
+    }
+}
+@media  (min-width: 992px) {
+    .map-directory-control{
+        margin-left: -35px;
+        padding-right: 6px;
+    }
+    .directory-search .category-section{margin:0px;padding:0px;}
+
+
+    .compare_details .tab-compare .nav-tabs > li > a {
+        margin-left: 7px;
+        margin-right: 7px;
+        padding-left: 20px;
+        padding-right: 21px;
+    }
+
+
+}
+
+@media   (min-width: 1600px) {
+
+    #main-gallery-details .content-details-gallery img,
+    #main-gallery-details .content-details-gallery{
+        height: 478px!important;
+    }
+}
+@media (min-width: 992px) and (max-width: 1060px){
+    .arctile-detail-section .static_social,.arctile-detail-section .hover_social{
+        margin-left: -40px;
+    }
+
+}
+@media screen and (min-width: 500px) and (max-width: 992px){
+    .list-calandar .date, .btn-list a {
+        font-size: 12px;
+    }
+    .list-calandar .description {
+        font-size: 15px;
+    }
+    .btn-list a {
+        padding-top: 0px;
+    }
+    .right-calandar {
+        padding: 0px;
+        padding-top: 5px;
+    }
+    #arctile-detail-section .most-section .most-list .item-most .right-most .date{
+        font-size: 12px!important;
+    }
+    #arctile-detail-section .most-section .most-list .item-most .right-most .description{
+        font-size: 15px!important;
+    }
+
+
+}
+@media screen and  (max-width: 492px) {
+    .title-calandar {
+        font-size: 22px;
+    }
+    .add-school .form-item-keyword {
+        width: 104%!important;
+    }
+    .add-school .form-submit,.compare_items .item{
+        width: 100%!important;
+    }
+    .compare_items .add-school div:last-child {
+        width: 100%!important;
+    }
+    .newsletter-container,.newsletter-section, .newsletter{
+        margin-left:0px;margin-right:0px;
+        padding-left:0px;padding-right:0px;
+    }
+    #main .title-item {
+        font-size: 10px;
+    }
+    .btn-add-school a ,.pagination-school .pager li > a, .pagination-school .pager li > span{
+        font-size:10px;
+    }
+    .btn-add-school a{
+        min-width: 0px;
+    }
+    #arctile-section .title .text{
+        width: 100%!important;
+    }
+    .item-content-editor{
+        width: 100%!important;
+    }
+    .item-content{
+        width: 100%!important;
+    }
+
+}
+
+/*Desktops*/
+@media  (max-width: 992px){
+
+    .item-directory .btn-details{
+        width:105%!important;
+    }
+    .input-section-search-directory {
+        float:left!important;
+        margin-right: 0px!important;
+        padding-left: 0px!important;
+    }
+    #edit-submit-top{
+        width:100%!important;
+    }
+    .wrapper_search_directory{
+        width:100%!important;
+    }
+    .item_rigth_top_bar, #add-listing{
+        display:none!important;
+    }
+    .map-directory-control_section_xs{
+        padding:0px;
+    }
+    .map-directory-control_xs{
+        padding-left:0px;
+    }
+    .map-directory-control_xs a{
+        border: 1px solid #C9C9C9;
+        color: #C9C9C9;
+        width: 100%;
+        text-decoration: none;
+        background-color: white;
+        border-radius: 4px;
+        padding-top: 7px;
+        padding-bottom: 7px;
+    }
+    .map-directory-control_xs a:hover, .map-directory-control_xs a:focus{
+        border: 1px solid #C9C9C9;
+        color: #C9C9C9;
+        width: 100%;
+        text-decoration: none;
+        background-color: white;
+        border-radius: 4px;
+        padding-top: 7px;
+        padding-bottom: 7px;
+    }
+
+    .week-item{
+        margin-left: 0px;
+    }
+    /*    .trending_now .item-content{
+        min-height: 286px;
+         }
+        .trending_now .item-content .img-item{
+                min-height: 215px;
+        }*/
+
+    .carousel-control .glyphicon-chevron-right, .carousel-control .icon-next{
+        right: 0%;
+    }
+    #main-gallery-details button{
+        left:10%;
+    }
+    #main-gallery-details .carousel{
+        right: -5%;
+        margin-left: 0px;
+    }
+    #main-registration .last-paragraph{
+        margin-top:30px;
+    }
+    #main-contact .contact-content{
+        width:100%!important;
+    }
+
+    .best_of-container{float: right!important;}
+    .item-events-img-content{
+        padding-left: 0px;
+        padding-bottom: 15px;
+    }
+    .item-events .item-wrapper{
+        padding-left: 10px;
+    }
+
+    .status_events{
+        margin-left: 10px;
+        margin-right: -10px;
+    }
+    #arctile-detail-section .right-side{
+        left:0px!important;
+    }
+
+
+
+}
+/*Phones*/
+@media screen and  (max-width: 768px){
+    .school-seach-container .wrapper_school_search .btn_school_advan #collapsesearch .tuition-content {
+        padding-top: 15px!important;
+    }
+    .pagination-search-day{
+        padding-bottom: 15px!important;
+    }
+    section{
+        overflow-x:hidden!important;
+    }
+    .map-directory-control_section_xs{
+        padding-left:15px;
+    }
+    .input-section-search-directory {
+        padding: 0px 30px 0px 30px;
+    }
+}
+@media screen and  (max-width: 768px){
+    #school_results{
+        padding-top:40px;
+    }
+    .item-directory img{
+        margin: auto!important;
+        width: initial!important;
+        height: auto!important;
+    }
+    .description-item-directory-container{
+        border:none!important;
+    }
+    .title_directories{
+        text-align:center;
+    }
+    .arctile-detail-section .description img{
+        width:100%!important;
+        height:auto!important;
+    }
+
+    .input-section-search-directory div.form-item{width: 100%!important;}
+    .input-section-search-directory #edit-submit{margin-left:0px!important;}
+    #arctile-section .item-articles .first-item{
+        font-size: 12px;
+    }
+    #arctile-detail-section .title{
+        font-size: 25px!important;
+    }
+
+    .about_us{
+        border-left: 1px solid gray;
+        text-align: center;
+    }
+    .directory-search .search-content{
+        padding-right: 15px;
+        padding-left: 15px;
+    }
+    #main-directory-details .header-details .pull-right{
+        font-size:12px;
+        margin-top: 4px;
+    }
+    #main-directory-details .title-related{
+        font-size: 12px;
+    }
+    .btn-event-search button { width: 100%;}
+    .status_events{
+        position: relative;
+        left: 6px;
+    }
+    .description-item-school-container{
+        margin-left: 0px;
+        min-height:0px;
+        padding-left: 30px;
+    }
+
+
+}
+
+
+
+/*
+@media screen and  (max-width: 768px){
+    .btn-compare-school.col-sm-12.col-md-12 {
+        margin-top: 17px !important;
+}
+
+}
+
+*/
+
+
+
+@media screen and  (max-width: 990px){    .item-school .item-wrapper  div {border:none;}
+
+
+}
+
+
+@media screen and  (max-width: 768px){
+
+    .btn-compare-school.col-sm-12.col-md-12 {
+        margin-top: 17px !important;
+    }
+    .web_site_url .pull-right{
+        float: left!important;
+        margin-top: 10px;
+        width: 100%!important;
+    }
+}
+
+@media screen and  (max-width: 492px){
+    .school_top_item.large_item .title_school_top{
+        left:15px!important;
+    }
+    .school_top_item.large_item .section_descr_school_top_item,
+    .school_top_item.large_item .section_btn_school_top_item{
+        left:25px!important;
+    }
+    .panel_details  .item_title{
+        width: 100%;
+    }
+    .panel_details  .item_content{
+        width: 100%;
+    }
+    .panel_details .rating_section{
+        position: initial!important;
+        margin-right:0px!important;
+    }
+    .btn-add-school{
+        with:100%;
+    }
+    .pagination-school .pager li.pager-current {
+        font-size: 10px;
+    }
+    .main-gallery .item_list .item{
+        width:100%;
+    }
+    .related-content .related-item {width:100%;}
+    .trending_now .item-content {
+        width: 100%;
+    }
+
+    #main .title-item{
+        font-size:10px;
+    }
+
+}
+
+@media (max-width:1200px){
+    #calandar_tab li{
+            width: 42px;
+    }
+    .wrapper_search_day_post{
+        margin: auto;
+        width: 80%;
+    }
+
+    .dfp_fix_size .dfs_family{
+        display:none;
+    }
+    .dfp_fix_main {
+        display:none;
+    }
+    .arctile-detail-section .most-section .title{
+        font-size:25px!important;
+    }
+  
+    #owl-home-gallery .owl-pagination{display:none!important;}
+}
+@media (max-width: 992px){
+    .wrapper_search_day_post{
+        margin: auto;
+        width: 100%;
+    }
+    .best_of{
+        padding-left: 5px;
+        margin-left: 15px;
+    }
+    .calandar-container{
+        padding-right:30px;
+    }
+    .calandar-container,.pick-of-week-container{
+        margin-left: 15px;
+
+    }
+    #search-topbar {
+        position: absolute;
+        top: 0px;
+        right: 0px;
+    }
+    .user-info-from-cookie .password-strength{
+        position: absolute;
+        right: 15px;
+        top: 23%;
+    }
+    .user-info-from-cookie .password-field{
+        width: 100%!important;
+    }
+    .user-info-from-cookie .password-strength {
+        width: 17em!important;
+    }
+
+    .topbar-section #bs-family-navbar-collapse {
+        display: block!important;
+    }
+    .topbar-section  .family_top_bar_left,.topbar-section .follow-us-topbar,.topbar-section .follow-us-label-topbar{
+        display: none;
+    }
+
+
+    .chrome_fix .nav>li.mega-dropdown>a {
+        padding-right: 0px;
+        padding-left: 0px;
+        margin-left: 0px;
+        margin-right: -3px;
+        font-size: 9px;
+        transform: scale(0.85);
+    }
+    .directory_m li{
+        margin-left:-10px;
+    }
+    .icon_menu{
+        background-repeat:no-repeat;
+        background-size: 13px 13px;
+        background-position: 0px 3px;
+        padding-left: 14px!important;
+    }
+
+
+}
+
+@media (min-width: 993px){
+    .arctile-section .item-articles .article_grid .wrapper-masonry img {
+        min-width: 188px;
+    }
+    .item-directory-img-section{width:170px;}
+    .chrome_fix .nav>li.mega-dropdown>a {
+        margin-right: 4px!important;
+    }
+    .megamenu-container  .nav>li.mega-dropdown>a {
+        padding-right: 4px;
+        padding-left: 5px;
+        font-size: 15px!important;
+    }
+
+
+    .directory_m li{
+        margin-left:-10px;
+    }
+    .icon_menu{
+        background-repeat:no-repeat;
+        background-size: 15px 15px;
+        background-position: 0px 2px;
+        padding-left: 17px!important;
+    }
+    .dropdown-menu-family{
+        width: 979px;
+        font-size: 15px!important;
+        left: -19.5%;
+
+    }
+
+}
+
+/* Large desktops and laptops */
+@media (min-width: 1200px) {
+    .map-directory-control{
+        margin-left: -35px;
+        padding-right: 19px;
+    }
+    .dfp_fix_main{
+        margin-left: 50%;
+        left: -45.6%;
+    }
+    .dfp_fix_size{
+        width: 26.3%;
+        margin-left: -35px;
+        left: 30px;
+    }
+    #arctile-section .item-articles .article_grid .wrapper-masonry img {
+        min-width: 238px;
+    }
+    .dropdown-menu-family{
+        width: 1085px;
+        font-size:15px!important;
+        left: -26%;
+    }
+    .arctile-detail-section .sidebar_second{
+        position: relative;
+
+    }
+    .container {
+
+        /*        max-width: 970px;*/
+
+    }
+    .megamenu-container .nav>li.mega-dropdown>a{
+        padding-right: 4px;
+        padding-left: 5px;
+        margin-left: 7.8px;
+        margin-right: 7.8px;
+        font-size: 15px!important;
+
+    }
+}
+
+/* Landscape tablets and medium desktops */
+@media (min-width: 992px) and (max-width: 1199px) {
+    .vl_footer {
+        border-left: 1px solid gray;
+        text-align: center;
+        padding-left: 6px;
+        padding-right: 6px;
+        float:left;
+        font-size:13px;
+    }
+    .arctile-detail-section .sidebar_second{
+        position: relative;
+        left: 20px;
+    }
+    .list-calandar .date, .btn-list a {
+        font-size: 10px;
+    }
+    .list-calandar .description {
+        font-size: 12px;
+    }
+}
+
+@media screen and (max-width: 499px){
+    .input_search #load_school {
+        position:absolute;
+        top:10px!important;
+        right:25px!important;
+    }
+
+    #block-bean-shanghai-frontpage-728x90-two{
+        bottom: 2px;
+        left: 0;
+        position: fixed;
+        width: 100%;
+        z-index: 1000;
+    }
+    #fs-newsletter-subscribe-form .form-item-mail{
+        width:100%!important;
+    }
+    .newsletter .form-group {
+        margin: auto;
+        width: 90%;
+    }
+    #fs-newsletter-subscribe-form .form-submit {
+        width: 90%!important;
+        margin-top: 0px!important;
+        margin-left: 5%;
+    }
+    .menu-week,.week-item{width:100%;}
+    .item-directory-img-section,.description-item-directory-container{width:100%;}
+    .description-item-directory-container{border-left: transparent!important;}
+    .item_calandar{width:100%}
+    .user-info-from-cookie .password-strength {
+        position: inherit;
+        width: 100%!important;
+    }
+    .user-info-from-cookie #edit-submit{
+        width: 100%!important;
+    }
+}
+
+/* Portrait tablets and small desktops */
+@media (min-width: 768px) and (max-width: 991px) {
+    .directory-search .category-section{margin:0px;padding:0px;}
+    .dropdown-menu-family {
+        font-size: 15px;
+        margin-top: 25px!important;
+        padding: 0px;
+        top: 0%;
+        width: 760px;
+        left: -7%;
+    }
+
+}
+
+/* Landscape phones and portrait tablets */
+@media screen and (max-width: 767px) {
+    .compare_details .tab-content  .item .description .reset{
+        margin-left: 15px;
+        margin-top: 5px;
+    }
+
+    .vl_footer {
+        border-left: 1px solid gray;
+        text-align: center;
+        padding-left: 6px;
+        padding-right: 6px;
+        float:left;
+        margin-top:5px;
+        width:30%;
+        font-size:14px;
+    }
+    .editor_pick_container .item_editor_pick{
+        padding: 0px;
+
+    }
+    .editor_pick_container  .item-content-editor{
+        padding:0px;
+        padding-left:5px;
+        padding-right:5px;
+        height: 250px;
+    }
+    .logo-img img {
+        display: block;
+        margin-left: 0px!important;
+        margin-right: 0px!important;
+    }
+}
+
+/* Portrait phones and smaller */
+@media screen and (max-width: 480px) {
+    .qr_code_section{ width:100% ;}
+    .vl_footer {
+        border-left: 1px solid gray;
+        text-align: center;
+        padding-left: 6px;
+        padding-right: 6px;
+        float:left;
+        margin-top:5px;
+        width:50%;
+        font-size:14px;
+    }
+    .logo-img a img{
+        width: 145px;
+    }
+    .small-logo-section img{
+        width: 165px;
+    }
+    .arctile-detail-section .most-section .most-list .item-most{
+        width: 100%!important;
+    }
+
+    .arctile-detail-section .related-content .related-item {width: 100%!important;}
+}
+@media screen and  (min-width: 667px) and (max-width:700px) {
+    #arctile-section .item-articles .article_grid .wrapper-masonry img {
+        min-width: 260px;
+    }
+}
+@media screen and  (max-width: 666px)  {
+    .compare_details .tab-compare .item .title p{
+        margin-top: 5px!important;
+        font-size: 20px!important;
+    }
+    #arctile-section .item-articles .article_grid .wrapper-masonry img {
+        min-width: 250px;
+    }
+}
+
+@media  (min-width: 992px) {
+    .article_grid .grid-item {
+        width: 33.333%;
+    }
+}
+@media screen and  (min-width: 768px) and (max-width: 991px) {
+    .article_grid .grid-item {
+        width: 50%;
+    }
+}
+@media screen and  (max-width: 767px) {
+    .article_grid .grid-item {
+        width: 50%;
+    }
+}
+@media screen and  (max-width: 480px) {
+
+    .article_grid .grid-item {
+        width: 100%;
+    }
+}
+@media screen and  (max-width: 670px) {
+    .item_calandar  {
+        width: 100%;
+    }
+}
+
+@media screen and  (min-width: 585px) and (max-width: 944px) {
+
+    /*    #editor_section{
+           /// height:525px;
+        }*/
+}
+@media screen and  (max-width: 583px){
+
+    .item-editor img {
+        width: 100px!important;
+        height: 100px!important;
+    }
+    .editor_overlay {
+        width: 100%;
+        height: 100px!important;
+        position: absolute;
+        background-color: black;
+        top: 0px;
+        border-radius: 750%;
+        transition: opacity 0.8s ease-out;
+        opacity: 0;
+    }
+    .title_editor h1 {
+        font-size: 30px!important;
+    }
+}
+
+
+@media screen and (max-width: 499px){
+    .dfs_family_mobile{
+        display:block!important;
+    }
+    .dfs_family_large{
+        display:none;
+    }
+}
+
+@media all and (min-width: 1200px){
+    .item-pagination-day{
+        margin-left: 15px;
+        margin-right: 20px;
+    }
+}
+@media all and (min-width: 992px) and (max-width: 1200px){
+    .event-search #edit-submit{
+        width: 111%!important;
+    }
+    .item-pagination-day{
+        margin-left: 10px;
+        margin-right: 22px;
+    }
+}
+@media all and (min-width: 786px) and (max-width: 991px){
+    .event-search #edit-submit{
+        width: 116%!important;
+    }
+    .item-pagination-day{
+        margin-left: 15px;
+        margin-right: 13px;
+    }
+}
+
+@media (max-width: 991px){
+    #header_top_ad{
+        display: none;
+    }
+}
+
+@media (max-width: 785px){
+    .top-section{
+        margin-top:0px!important;
+    }
+    .item-pagination-day{
+        margin-left: 3%;
+        margin-right: 3%;
+    }
+    .event-search #edit-submit{
+        width: 100%!important;
+        margin-left:0px!important;
+        margin-left: 0px!important;
+    }
+    .wrapper_fields_search .form-group{
+        width: 100%!important;
+        margin-left:0px;
+    }
+    .event-search .wrapper_fields_search{
+        width: 100%!important;
+
+    }
+
+    #header_top_ad{
+        display: none;
+    }
+}
+@media (max-width: 500px){
+    .item-pagination-day{
+        margin-left: 6%!important;
+        margin-right: 6%!important;
+    }
+    .container_editor .wrapper_editor{
+        width:300px;
+    }
+    #header_top_ad{
+        display: none;
+    }
+}
+
+
+#parent_kids_left {
+    position:absolute;
+    top:0px;
+    left:0px;
+}
+
+@media all and (max-width: 767px){
+    #parent_kids_left{
+        display: none;
+    }
+    .pushdown_container {
+        display: none;
+    }
+}
+.pushdown_container {
+    width: 100%;
+    overflow: hidden;
+}
+
+.pushdown_section {
+    width: 1140px;
+    margin: 0 auto;
+}
+
+@media (min-width: 756px) and (max-width: 767px){
+    .featured-school-top-position{
+        height: 0px;
+    }
+}
+
+.school-videos{
+    padding-top:30px;
+    width: 100%;
+    float: left;
+    clear: both;
+    margin-left: -15px;
+
+}
+.bs-family-school-video,.bs-family-school-gallery{
+    padding-top: 10px;
+
+}
+
+.school-related-blog{
+    margin: 0 -15px 0 -15px;
+    padding-top: 30px;
+
+}
+
+.school-related-blog .main-title{
+    padding-bottom: 10px;
+}
+
+.school-related-blog .image{
+    padding-left: 0;
+}    
+.school-related-blog .title{
+    font-size: 16px;
+    font-weight: bold;
+    width: 100%;
+    color: #333;
+    padding: 0;
+    margin: 0 0 5px 0;
+    max-height: 50px; overflow: hidden;
+}   
+.school-related-blog .description{
+    font-size: 13px;
+    padding: 0;
+    margin: 0;
+    color: grey;
+    overflow: hidden
+}
+.school-related-blog .description a{
+    color: #00B0AE;
+}
+
+.school-related-blog .more-article .title{
+    font-size: 12px;
+    padding-top: 10px;
+}
+
+.school-related-blog .more-article ul{
+    padding:0 15px; 
+    color:#00B0AE; 
+}
+
+.school-related-blog .more-article ul li{
+    padding-top: 5px;
+}
+
+.school-related-blog .more-article ul li span{
+    color: #000;
+    font-size: 13px;
+}
+
+
+
+#owl-school-videos .item,#owl-school-gallery .item{
+    margin: 1px;
+    text-align: center;
+    overflow: hidden;
+}
+
+/*    Home Page Featured School and Schoo Detail Page Similar Schools*/
+.fs-similar-school{
+    border: 0;padding: 0;clear:both;
+}
+.hp-featured-school{
+    border: 3px solid #ED4E76;padding: 0;clear:both;
+}
+.hp-featured-school a,.fs-similar-school a{
+    text-decoration: none;
+}
+
+.hp-featured-school .item-container a:hover .see-more-btn{
+    text-decoration: underline;
+}
+
+.hp-featured-school .title,
+.fs-similar-school .title{
+    margin-left: 10px;color: #00AFB5;
+} 
+
+.hp-featured-school .top-blue-line {
+    width:90px;height: 3px;background:#00AFB5;margin-left: 10px;margin-bottom: 10px;
+}
+
+.fs-similar-school .item-container{
+    height:auto;padding:20px 5px 20px 5px;overflow:hidden; border-top:0.1px solid #DDD;
+}
+
+.hp-featured-school .item-container{
+    height:auto;padding:20px 5px 20px 5px;overflow:hidden; border-bottom:0.1px solid #DDD;
+}
+
+.hp-featured-school .item-container .image,
+.fs-similar-school .item-container .image{
+    padding:0;
+}
+
+.hp-featured-school .item-container .col-md-7.content-cont,
+.fs-similar-school .item-container .col-md-7.content-cont{
+    padding:0 0 0 10px;
+}
+
+.hp-featured-school .item-container .title,
+.fs-similar-school .item-container .title
+{
+    font-weight: bold;color: #000;
+    margin: 0;
+    height: 40px;
+    overflow: hidden;
+
+}  
+
+.hp-featured-school .item-container .description,
+.fs-similar-school .item-container .description{
+    line-height:18px;padding-top: 5px;
+
+}  
+
+.hp-featured-school .item-container .read-more-link,
+.fs-similar-school .item-container .read-more-link{
+    padding-top: 5px;
+    color: #00AFB5;
+}
+
+.hp-featured-school .see-more-btn{
+    width: 100%;padding:5px; background:#ED4E76;text-align: center;color:#FFF;
+}
+
+
+
+/*// School Detail Page STYLE */
+
+.school_detail_main{
+    padding:0;
+    margin: 0;
+    width: 100%;
+    font-family: Helvetica Neue,Helvetica,Arial,sans-serif; 
+
+}
+
+.school_detail_main a{
+    text-decoration: none;
+    cursor: pointer;
+}
+.school_detail_main .school-title-section{
+    padding: 20px 10px 20px 10px;
+}
+
+.school_detail_main .title_details{
+    font-size: 34px;
+    font-weight: normal;
+    color: #5F5F5F;
+    font-weight: 500;
+    border-bottom: 0.5px solid #C9C9C9;
+}
+
+.school_detail_main .school-title-section .title h1{
+    color:#00B0AE;
+    margin-top: 10px;
+}
+
+.school_detail_main .school-image-section{
+    width:100%;padding-top: 20px;clear: both;
+}
+
+.school_detail_main .school-image-section .school-left-menu{
+    height:362px;width: 210px;float:left;
+}
+
+.school_detail_main .school-image-section .school-left-menu ul{
+    background: #00B0B2; width: 100%;padding: 0; height:362px !important;color: #FFF;font-size: 14px;list-style: none;
+}
+
+.school_detail_main .school-image-section .school-left-menu ul a{
+    color: #FFFFFF;
+    text-decoration: none;
+}
+
+.school_detail_main .school-image-section .school-left-menu ul li{
+    padding:10px 20px 10px;border-bottom: 1px solid #0e9597;
+}
+
+.school_detail_main .school-image-section .school-left-menu ul a:hover li{
+    background: #0e9597;
+}
+
+.school_detail_main .school-image-section .school-left-menu .menu-btn-container{
+    padding-top: 20px; width: 150px;margin: 0 auto;
+}
+
+.school_detail_main .school-image-section .school-left-menu .menu-btn-container .menu-btn{
+    color: #FFF;border: 1px solid #FFF;border-radius:5px; padding-top:5px;padding-bottom: 5px;width: 150px;margin: 0 auto;text-align: center;
+    display: block;
+}
+
+.school_detail_main .school-image-section .school-left-menu .menu-btn-container a:hover{
+    background: #0e9597;
+}
+
+.school_detail_main .main-image{
+    width:612px;height: 362px;float: left;overflow: hidden;
+}
+
+.school-info-section,.adress_section{
+    width: 100%;
+    clear: both;
+    padding-top: 30px;
+    margin: 0;
+}
+
+
+
+.school-info-section .main_details{
+    padding:0;
+}
+
+.school-info-section .main_details .info-container {
+
+}
+
+.col-xs-12.mission-container {
+    display: none;
+    margin-top: 20px;
+    padding: 0;
+}
+
+.school-info-section .main_details .mission-container {
+    display:inline-block;float: right; width: 280px;vertical-align:top;position: relative;
+    margin-left: 20px;
+}
+.school-info-section .main_details .item_content{
+    color:#281d1d;
+} 
+.school-info-section .main_details .item_content.description{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+.school-info-section .main_details .item_details{
+    width: 100%;
+}
+
+.school-info-section .main_details .item_details .item_title{
+    width: 20%;
+    float: left;
+    font-weight: bold;
+}
+
+.school-info-section .main_details .item_details .item_content{
+    margin-left: 20%;
+
+
+}
+
+.school-info-section .main_details .item_details .item_content a{
+    color:#00B0AE;
+}
+
+.school-info-section .main_details .col-xs-3,.school-info-section .main_details .col-xs-9,
+.school-info-section .main_details .col-sm-7{
+    padding: 0;
+}
+
+.school-videos .carousel-control-family-left,.school-videos .carousel-control-family-right{
+    font-weight: initial;
+    color: #CCC;
+    line-height: 0.8;
+}
+
+.school-videos .carousel-control-family-left{
+    left:4px;
+}
+
+.school-videos .carousel-control-family-right{
+    right: 4px;
+}
+
+
+.school-mission-box{
+    color:#00B0AE;width:100%;
+    max-height:100%;overflow: hidden; padding: 10px;border:2px dotted #00B0AE;border-radius: 2px;
+}
+.school-mission-box .left-quat{
+    float: left;
+    font-size: 40px;
+    position: absolute;
+    left: 5px;
+    top: -5px;
+}
+
+.school-mission-box .right-quat{
+    float: right;
+    font-size: 40px;
+    position: absolute;
+    bottom: -22px;
+    right: 5px
+}
+.school-mission-box .logo-img{
+    display: inline-block;float:left;width: 100px;
+}
+
+.school-mission-box .mission-desc{
+    font-style: italic;line-height: 22px;font-size: 16px; margin-left: 10px;margin-top: 20px;
+}
+
+.school_detail_main .school-image-section .school-bottom-menu{
+    display: none;
+}
+
+.other-campus{
+    padding: 0;
+    margin: 0 -15px 0 -15px;
+}
+
+.other-campus-detail{
+    padding-bottom: 10px;
+} 
+.other-campus-detail .title{
+    font-size: 16px;
+    color: #000;
+    margin: 0;
+    padding-bottom: 5px
+}
+
+.other-campus-detail .detail {
+    color: grey;
+    margin-top: 5px;
+    height: 22px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    clear: both;
+}
+
+.item-school-premium{
+    border-top: 2px solid #00B0AE;
+    background: #FFFDE6;
+
+}
+
+.school_button{
+    border: 1px solid #009DA2;
+    border-radius: 5px;
+    text-align: center;
+    display: block;
+    padding: 4px;
+    width: 120px;
+    float: left;
+    margin-right: 10px;
+    color: #009DA2;
+}
+a.school_button:hover{
+    background: #00AFB5;
+    color:#FFF !important;
+}
+
+
+.school_testimonial{
+    padding-top: 30px;
+    margin: 0 -15px 0 -15px;
+}
+
+.school_testimonial .item{
+    text-align: center;
+}
+.school_testimonial .item .left-quat{
+    float: left;
+    font-size: 50px;
+    position: absolute;
+    left: 10%;
+    top: -15px;
+    color: #000;
+
+}
+
+.school_testimonial .item .right-quat{
+    float: right;
+    font-size: 50px;
+    position: absolute;
+    top: -10px;
+    right: 10%;
+    color: #000;
+
+}
+
+.school_testimonial .item .description{
+    font-style: italic;
+    width: 72%;
+    margin: 0 auto;
+    padding-top: 10px;
+
+}
+
+.school_testimonial .item .title{
+    font-weight: bold;
+    padding-top: 10px;
+    width: 80%;
+    margin: 0 auto;
+    color: #000;
+
+}
+
+.bs-family-school-testimonial{
+    padding-top: 10px;
+}
+
+.school-videos .owl-item img{
+    width:100%;
+}
+
+.school_detail_main .modal-dialog .modal-body form .btn.btn-default{
+    background: #00B0B2;
+}
+
+
+
+@media all and (max-width: 1199px){
+    .school_detail_main .main-image {
+        width: 100%;
+        height: auto;
+        padding: 0;
+        margin: 0;
+        clear: both;
+    }
+    .school_detail_main .main-image img{
+        width: 100%;
+    }
+    .school_detail_main .school-image-section .school-left-menu {
+        display: none;
+    }
+
+    .school_detail_main .school-image-section .school-bottom-menu {
+        display: block;
+        width: 100%;
+        float:left;
+        clear: both;
+        background: #00B0B2; 
+    }
+
+    .school_detail_main .school-image-section .school-bottom-menu  ul{
+        background: #00B0B2; width: 100%;padding: 0; height:auto;color: #FFF;font-size: 14px;list-style: none;
+    }
+
+    .school_detail_main .school-image-section .school-bottom-menu  ul a{
+        color: #FFFFFF;
+        text-decoration: none;
+    }
+
+    .school_detail_main .school-image-section .school-bottom-menu  ul li{
+        width: 20%;
+        height: 50px;
+        float: left;
+        padding:5px;
+        border-right: 1px solid #0e9597;
+        border-bottom: 1px solid #0e9597;
+        background: #00B0B2;
+        font-size: 12px;
+        text-align: center;
+        vertical-align: middle;
+        line-height: 35px;
+    }
+
+    .school_detail_main .school-image-section .school-bottom-menu  ul li i{
+        display: none;
+    }
+
+
+    .school_detail_main .school-image-section .school-bottom-menu .menu-btn-container{
+        width: 130px;
+        float: left;
+        padding:10px;
+        background: #00B0B2;
+        border: 0;
+        line-height: 20px;
+    }
+
+    .school_detail_main .school-image-section .school-bottom-menu  ul a:hover li{
+        background: #0e9597;
+    }
+
+
+    .school_detail_main .school-image-section .school-bottom-menu .menu-btn-container .menu-btn{
+        color: #FFF;border: 1px solid #00E1E4;border-radius:5px; padding:5px;width: auto;margin: 0 auto;text-align: center;
+        display: block;
+        font-size: 12px;
+    }
+
+    .school_detail_main .school-image-section .school-bottom-menu .menu-btn-container a:hover{
+        background: #0e9597;
+    }
+
+
+
+}
+
+@media all and (max-width: 767px){
+    .school-info-section .main_details .mission-container{
+        display: none;
+    }
+
+    .col-xs-12.mission-container {
+        display: block;
+    }
+
+    .school-info-section .main_details .item_details{
+        width: 100%;
+        padding-top: 15px;
+        clear: both;
+        text-align: left;
+    }
+    .school-info-section .main_details .item_details .item_title{
+        width: 20%;
+        float: left;
+    }
+    .school-info-section .main_details .item_details .item_content{
+        float: right;
+        width: 70%;
+        margin-left: 0;
+    }
+    .school_detail_main .school-image-section .school-bottom-menu  ul li{
+        line-height: 16px;
+    }  
+    .school-related-blog .title{
+        padding-top: 10px;
+    }
+
+}
+
+@media all and (max-width: 480px){
+    .school-info-section .main_details .item_details{
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+    .school-info-section .main_details .item_details .item_title{
+        width: 100%;
+        float: left;
+    }
+    .school-info-section .main_details .item_details .item_content{
+        float: left;
+        margin-left: 0;
+    }
+
+
+    .school_detail_main .school-image-section .school-bottom-menu  ul li{
+        width: 100%;
+        height: auto;
+        float: left;
+        padding:10px;
+        border-bottom: 1px solid #0e9597;
+        text-align: left;
+    }
+
+    .school_detail_main .school-image-section .school-bottom-menu  ul li i{
+        display: block;
+        float: left;
+        padding-right: 5px;
+
+    }
+
+    .school_button{
+        margin-top: 10px;
+    }
+
+    .school-info-section .main_details .item_details .item_content {
+        width:100%;
+    }
+
+}
+
+
+
+

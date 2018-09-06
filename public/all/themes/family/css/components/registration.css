@@ -1,0 +1,137 @@
+#reg-content{
+   -moz-box-shadow:    0px 10px 12px 0 #ccc;
+  -webkit-box-shadow:  0px 10px 12px 0 #ccc;
+    box-shadow:  0px 10px 12px 0 #ccc;
+    margin-top:40px;padding:0px;margin-bottom: 60px;
+    border: 1px solid #e8e5e5;
+}
+
+      
+#reg-content .form-item input.error{
+    border:none;
+    border-bottom: 1px solid red;
+}
+#reg-content .form-item-field-user-family-newsletter-und input{
+    float: left;
+    width: initial;
+}
+#reg-content .form-item-captcha-response{
+    float: left;
+    margin-right: 20px;
+}
+#reg-content .captcha {
+   clear: both; 
+}
+#reg-content .captcha img{
+    width: 130px;
+    height: auto;
+    margin-top: 15px;
+    
+}
+#reg-content  .form-actions{
+   clear: both; 
+}
+#reg-info{color: #4d4d4d;background-color:#6cd1ea;position:relative;}
+#reg-form{background-color: #ffffff;padding-bottom:30px;padding-top:20px;}
+.last-paragraph{
+    background-color:#ffcdd7;   
+    padding: 20px 10px 17px 10px;
+    background-image: url("../images/background/reg_style.png") ;
+    background-size: 10px;
+    background-repeat-y: no-repeat;
+    position:absolute;
+    bottom: 0px;
+    right: 0px;
+}
+
+.first-paragraph{padding:15px;}
+.first-paragraph .title{text-align: center;}
+.first-paragraph .subtitle{font-size:12px;text-align:center}
+.row-divider{border:2px solid #ffffff;width:60px;margin: auto;margin-top:10px;margin-bottom:40px;}
+#reg-info .checkbox{ margin-bottom:20px;}
+.pre-last-paragraph{padding-top:15px;}
+#reg-form {color:#808080;
+}
+.password-content{margin-left:-15px;padding-right:0px;padding-left:0px;}
+#confirm-content{padding-right:0px;}
+#reg-form .form-control { border-left:none;border-right:none;border-top:none;
+    border-radius:0px;box-shadow:none;margin-top:-5px;}
+#reg-form label{font-weight: normal;padding-left:5px;font-size:12px;}
+
+#reg-form .checkbox{
+    margin-bottom: 15px;
+    margin-left: 15px;
+}
+#reg-form  .form-group span.glyphicon{
+    height:20px;
+    line-height:1.8;
+    width:20px;
+}
+#reg-form  .form-group span.glyphicon-ok{color:#27a2e0; border:1px solid #27a2e0;
+    border-radius:50px;font-size:10px;}
+
+
+#reg-form .glyphicon-warning-sign{color:red;}
+.text_validation{font-size:11px;position:absolute;}
+.password-content{margin-right:0px;}
+
+#password-content .glyphicon{margin-right:12px;}
+
+#reg-form  input:hover{border-bottom:1.5px #808080 solid; }
+#reg-form  input:focus{border-bottom:1.5px #808080 solid; }
+
+#reg-form  span.glyphicon-ok{display:none;}
+#reg-form  span.text_validation{display:none;}
+#reg-form  span.glyphicon-warning-sign{display:none;}
+
+
+#reg-form .valid_sucess input {border-bottom:1px #27a2e0 solid;color:#27a2e0;  }
+#reg-form .valid_sucess span.glyphicon-ok{display:block}
+
+
+#reg-form .error_validation input {border-bottom:1px red solid;color:red; }
+#reg-form .error_validation span.text_validation{display:block;color:red;}
+#reg-form .error_validation .glyphicon-warning-sign{color:red;display:block;}
+#reg-form .checkbox label{line-height:1.8;}
+@media (max-width:992px) {
+    #password-content{margin-right:-15px;}
+    #reg-info{margin:0px 15px 0px 15px; }
+}
+.btn-reg:hover{background-color:#6cd1ea;color:#ffffff;}
+.btn-reg{background-color:#3ad4ed;color:#ffffff;border-radius:3px;    font-size: 12px; }
+.row-reg{padding-right: 25px;}
+
+.pwstrength_viewport_progress{
+    margin-top: 30px;
+}
+.city{
+   padding-top: 25px;
+}
+.city select{
+   border: 0;
+    box-shadow: none;
+    border-bottom: 1px black solid;
+    width: 100%;
+    color:black;
+    background-color: transparent;
+    font-size: 12px;
+}
+#main-registration .form-group {
+    margin-bottom: 10px;
+}
+
+.password-suggestions{
+    display:none;
+}
+.form-item-name label{width:100%; }
+
+.edit-submit{
+    background-color: #3ad4ed;
+    color: #ffffff;
+    border-radius: 3px;
+    font-size: 12px;
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+}
+.login_hidden{display:none!important;}

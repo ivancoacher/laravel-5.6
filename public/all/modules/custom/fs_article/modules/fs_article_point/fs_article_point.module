@@ -1,0 +1,60 @@
+<?php
+
+/**
+ * Implements hook_comment_insert().
+ */
+function fs_article_point_comment_insert($comment) {
+  $nid = $comment->nid;
+  if (is_numeric($nid)) {
+    db_merge('fs_article_point')
+      ->key(array('nid' => $nid))
+      ->fields(array(
+        'point' => 10,
+        'timestamp' => REQUEST_TIME,
+      ))
+      ->expression('point', 'point + 10')
+      ->execute();
+  }
+}
+
+/**
+ * Implements hook_comment_delete().
+ */
+function fs_article_point_comment_delete($comment) {
+  $nid = $comment->nid;
+  if (is_numeric($nid)) {
+
+    //TODO: should use another way to reduce the value of point.
+    db_merge('fs_article_point')
+      ->key(array('nid' => $nid))
+      ->fields(array(
+        'point' => 10,
+        'timestamp' => REQUEST_TIME,
+      ))
+      ->expression('point', 'point - 10')
+      ->execute();
+  }
+}
+
+
+/**
+ * Implements hook_node_view().
+ */
+function fs_article_point_node_view($node, $view_mode, $langcode) {
+  if ($node->type == 'article') {
+    if (!empty($node->nid) && $view_mode == 'full' && node_is_page($node) && empty($node->in_preview)) {
+      $fs_article_point = drupal_get_path('module', 'fs_article_point') . '/fs_article_point.js';
+      $node->content['#attached']['js'][$fs_article_point] = array(
+        'scope' => 'footer',
+      );
+      $settings = array(
+        'data' => array('nid' => $node->nid),
+        'url' => url(drupal_get_path('module', 'fs_article_point') . '/fs_article_point.php'),
+      );
+      $node->content['#attached']['js'][] = array(
+        'data' => array('fs_article_point' => $settings),
+        'type' => 'setting',
+      );
+    }
+  }
+}

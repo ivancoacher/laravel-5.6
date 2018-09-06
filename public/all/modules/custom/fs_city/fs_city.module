@@ -1,0 +1,185 @@
+<?php
+
+/**
+ * Implements hook_menu().
+ */
+function fs_city_menu() {
+  $file_path = drupal_get_path('module', 'fs_city');
+
+  $items['change_city'] = [
+    'title' => 'Change City',
+    'type' => MENU_NORMAL_ITEM,
+    'access callback' => TRUE,
+    'page callback' => 'fs_city_change_city_callback',
+    'file' => 'fs_city.pages.inc',
+    'file_path' => $file_path,
+  ];
+
+  return $items;
+}
+
+
+/**
+ * Implements hook_theme().
+ */
+function fs_city_theme() {
+  $module_path = drupal_get_path('module', 'fs_city');
+
+  return [
+    'fs_city_navigation' => [
+      'variables' => ['cities' => NULL],
+      'template' => 'fs_city_navigation',
+      'path' => $module_path . '/templates',
+    ],
+  ];
+}
+
+/**
+ * Implements hook_block_info().
+ */
+function fs_city_block_info() {
+  $blocks['fs_city_navigation'] = [
+    'info' => t('FS City Navigation'),
+    'cache' => DRUPAL_CACHE_PER_PAGE,
+
+  ];
+
+  return $blocks;
+}
+
+/**
+ * Implements hook_block_view().
+ */
+function fs_city_block_view($delta = '') {
+  $block = [];
+
+  switch ($delta) {
+    case 'fs_city_navigation' :
+
+      // $block['subject'] = t('FS City Navigation');
+      //      $path = drupal_get_path('module', 'fs_city');
+      //      drupal_add_js($path . '/js/fs_city_navigation.js', array('weight' => 1));
+
+      $variables = [
+        'cities' => [],
+      ];
+
+      $cities = _fs_city_get_cities();
+      $selected_cid = fs_city_get_selected_city_id();
+
+      if (!empty($cities)) {
+        foreach ($cities as $cid => $city_name) {
+          $variables['cities'][$cid]['name'] = ucfirst($city_name);
+          $variables['cities'][$cid]['url'] = url('change_city', array('query' => array('city' => $city_name)));
+          if ($cid == $selected_cid) {
+            $variables['cities'][$cid]['selected'] = TRUE;
+          }
+          else {
+            $variables['cities'][$cid]['selected'] = FALSE;
+          }
+        }
+      }
+      global $base_url;
+      $variables['theme_family'] = $base_url . "/" . drupal_get_path('theme', 'family');
+      $block['content'] = theme('fs_city_navigation', $variables);
+      break;
+  }
+
+  return $block;
+}
+
+
+/**
+ * Implements hook_node_insert().
+ */
+function fs_city_node_insert($node) {
+  if ($node->type == 'city') {
+    cache_clear_all('fs_city_cities', 'cache', TRUE);
+    menu_rebuild();
+  }
+}
+
+/**
+ * Implements hook_node_update().
+ */
+function fs_city_node_update($node) {
+  if ($node->type == 'city') {
+    cache_clear_all('fs_city_cities', 'cache', TRUE);
+    menu_rebuild();
+  }
+}
+
+/**
+ * Implements hook_node_delete().
+ */
+function fs_city_node_delete($node) {
+  if ($node->type == 'city') {
+    cache_clear_all('fs_city_cities', 'cache', TRUE);
+    menu_rebuild();
+  }
+}
+
+/**
+ * Helper function get select city id.
+ *
+ * @return number nid of city.
+ */
+function fs_city_get_selected_city_id() {
+  global $fs_city;
+  // The key is the node id of city.
+  $fs_cities_mapping = _fs_city_get_cities();
+
+  //set shanghai as default city.
+  $cid = 1;
+
+  if (isset($fs_city) && !empty($fs_city)) {
+    if (in_array($fs_city, $fs_cities_mapping)) {
+      $flipped_array = array_flip($fs_cities_mapping);
+      $cid = $flipped_array[$fs_city];
+    }
+  }
+
+  return $cid;
+}
+
+/**
+ * Helper function to get cities information.
+ * @return array|mixed [cid => city_name]
+ *
+ */
+function _fs_city_get_cities() {
+  $cities = &drupal_static(__FUNCTION__);
+  if (!isset($cities)) {
+    if ($cache = cache_get('fs_city_cities')) {
+      $cities = $cache->data;
+    }
+    else {
+      $query = new EntityFieldQuery();
+      $query->entityCondition('entity_type', 'node')
+        ->entityCondition('bundle', 'city')
+        ->propertyCondition('status', NODE_PUBLISHED)
+        ->addMetaData('account', user_load(1));
+
+      $result = $query->execute();
+
+      $cities = [];
+
+      if (isset($result['node'])) {
+        $nids = array_keys($result['node']);
+        $nodes = entity_load('node', $nids);
+
+        foreach ($nodes as $node) {
+          $cities[$node->nid] = strtolower(check_plain($node->title));
+        }
+      }
+
+      cache_set('fs_city_cities', $cities, 'cache');
+    }
+  }
+
+  return $cities;
+}
+
+
+
+

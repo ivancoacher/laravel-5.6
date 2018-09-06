@@ -1,0 +1,74 @@
+<?php
+
+/**
+ * Implements hook_menu().
+ */
+function fs_taxonomy_menu() {
+  $file_path = drupal_get_path('module', 'fs_taxonomy');
+  $items['api/fs_taxonomy_get_article/%/%'] = [
+    'title' => 'Articles',
+    'type' => MENU_CALLBACK,
+    'access callback' => TRUE,
+    'page callback' => 'fs_taxonomy_get_article_callback',
+    'page arguments' => [2, 3],
+    'file' => 'fs_taxonomy.pages.inc',
+    'file_path' => $file_path,
+  ];
+
+  return $items;
+}
+
+/**
+ * Implements hook_menu_alter().
+ */
+function fs_taxonomy_menu_alter(&$items) {
+  if (isset($items['taxonomy/term/%taxonomy_term'])) {
+    $items['taxonomy/term/%taxonomy_term']['page callback'] = 'fs_taxonomy_term_pages';
+    $items['taxonomy/term/%taxonomy_term']['access callback'] = 'fs_taxonomy_access_term_pages';
+    $items['taxonomy/term/%taxonomy_term']['access arguments'] = [2];
+  }
+}
+
+function fs_taxonomy_access_term_pages($term) {
+  return TRUE;
+}
+
+/**
+ * Callback function for taxonomy/term/%.
+ *
+ * @param $term
+ *   The term id.
+ *
+ * @return string
+ * Themed page for a taxonomy term, specific to the term's vocabulary.
+ */
+function fs_taxonomy_term_pages($term) {
+  $vocabulary = taxonomy_vocabulary_load($term->vid);
+  switch ($vocabulary->machine_name) {
+    case 'article_category_bj':
+    case 'article_category_sh':
+      module_load_include('inc', 'fs_taxonomy', 'fs_taxonomy.pages');
+
+      return fs_taxonomy_article_term_page($term);
+    default:
+      // Returns the default term page provided by taxonomy module.
+      module_load_include('inc', 'taxonomy', 'taxonomy.pages');
+      return taxonomy_term_page($term);
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function fs_taxonomy_theme() {
+  $module_path = drupal_get_path('module', 'fs_taxonomy');
+
+  return [
+    'fs_taxonomy_article_term_page' => [
+      'variables' => ['items' => NULL],
+      'template' => 'fs_taxonomy_article_term_page',
+      'path' => $module_path . '/templates',
+    ],
+  ];
+}
+

@@ -1,0 +1,8 @@
+<?php
+
+function fs_sailthru_install() {
+  db_update('system')
+    ->fields(array('weight' => 110))
+    ->condition('name', 'fs_sailthru', '=')
+    ->execute();
+}

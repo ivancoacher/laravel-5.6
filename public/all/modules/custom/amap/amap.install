@@ -1,0 +1,44 @@
+<?php
+
+/**
+ * @file
+ * Defines schema for amap fields
+ */
+
+/**
+ * Implements hook_field_schema().
+ */
+function amap_field_schema() {
+    return array(
+        'columns' => array(
+            'name' => array(
+                'type' => 'varchar',
+                'length' => 128,
+                'not null' => FALSE,
+            ),
+            'description' => array(
+                'type' => 'text',
+                'not null' => FALSE,
+            ),
+            'lat' => array(
+                'type' => 'float',
+                'size' => 'big',
+                'default' => 0.0,
+                'not null' => FALSE,
+            ),
+            'lng' => array(
+                'type' => 'float',
+                'size' => 'big',
+                'default' => 0.0,
+                'not null' => FALSE,
+            ),
+        ),
+    );
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function amap_uninstall() {
+    variable_del('amap_*');
+}

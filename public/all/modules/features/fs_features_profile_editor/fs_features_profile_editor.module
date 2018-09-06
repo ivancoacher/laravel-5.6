@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Profile editor feature.
+ */
+
+include_once 'fs_features_profile_editor.features.inc';

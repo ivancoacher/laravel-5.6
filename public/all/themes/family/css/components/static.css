@@ -1,0 +1,133 @@
+.content .top-section {
+  background-color: #FCFCFC;
+}
+.content .top-section a {
+  color: #5F5F5F;
+  font-size: 16px;
+}
+.content .top-section .breadcrumb {
+  color: #5F5F5F;
+}
+.content .top-section .breadcrumb a {
+  margin: 7px;
+  font-size: 15px;
+}
+.content .map-location img {
+  width: 100%;
+  margin: auto;
+}
+.content .map-location div:first-child {
+  padding-left: 0px;
+  padding-right: 5px;
+  margin-top: 10px;
+}
+.content .map-location div:last-child {
+  padding-left: 5px;
+  padding-right: 0px;
+  margin-top: 10px;
+}
+.content .title-contact {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  font-size: 22px;
+}
+.content .contact-content {
+  width: 60%;
+}
+.content .contact-content label {
+  font-family: Arial, FontAwesome;
+  color: #ccc;
+  position: absolute;
+  top: 5px;
+  left: 10px;
+}
+.content .contact-content .field-name-field-page-body {
+  display: none;
+}
+.content .contact-content .form-item-field-ef-name-und-0-value {
+  position: relative;
+}
+.content .contact-content .form-item-field-ef-email-und-0-email {
+  position: relative;
+}
+.content .contact-content .form-item-field-ef-message-und-0-value {
+  position: relative;
+}
+.content .contact-content #edit-submit {
+  padding-left: 15px;
+  padding-right: 15px;
+  background-color: #6cd1ea;
+  border: none;
+  color: white;
+  border-radius: 2px;
+}
+.content .contact-content .subtitle-contact {
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+.content .contact-content #edit-field-ef-name-und-0-value {
+  font-family: Arial, FontAwesome;
+  background-color: #f7f7f7;
+  border-radius: 2px;
+  border: none;
+  box-shadow: 0px;
+  height: 30px;
+  border: 1px solid #ccc;
+  width: 100%;
+}
+.content .contact-content #edit-field-ef-email-und-0-email {
+  font-family: Arial, FontAwesome;
+  background-color: #f7f7f7;
+  border-radius: 2px;
+  border: none;
+  box-shadow: 0px;
+  height: 30px;
+  border: 1px solid #ccc;
+  width: 100%;
+}
+.content .contact-content #edit-field-ef-message-und-0-value {
+  font-family: Arial, FontAwesome;
+  background-color: #f7f7f7;
+  border-radius: 2px;
+  border: none;
+  border: 1px solid #ccc;
+}
+.content .underline-contact {
+  height: 1px;
+  background-color: #ccc;
+  margin-top: 15px;
+  margin-left: 5px;
+  width: 98.5%;
+  margin-bottom: -10px;
+}
+.content .adress-content {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.content .adress-content .title-contact {
+  padding-left: 5px;
+}
+.content .adress-content .adress-item {
+  border: 1px solid #ccc;
+  padding: 5px 0px 5px 0px;
+  font-size: 12px;
+  border-radius: 5px;
+  margin-left: -10px;
+  margin-right: -10px;
+  margin-top: 5px;
+}
+.content .adress-content .adress-item div {
+  margin-top: 10px;
+}
+.content .adress-content .adress-list {
+  padding: 0px;
+}
+#main-static{margin-top:20px;}
+#main-static .field-label{display:none;}
+.form-contact .form-submit{
+    background: #1FAFB1;
+    border: none;
+    width: 115px;
+    color: white;
+    border-radius: 2px;
+}

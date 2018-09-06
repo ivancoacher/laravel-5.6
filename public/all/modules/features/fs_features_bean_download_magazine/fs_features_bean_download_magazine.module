@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Download Magazine feature.
+ */
+
+include_once 'fs_features_bean_download_magazine.features.inc';

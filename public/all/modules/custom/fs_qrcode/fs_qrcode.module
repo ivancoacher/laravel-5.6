@@ -1,0 +1,20 @@
+<?php
+
+/**
+ * Implements hook_menu().
+ */
+function fs_qrcode_menu() {
+  $file_path = drupal_get_path('module', 'fs_qrcode');
+  $items = [];
+
+  $items['api/qrcode/%/%'] = [
+    'page callback' => 'fs_generate_qrcode',
+    'page arguments' => [2, 3],
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+    'file' => 'fs_qrcode.pages.inc',
+    'file_path' => $file_path,
+  ];
+
+  return $items;
+}

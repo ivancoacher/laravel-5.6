@@ -1,0 +1,50 @@
+<?php
+
+/**
+ * Implements hook_token_info().
+ */
+function fs_token_token_info() {
+  $info['tokens']['node']['fs-city-url'] = [
+    'name' => t('Family City url prefix'),
+    'description' => t('Url Tokens related to Family Space.'),
+  ];
+
+  return $info;
+}
+
+/**
+ * Implements hook_tokens().
+ */
+function fs_token_tokens($type, $tokens, array $data = array(), array $options = array()) {
+  $replacements = array();
+  $sanitize = !empty($options['sanitize']);
+
+  if ($type == 'node' && !empty($data['node'])) {
+    $node = $data['node'];
+
+    foreach ($tokens as $name => $original) {
+      switch ($name) {
+        case 'fs-city-url':
+//          $groups = og_get_entity_groups('node', $node);
+//          if (isset($groups['node'])) {
+//            if (count($groups['node']) > 1) {
+//              $replacements[$original] = 'china';
+//            }
+//            else {
+//              $nid_city = current($groups['node']);
+//              $node_city = node_load($nid_city);
+//              //TODO: use a custom field instead. not use title.
+//              $replacements[$original] = strtolower(check_plain($node_city->title));
+//            }
+//          }
+//          else {
+//            $replacements[$original] = NULL;
+//          }
+          $replacements[$original]="shanghai";
+          break;
+      }
+    }
+  }
+
+  return $replacements;
+}

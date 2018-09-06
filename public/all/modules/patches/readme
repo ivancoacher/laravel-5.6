@@ -1,0 +1,7 @@
+patch name pastern:
+
+[module]_patch_[date]_[trello_id].diff
+
+or
+
+[module]_patch_[date].diff

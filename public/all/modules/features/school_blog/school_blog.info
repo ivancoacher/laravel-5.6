@@ -1,0 +1,15 @@
+name = School Blog
+core = 7.x
+package = Content type
+version = 7.x-1.1
+dependencies[] = content_types_base
+dependencies[] = features
+dependencies[] = fs_features_article
+dependencies[] = image
+dependencies[] = text
+features[features_api][] = api:2
+features[field_instance][] = node-school_blog-field_article_body
+features[field_instance][] = node-school_blog-field_main_image
+features[field_instance][] = node-school_blog-field_related_school
+features[node][] = school_blog
+features_exclude[dependencies][fs_features_gallery] = fs_features_gallery

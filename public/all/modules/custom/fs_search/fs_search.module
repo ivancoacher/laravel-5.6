@@ -1,0 +1,174 @@
+<?php
+
+module_load_include('inc', 'fs_search', 'fs_search');
+
+/**
+ * Implements hook_menu().
+ */
+function fs_search_menu() {
+  $file_path = drupal_get_path('module', 'fs_search');
+
+  $items = [];
+
+  $cities = _fs_city_get_cities();
+  foreach ($cities as $city) {
+    $items[$city . '/search'] = [
+      'title' => 'Search Result',
+      'page callback' => 'fs_city_search_result_page',
+      'page arguments' => [0],
+      'access callback' => TRUE,
+      'file' => 'fs_search.pages.inc',
+      'file_path' => $file_path,
+    ];
+  }
+
+  $items['search/autocomplete/%'] = [
+    'page callback' => 'fs_search_autocomplete',
+    'page arguments' => [2],
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+    'file' => 'fs_search.pages.inc',
+    'file_path' => $file_path,
+  ];
+
+
+  //admin pages.
+  $items['admin/config/fs/search_base'] = [
+    'title' => 'Family Space Search Base',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => ['fs_search_settings_form'],
+    'access arguments' => ['administer site configuration'],
+    'type' => MENU_NORMAL_ITEM,
+    'file' => 'fs_search.admin.inc',
+    'file path' => $file_path,
+  ];
+  
+  return $items;
+}
+
+
+/**
+ * Implements hook_theme().
+ */
+function fs_search_theme(){
+  $module_path = drupal_get_path('module', 'fs_search');
+  return [
+    'fs_city_search_result_page' => [
+      'variables' => ['items' => NULL, 'pager' => NULL],
+      'template' => 'fs_city_search_result_page',
+      'path' => $module_path . '/templates',
+    ],
+    'fs_city_search_result_article' => [
+      'variables' => ['item' => NULL],
+      'template' => 'fs_city_search_result_article',
+      'path' => $module_path . '/templates',
+    ],
+    'fs_city_search_result_event' => [
+      'variables' => ['item' => NULL],
+      'template' => 'fs_city_search_result_event',
+      'path' => $module_path . '/templates',
+    ],
+    'fs_city_search_result_listing' => [
+      'variables' => ['item' => NULL],
+      'template' => 'fs_city_search_result_listing',
+      'path' => $module_path . '/templates',
+    ],
+    'fs_search_list_listing' => [
+      'variables' => ['items' => NULL],
+      'template' => 'fs_search_list_listing',
+      'path' => $module_path . '/templates',
+    ],
+  ];
+}
+
+/**
+ * Implements hook_block_info().
+ */
+function fs_search_block_info() {
+  $blocks['fs_global_search'] = [
+    'info' => t('FS Global Search'),
+  ];
+
+  return $blocks;
+}
+
+/**
+ * Implements hook_block_view().
+ */
+function fs_search_block_view($delta = '') {
+  $block = [];
+  
+  switch ($delta) {
+    case 'fs_global_search' :
+      $block['subject'] = t('FS Global Search');
+      $block['content'] = drupal_get_form('fs_search_global_search_from');
+      break;
+  }
+  return $block;
+}
+
+function fs_search_global_search_from($form, &$form_state) {
+  $cid = fs_city_get_selected_city_id();
+
+  $file_path = drupal_get_path('module', 'fs_search');
+  $form['#method'] = 'get';
+  $form['#action'] = '/shanghai/search';
+  $form['#attached']['library'] = array(
+    array('system', 'ui.autocomplete'),
+  );
+
+  $form['#attached']['js'] = array(
+    array(
+      'data' => array(
+        'fs_search_global_search_form' => [
+          'query_url' => url('search/autocomplete/' . $cid, ['absolute' => TRUE]),
+          'cid' => $cid,
+        ], // 2. add data
+      ),
+      'type' => 'setting',
+    ),
+    $file_path . '/js/fs_search_global_form.js',
+  );
+
+
+  $form['keyword'] = [
+    '#type' => 'textfield',
+    '#maxlength' => 128,
+    '#attributes' => array('id' => 'keyword-global','placeholder' => t('SEARCH')),
+    '#required' => TRUE,
+    '#prefix' => '<div class="search_input_global"><i class="fa fa-search"></i>',
+    '#suffix' => '</div>',
+
+  ];
+
+  $cities = _fs_city_get_cities();
+  $city = $cities[$cid];
+
+  $form['city'] = [
+    '#type' => 'hidden',
+    '#value' => $city,
+  ];
+
+  $form['type'] = [
+    '#type' => 'hidden',
+    '#value' => 'all',
+  ];
+
+  $form['submit'] = [
+    '#type' => 'submit',
+    '#value' => t('Search'),
+  ];
+
+  return $form;
+}
+
+function fs_search_global_search_from_submit($form, &$form_state) {
+//  $city = $form_state['values']['city'];
+//  $option['query'] = array(
+//    'keyword' => $form_state['values']['keyword'],
+//    'type' => $form_state['values']['type'],
+//  );
+  // $form_state['redirect'] = $city . '/search';
+  // drupal_goto($city . '/search', $option);
+}
+

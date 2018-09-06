@@ -1,0 +1,255 @@
+<?php
+
+// define('FS_SAILTHRU_API_KEY', 'b88afc93ed29374ed7978ebed5822c26');
+// define('FS_SAILTHRU_SECRET', 'caae1dd9038c362c86ffc37c6ae4ff30');
+
+
+define('FS_SAILTHRU_TEMPLATE_ACCOUNT_ACTIVATION', 'account activation family');
+define('FS_SAILTHRU_TEMPLATE_ACCOUNT_CONFIRMATION', 'account confirmation family');
+define('FS_SAILTHRU_TEMPLATE_NEWSLETTER_CONFIRMATION', 'newsletter subscription family');
+
+
+/**
+ * Implements hook_menu().
+ */
+function fs_sailthru_menu() {
+  $file_path = drupal_get_path('module', 'fs_sailthru');
+  $items = [];
+
+  $items['admin/config/fs/sailthru'] = [
+    'title' => 'Family Space Sailthru',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => ['fs_base_sailthru_settings_form'],
+    'access arguments' => ['administer site configuration'],
+    'type' => MENU_NORMAL_ITEM,
+    'file' => 'fs_sailthru.admin.inc',
+    'file path' => $file_path,
+  ];
+
+  return $items;
+}
+
+function fs_sailthru_get_client() {
+  $key = variable_get('fs_sailthru_key');
+  $secret = variable_get('fs_sailthru_secret');
+  $sailthru = new Sailthru_Client($key, $secret);
+
+  return $sailthru;
+}
+
+function fs_sailthru_user_activation_email($account, $activation_link) {
+  try {
+    $sailthru = fs_sailthru_get_client();
+
+    $variables = [
+      'confirmation_link' => $activation_link,
+    ];
+
+    $response = $sailthru->send(FS_SAILTHRU_TEMPLATE_ACCOUNT_ACTIVATION, $account->mail, $variables);
+
+    if (!isset($response['error'])) {
+      // everything OK
+      watchdog('fs_sailthru', 'Template : !template; email : !email; send_id : !send_id', [
+        '!template' => $response['template'],
+        '!email' => $response['email'],
+        '!send_id' => $response['send_id'],
+      ]);
+    }
+    else {
+      // handle API error
+      watchdog('fs_sailthru', $response['error'], [], WATCHDOG_ERROR);
+    }
+  }
+  catch (Sailthru_Client_Exception $e) {
+    $message = $e->getMessage();
+    $message .= "<br/>" . $e->getTraceAsString();
+    watchdog('fs_sailthru', $message, [], WATCHDOG_ERROR);
+  }
+}
+function fs_sailthru_user_reset_password($account,$reset_link) {
+  $status =0;
+  try {
+    $sailthru = fs_sailthru_get_client();
+
+    $variables = [
+      'reset_link' => $reset_link,
+    ];   
+    $response = $sailthru->send('reset password family', $account->mail, $variables);
+    if (!isset($response['error'])) {
+      // everything OK
+      watchdog('fs_sailthru', 'Template : !template; email : !email; send_id : !send_id', [
+        '!template' => $response['template'],
+        '!email' => $response['email'],
+        '!send_id' => $response['send_id'],
+      ]);
+      $status =1;
+    }
+    else {
+      // handle API error
+      watchdog('fs_sailthru', $response['error'], [], WATCHDOG_ERROR);
+    }
+  }
+  catch (Sailthru_Client_Exception $e) {
+    $message = $e->getMessage();
+    $message .= "<br/>" . $e->getTraceAsString();
+    watchdog('fs_sailthru', $message, [], WATCHDOG_ERROR);
+     $status =0;
+  }
+  return $status ;
+}
+function fs_sailthru_user_confirmation_email($account) {
+  module_load_include('inc', 'fs_article', 'fs_article');
+  module_load_include('inc', 'fs_user', 'fs_user');
+
+  try {
+    $sailthru = fs_sailthru_get_client();
+    $user_name = fs_user_get_user_name_by_api($account);
+    $articles = fs_article_newsletter_get_related_articles();
+    $variables = [
+      'username' => $user_name,
+      'articlesShanghai' => [
+        'content' => $articles,
+      ],
+      'city_link' => url(variable_get('site_frontpage', 'node'), ['absolute' => TRUE]),
+    ];
+
+    $response = $sailthru->send(FS_SAILTHRU_TEMPLATE_ACCOUNT_CONFIRMATION, $account->mail, $variables);
+
+    if (!isset($response['error'])) {
+      // everything OK
+      watchdog('fs_sailthru', 'Template : !template; email : !email; send_id : !send_id', [
+        '!template' => $response['template'],
+        '!email' => $response['email'],
+        '!send_id' => $response['send_id'],
+      ]);
+    }
+    else {
+      // handle API error
+      watchdog('fs_sailthru', $response['error'], [], WATCHDOG_ERROR);
+    }
+  }
+  catch (Sailthru_Client_Exception $e) {
+    $message = $e->getMessage();
+    $message .= "<br/>" . $e->getTraceAsString();
+    watchdog('fs_sailthru', $message, [], WATCHDOG_ERROR);
+  }
+}
+
+function fs_sailthru_newsletter_subscribe($info) {
+  try {
+    $sailthru = fs_sailthru_get_client();
+
+    $response = $sailthru->saveUser($info['mail'], array(
+      'key' => 'email',
+      'vars' => $info['vars'],
+      'lists' => array(
+        'all contacts' => 1,
+      ),
+    ));
+
+    if (!isset($response['error'])) {
+      $error = 0;
+      // everything OK
+      watchdog('fs_sailthru', '!email subscribe the family newsletter', [
+        '!email' => $info['mail'],
+      ]);
+    }
+    else {
+      $error = 1;
+      // handle API error
+      watchdog('fs_sailthru', $response['error'], [], WATCHDOG_ERROR);
+    }
+  }
+  catch (Sailthru_Client_Exception $e) {
+    $error = 1;
+    $message = $e->getMessage();
+    $message .= "<br/>" . $e->getTraceAsString();
+    $response = $message;
+    watchdog('fs_sailthru', $message, [], WATCHDOG_ERROR);
+  }
+
+  $result = [
+    'error' => $error,
+    'response' => $response,
+  ];
+  return $result;
+}
+
+
+function fs_sailthru_newsletter_confirmation($info) {
+  try {
+    $sailthru = fs_sailthru_get_client();
+
+    $email = $info['email'];
+
+    $variables = [
+      'fill_in_my_profile' => $info['fill_in_my_profile'],
+    ];
+    $response = $sailthru->send(FS_SAILTHRU_TEMPLATE_NEWSLETTER_CONFIRMATION, $email, $variables);
+    if(!isset($response['error'])) {
+      // everything OK
+      watchdog('fs_sailthru', 'Template : !template; email : !email; send_id : !send_id', [
+        '!template' => $response['template'],
+        '!email' => $response['email'],
+        '!send_id' => $response['send_id'],
+      ]);
+    }
+    else {
+      // handle API error
+      watchdog('fs_sailthru', $response['error'], [], WATCHDOG_ERROR);
+    }
+  }
+  catch (Sailthru_Client_Exception $e) {
+    $message = $e->getMessage();
+    $message .= "<br/>" . $e->getTraceAsString();
+    watchdog('fs_sailthru', $message, [], WATCHDOG_ERROR);
+  }
+}
+/**
+ * @param $template
+ * @param $email
+ * @param $vars
+ * @param $options
+ */
+function fs_sailthru_send_notification($template, $email, $vars, $options) {
+  $result = [
+    'success' => '',
+    'message' => '',
+  ];
+  try {
+    $sailthru = fs_sailthru_get_client();
+    
+    if(is_array($email)){  
+      $response = $sailthru->multisend($template,$email, $vars, $options);      
+    }else{
+      $response = $sailthru->send($template, $email, $vars, $options);
+    }
+
+    if (!isset($response['error'])) {
+      // everything OK
+      watchdog('fs_sailthru', 'Template : !template; email : !email; send_id : !send_id', [
+        '!template' => $response['template'],
+        '!email' => $response['email'],
+        '!send_id' => $response['send_id'],
+      ]);
+
+      $result['success'] = 1;
+      $result['message'] = 'success';
+    }
+    else {
+      // handle API error
+      watchdog('fs_sailthru', $response['error'], [], WATCHDOG_ERROR);
+      $result['success'] = 0;
+      $result['message'] = $response['error'];
+    }
+  }
+  catch (Sailthru_Client_Exception $e) {
+    $message = $e->getMessage();
+    $message .= "<br/>" . $e->getTraceAsString();
+    watchdog('fs_sailthru', $message, [], WATCHDOG_ERROR);
+    $result['success'] = 0;
+    $result['message'] = 'Get error';
+  }
+
+  return $result;
+}

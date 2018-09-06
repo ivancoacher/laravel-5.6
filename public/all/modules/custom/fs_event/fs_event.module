@@ -1,0 +1,285 @@
+<?php
+
+/**
+ * Implements hook_theme().
+ */
+function fs_event_theme() {
+  $module_path = drupal_get_path('module', 'fs_event');
+
+  return [
+    'fs_event_detail_page' => [
+      'variables' => ['item' => NULL],
+      'template' => 'fs_event_detail_page',
+      'path' => $module_path . '/templates',
+    ],
+    'fs_event_home_calendar' => [
+      'variables' => ['items' => NULL, 'items_best_of_month' => NULL],
+      'template' => 'fs_event_home_calendar',
+      'path' => $module_path . '/templates',
+    ],
+    'fs_event_related_events' => [
+      'variables' => ['items' => NULL],
+      'template' => 'fs_event_related_events',
+      'path' => $module_path . '/templates',
+    ],
+  ];
+}
+
+/**
+ * Implements hook_block_info().
+ */
+function fs_event_block_info() {
+  $blocks = [];
+
+  $blocks['fs_event_home_calendar'] = [
+    'info' => t('FS Home calendar'),
+    'cache' => DRUPAL_CACHE_PER_PAGE,
+  ];
+
+  $blocks['fs_event_related_events'] = [
+    'info' => t('FS Related events'),
+    'cache' => DRUPAL_CACHE_PER_PAGE,
+  ];
+
+  return $blocks;
+}
+
+/**
+ * Implements hook_block_view().
+ */
+function fs_event_block_view($delta = '') {
+  $block = [];
+
+  switch ($delta) {
+    case 'fs_event_home_calendar':
+      module_load_include('inc', 'fs_event', 'fs_event');
+      $block['subject'] = t('Home Calendar');
+
+      $cid = fs_city_get_selected_city_id();
+      $cities = _fs_city_get_cities();
+      $city = $cities[$cid];
+      $params = [
+        'city' => $city,
+      ];
+      $timezone = new DateTimeZone('Asia/Shanghai');
+      $date = new DateTime('today', $timezone);
+
+      $dates_filter_dates = [];
+      $days = 2;
+      for ($i = 0; $i <= $days; $i++) {
+        if ($i == 0) {
+          $dates_filter_dates[] = $date->format('Y-m-d');
+        }
+        else {
+          $modify_string = '+' . 1 . ' day';
+          $date->modify($modify_string);
+          $dates_filter_dates[] = $date->format('Y-m-d');
+        }
+      }
+
+      $first_day = $dates_filter_dates[0];
+      $end_day_obj = new DateTime($dates_filter_dates[2]);
+      $end_day_obj->modify('+1 day');
+      $end_day = $end_day_obj->format('Y-m-d');
+
+      $items = [];
+      ///// date_filter always show    
+      foreach ($dates_filter_dates as $dates_filter_date) {
+        $date = new DateTime($dates_filter_date);
+        // $items[$dates_filter_date]['date_full']=$date;
+        $items[$dates_filter_date]['day_week'] = $date->format('D');
+        $items[$dates_filter_date]['day'] = $date->format('d');
+        $date_today = new DateTime('today');
+        if ($date->format('Y-m-d') == $date_today->format('Y-m-d')) {
+          $items[$dates_filter_date]['is_today'] = TRUE;
+        }
+        else {
+          $items[$dates_filter_date]['is_today'] = FALSE;
+        }
+      }
+
+      try {
+        $timezone = new DateTimeZone('Asia/Shanghai');
+        $elasticsearch = new FsElasticsearch();
+        foreach ($items as $key => $dates_filter_date) {
+
+          $date_filter = new DateTime($key, $timezone);
+          $query_in = fs_events_es_query_date_in_between($date_filter);
+          $result_event_json_in_between = $elasticsearch->es_node_list($query_in, 'events');
+          $result_event_in_between = drupal_json_decode($result_event_json_in_between);
+          $result = $result_event_in_between['hits']['hits'];
+          $items[$key]['nodes'] = $result;
+        }
+      }
+      catch (Exception $e) {
+        $message = $e->getMessage();
+        $message .= "<br/>" . $e->getTraceAsString();
+        watchdog('fs_event', $message, [], WATCHDOG_ERROR);
+      }
+
+
+      //best of month items
+      $params_best_of_month = $params;
+      $params_best_of_month['best_of_month'] = 1;
+      $end_day_of_month = $date->format('Y-m-t');
+      $end_day_of_month_obj = new DateTime($end_day_of_month);
+      $end_day_of_month_obj->modify('+1 day');
+      $end_day = $end_day_of_month_obj->format('Y-m-d');
+
+      $items_best_of_month = [];
+
+      try {
+        $elasticsearch_best = new FsElasticsearch();
+        $query_in = fs_events_es_query_best_of();
+        $result_event_json_in_between = $elasticsearch_best->es_node_list($query_in, 'events');
+        $result_event_in_between = drupal_json_decode($result_event_json_in_between);
+        $result = $result_event_in_between['hits']['hits'];
+        $items_best_of_month = $result;
+      }
+      catch (Exception $e) {
+        $message = $e->getMessage();
+        $message .= "<br/>" . $e->getTraceAsString();
+        watchdog('fs_event', $message, [], WATCHDOG_ERROR);
+      }
+
+
+      $variables = [
+        'items' => $items,
+        'items_best_of_month' => $items_best_of_month,
+      ];
+
+      $block['content'] = theme('fs_event_home_calendar', $variables);
+
+      break;
+//
+//    case 'fs_event_related_events':
+//      $block['subject'] = t('Related items');
+//      $block['content'] = '';
+//      if (arg(0) == 'event' && is_numeric(arg(1))) {
+//        $nid = arg(1);
+//        $type = 'event';
+//
+//        $cw_api_base_url = variable_get('cw_api_base_url');
+//        $url = $cw_api_base_url . '/fs_api/event_related_items';
+//        $options = [
+//          'query' => [
+//            'nid' => $nid,
+//            'type' => $type,
+//          ],
+//        ];
+//
+//        $response = drupal_http_request(url($url, $options));
+//
+//        $response_items = drupal_json_decode($response->data);
+//
+//        $items = [];
+//        foreach ($response_items as $response_item) {
+//          $item = [];
+//
+//          $item['nid'] = $response_item['nid'];
+//          $item['title'] = $response_item['title'];
+//          $item['image'] = $response_item['image'];
+//          $item['address'] = $response_item['address'];
+//          $item['url'] = url('event/' . $item['nid']);
+//
+//          $items[] = $item;
+//        }
+//
+//        $variables = [
+//          'items' => $items,
+//        ];
+//
+//        $block['content'] = theme('fs_event_related_events', $variables);
+//      }
+//
+//      break;
+  }
+  return $block;
+}
+
+/**
+ * Implements template_preprocess_node().
+ */
+function fs_event_preprocess_node(&$variables) {
+  $node = $variables['node'];
+  $view_mode = $variables['view_mode'];
+  if ($node->type == 'events' && $view_mode == 'full') {
+     module_load_include('inc', 'fs_sailthru', 'fs_sailthru');
+    fs_sailthru_meta_tags($node);
+    drupal_add_css(drupal_get_path('theme', 'family') . '/css/components/listing.css', array('group' => CSS_THEME));
+    drupal_add_js('http://webapi.amap.com/maps?v=1.3&key=265b2136b0c369e4cded2a18d7662236', 'external');
+    drupal_add_js('http://cache.amap.com/lbs/static/addToolbar.js', 'external');
+    drupal_add_js(variable_get("path_theme", NULL) . '/lib/amap/amap.js', array('scope' => 'footer'));
+
+    module_load_include('inc', 'fs_search_event', 'fs_search_event');
+    module_load_include('inc', 'fs_base', 'fs_base');
+    module_load_include('inc', 'fs_event', 'fs_event');
+    $item = fs_base_load($node, "event");
+    $date_start = new DateTime($item['field_date']['date_start'].'+00');
+    $date_start->setTimezone(new DateTimeZone('Asia/Shanghai'));
+    $date_end = new DateTime($item['field_date']['date_end'].'+00');
+    $date_end->setTimezone(new DateTimeZone('Asia/Shanghai'));
+    $item['time_start_s'] = $date_start->format('H:i');
+    $item['time_end_s'] = $date_end->format('H:i');
+    global $base_url;
+    $variables["base_url"] = $base_url;
+    $lat = $item["field_map"]["lat"];
+    $lon = $item["field_map"]["lon"];
+
+    $uri = $item["field_main_image"];
+    $item["field_main_image"] = image_style_url("main_image", $uri);
+    if (!file_exists($item["field_main_image"])) {
+      $item["field_main_image"] = file_create_url($uri);
+    }
+    if (file_exists($item["field_main_image"])) {
+      $img = $item["field_main_image"];
+    }
+    else {
+      $img = variable_get("default_image");  //$item["preview_image"]
+    }
+
+    if($item["field_editor_description"]){
+      $item['body'] = $item['field_editor_description'];
+    }else{
+      $item['body'] = $item['field_contributor_description'];
+    }
+
+    $json_directory = "var json_directory=[";
+    $json_directory .= "{'lat':'" . $lat . "','long':'" . $lon . "','img':'" . $img . "'},";
+
+    $json_directory .= "];";
+    drupal_add_js($json_directory, array('type' => 'inline'));
+    $variables["item"] = $item;
+  }
+}
+
+/**
+ * Implements hook_node_insert().
+ */
+function fs_event_node_insert($node) {
+  if (isset($node->type)&&$node->type == "events") {
+    generate_image_events($node);
+     entity_get_controller('node')->resetCache(array($node->nid));
+  }
+}
+
+/**
+ * Implements hook_node_update().
+ */
+function fs_event_node_update($node) {
+  if (isset($node->type)&&$node->type == "events") {
+    generate_image_events($node);
+     entity_get_controller('node')->resetCache(array($node->nid));
+  }
+}
+
+function generate_image_events($node) {
+  module_load_include('inc', 'fs_base', 'fs_base');
+  $uri = fs_base_image_storage($node->nid, "field_main_image");
+  try {
+    fs_base_generate_image('event_calandar', $uri);
+  }
+  catch (Exception $e) {
+    ///echo 'Caught exception: ', $e->getMessage(), "\n";
+  }
+}

@@ -1,0 +1,178 @@
+<?php
+
+
+
+/**
+ * Implements hook_theme().
+ */
+function fs_listing_theme() {
+  $module_path = drupal_get_path('module', 'fs_listing');
+
+  return [
+    'fs_listing_detail_page' => [
+      'variables' => ['item' => NULL],
+      'template' => 'fs_listing_detail_page',
+      'path' => $module_path . '/templates',
+    ],
+    'fs_listing_related_listings' => [
+      'variables' => ['items' => NULL],
+      'template' => 'fs_listing_related_listings',
+      'path' => $module_path . '/templates',
+    ],
+    'fs_listing_home_pick_of_week' => [
+      'variables' => ['items' => NULL],
+      'template' => 'fs_listing_home_pick_of_week',
+      'path' => $module_path . '/templates',
+    ],
+  ];
+}
+
+/**
+ * Implements hook_block_info().
+ */
+function fs_listing_block_info() {
+  $blocks = [];
+
+  $blocks['fs_listing_related_listings'] = [
+    'info' => t('FS Related listings'),
+    'cache' => DRUPAL_CACHE_PER_PAGE,
+  ];
+
+  $blocks['fs_listing_home_pick_of_week'] = [
+    'info' => t('FS Home Pick Of Week'),
+    'cache' => DRUPAL_CACHE_PER_PAGE,
+  ];
+
+  return $blocks;
+}
+
+/**
+ * Implements hook_block_view().
+ */
+function fs_listing_block_view($delta = '') {
+  $block = [];
+
+  switch ($delta) {
+    case 'fs_listing_related_listings':
+      $block['subject'] = t('Related items');
+      $block['content'] = '';
+      if (arg(0) == 'directory' && is_numeric(arg(1))) {
+//        $nid = arg(1);
+//        $type = 'listing';
+//
+//        $cw_api_base_url = variable_get('cw_api_base_url');
+//        $url = $cw_api_base_url . '/fs_api/listing_related_items';
+//        $options = [
+//          'query' => [
+//            'nid' => $nid,
+//            'type' => $type,
+//          ],
+//        ];
+//
+//        $response = drupal_http_request(url($url, $options));
+//
+//        $response_items = drupal_json_decode($response->data);
+//
+//        $items = [];
+//        foreach ($response_items as $response_item) {
+//          $item = [];
+//          $item['nid'] = $response_item['nid'];
+//          $item['title'] = $response_item['title'];
+//          $item['image'] = $response_item['image'];
+//          $item['url'] = url('school/' . $item['nid']);
+//
+//          $items[] = $item;
+//        }
+//
+//        $variables = [
+//          'items' => $items,
+//        ];
+       $variables["test"]="";
+        $block['content'] = theme('fs_listing_related_listings', $variables);
+      }
+
+      break;
+
+    case 'fs_listing_home_pick_of_week':
+//      $block['subject'] = t('Pick Of Week');
+//      $cid = fs_city_get_selected_city_id();
+//      $cities = _fs_city_get_cities();
+//      $city = $cities[$cid];
+//
+//      $cw_api_base_url = variable_get('cw_api_base_url');
+//      $url = $cw_api_base_url . '/fs_api/listing_pick_of_week';
+//      $options = [
+//        'query' => [
+//          'city' => $city,
+//        ],
+//      ];
+//
+//      $response = drupal_http_request(url($url, $options));
+//
+//      $items = drupal_json_decode($response->data);
+//
+//      foreach ($items as &$item) {
+//        if (!empty($item['nodes'])) {
+//          foreach ($item['nodes'] as &$node) {
+//            $nid = $node['nid'];
+//            $node['url'] = url('directory/' . $nid);
+//          }
+//        }
+//      }
+//      //var_dump($items);
+//
+//      $variables = [
+//        'items' => $items,
+//      ];
+      $variables["test"]="";
+      $block['content'] = theme('fs_listing_home_pick_of_week', $variables);
+      break;
+  }
+
+  return $block;
+}
+
+/**
+ * Implements template_preprocess_node().
+ */
+function fs_listing_preprocess_node(&$variables) {
+  $node = $variables['node'];
+  $view_mode = $variables['view_mode'];
+  if ($node->type == 'listings' && $view_mode == 'full') {
+    drupal_add_css(drupal_get_path('theme', 'family') . '/css/components/listing.css', array('group' => CSS_THEME));
+    drupal_add_css(drupal_get_path('theme', 'family') . '/lib/bootstrap-rating/bootstrap-rating.css', array('group' => CSS_THEME));
+    drupal_add_js(variable_get("path_theme", NULL) . '/lib/bootstrap-rating/bootstrap-rating.min.js', array('scope' => 'footer'));
+    drupal_add_js('http://webapi.amap.com/maps?v=1.3&key=265b2136b0c369e4cded2a18d7662236', 'external');
+    drupal_add_js('http://cache.amap.com/lbs/static/addToolbar.js', 'external');
+    drupal_add_js(variable_get("path_theme", NULL) . '/lib/amap/amap.js', array('scope' => 'footer'));
+
+    module_load_include('inc', 'fs_search_directory', 'fs_search_directory');
+    module_load_include('inc', 'fs_base', 'fs_base');
+    module_load_include('inc', 'fs_listing', 'fs_listing');
+    module_load_include('inc', 'fs_sailthru', 'fs_sailthru');
+    fs_sailthru_meta_tags($node);
+    $item = fs_base_load($node,"listing");
+    if($item["field_editor_description"]){
+      $item['body'] = $item['field_editor_description'];
+    }else{
+      $item['body'] = $item['field_contributor_description'];
+    }
+      $default_preview_image = variable_get("default_image"); //url(drupal_get_path('module', 'fs_search') . '/images/placeholder.jpg');
+      if (empty($item["field_main_image"])) {
+        $item['field_main_image'] = $default_preview_image;
+      }
+      else {
+        $item['field_main_image'] = file_create_url($item['field_main_image']);
+      }
+
+      $lat = $item["field_map"]["lat"];
+      $lon = $item["field_map"]["lon"];
+      $img = $item["field_main_image"];
+      $json_directory = "var json_directory=[";
+      $json_directory .= "{'lat':'" . $lat . "','long':'" . $lon . "','img':'" . $img . "'},";
+
+      $json_directory .= "];";
+      drupal_add_js($json_directory, array('type' => 'inline'));
+      $variables["item"] =  $item ;
+  }
+}

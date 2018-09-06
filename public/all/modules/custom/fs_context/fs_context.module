@@ -1,0 +1,45 @@
+<?php
+
+/**
+ * Implements hook_context_plugins().
+ */
+function fs_context_context_plugins() {
+  $plugins = [];
+  $plugins['fs_context_condition_article_category'] = [
+    'handler' => [
+      'path' => drupal_get_path('module', 'fs_context') . '/plugins',
+      'file' => 'fs_context_condition_article_category.inc',
+      'class' => 'fs_context_condition_article_category',
+      'parent' => 'context_condition_node',
+    ],
+  ];
+
+  return $plugins;
+}
+
+
+
+/**
+ * Implements hook_context_registry().
+ */
+function fs_context_context_registry() {
+  return [
+    'conditions' => [
+      'fs_article_category' => [
+        'title' => t('FS Article category'),
+        'plugin' => 'fs_context_condition_article_category',
+      ],
+    ],
+  ];
+}
+
+/**
+ * Implements hook_node_view().
+ */
+function fs_context_node_view($node, $view_mode, $langcode) {
+  if($node->type == 'article') {
+    if ($plugin = context_get_plugin('condition', 'fs_article_category')) {
+      $plugin->execute($node, 'view');
+    }
+  }
+}

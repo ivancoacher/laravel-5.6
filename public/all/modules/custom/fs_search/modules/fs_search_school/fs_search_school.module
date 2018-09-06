@@ -1,0 +1,120 @@
+<?php
+
+/**
+ * Implements hook_menu().
+ */
+function fs_search_school_menu() {
+  $file_path = drupal_get_path('module', 'fs_search_school');
+  $items = [];
+  $items['admin/content/search_school'] = [
+    'title' => 'School search settings(In Shanghai)',
+    'type' => MENU_NORMAL_ITEM,
+    'page callback' => 'drupal_get_form',
+    'page arguments' => ['fs_search_school_search_page_setting_form', 'shanghai'],
+    'access arguments' => ['administer site configuration'],
+    'file' => 'fs_search_school.admin.inc',
+    'file path' => $file_path,
+  ];
+
+  $items['admin/content/search_school/default'] = [
+      'title' => 'Search school index set up',
+      'type' => MENU_DEFAULT_LOCAL_TASK,
+      'weight' => 1,
+    ] + $items['admin/content/search_school'];
+
+  $cities = _fs_city_get_cities();
+  
+    $items['shanghai/school'] = [
+      'title' => 'School',
+      'page callback' => 'fs_search_school_list_page',
+      'page arguments' => [0],
+      'access callback' => TRUE,
+      'file' => 'fs_search_school.pages.inc',
+      'file path' => $file_path,
+    ];
+    
+    $items['shanghai/school/%'] = [
+      'title' => 'School',
+      'page callback' => 'fs_search_school_details_redirect',
+      'page arguments' => [2],
+      'access callback' => TRUE,
+      'file' => 'fs_search_school.pages.inc',
+      'file path' => $file_path,
+    ];
+    $items['school/%'] = [
+      'title' => 'School',
+      'page callback' => 'fs_search_school_details_redirect',
+      'page arguments' => [1],
+      'access callback' => TRUE,
+      'file' => 'fs_search_school.pages.inc',
+      'file path' => $file_path,
+    ];
+     
+    $items['shanghai-schools'] = [
+      'title' => 'School',
+      'page callback' => 'fs_search_school_list_page',
+      'page arguments' => [0],
+      'access callback' => TRUE,
+      'file' => 'fs_search_school.pages.inc',
+      'file path' => $file_path,
+    ];
+    
+    $items['shanghai-schools/api'] = [
+      'title' => 'School',
+      'page callback' => 'fs_search_school_list_page_json',
+      'page arguments' => [0],
+      'access callback' => TRUE,
+      'file' => 'fs_search_school.pages.inc',
+      'file path' => $file_path,
+    ];
+  foreach ($cities as $city) {
+    $items[$city.'/school/premium'] = [
+    'page callback' => 'fs_school_search_premiun',
+    'page arguments' => [0],
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+    'file' => 'fs_search_school.pages.inc',
+    'file_path' => $file_path,
+    ];
+     }
+
+  $items['school/autocomplete/%'] = [
+    'page callback' => 'fs_school_search_autocomplete',
+    'page arguments' => [2],
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+    'file' => 'fs_search_school.pages.inc',
+    'file_path' => $file_path,
+  ];
+  
+ 
+
+
+
+  return $items;
+}
+
+/**
+ * Implements hook_theme().
+ */
+function fs_search_school_theme() {
+  $module_path = drupal_get_path('module', 'fs_search_school');
+
+  return [
+    'fs_search_school_list_page' => [
+      'variables' => ['items' => NULL, 'pager' => NULL],
+      'template' => 'fs_search_school_list_page',
+      'path' => $module_path . '/templates',
+    ],
+    'fs_search_school_school_list_view' => [
+      'variables' => ['item' => NULL],
+      'template' => 'fs_search_school_school_list_view',
+      'path' => $module_path . '/templates',
+    ],
+    'fs_school_top_item' => [
+      'variables' => ['item' => NULL],
+      'template' => 'fs_school_top_item',
+      'path' => $module_path . '/templates',
+    ],
+  ];
+}

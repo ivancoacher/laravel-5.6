@@ -1,0 +1,30 @@
+<?php
+
+/**
+ * @file migrate_d2d_example.module
+ */
+
+/**
+ * Intentionally left empty, see migrate_d2d_example.migrate.inc
+ * for the actual implementation.
+ *
+ * @link https://drupal.org/node/1006982
+ */
+module_load_include('inc', 'migrate_cw', 'migrate_cw');
+
+/**
+ * Implements hook_menu().
+*/
+function migrate_cw_menu() { 
+  $items['api/listings/%'] = [
+    'page callback' => 'migrate_cw_listing',
+    'page arguments' => [2],
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+  ]; 
+  return $items;
+}
+function migrate_cw_listing($nid){
+  $total = migrate_cw_process($nid);
+  drupal_json_output(array("total"=>$total));
+}

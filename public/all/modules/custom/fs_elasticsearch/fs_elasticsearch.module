@@ -1,0 +1,46 @@
+<?php
+
+module_load_include('inc', 'fs_elasticsearch', 'fs_elasticsearch');
+
+/**
+ * Implements hook_node_insert().
+ */
+function fs_elasticsearch_node_insert($node) {
+  if ($node->status == 1) {
+    $elasticsearch = new FsElasticsearch();
+    $index_list = $elasticsearch->index_mapping();
+    if (in_array($node->type, $index_list['node'])) {
+      $elasticsearch->es_node_create($node);
+    }
+  }
+}
+
+/**
+ * Implements hook_node_update().
+ */
+function fs_elasticsearch_node_update($node) {
+  $elasticsearch = new FsElasticsearch();
+  $index_list = $elasticsearch->index_mapping();
+  if (in_array($node->type, $index_list['node'])){
+    if ($node->status == 1) {
+      $elasticsearch->es_node_save($node);
+    }
+    else{
+      $elasticsearch->es_node_delete($node);
+    }
+  }
+}
+
+/**
+ * Implements hook_node_delete().
+ */
+function fs_elasticsearch_node_delete($node) {
+
+  $elasticsearch = new FsElasticsearch();
+  $index_list = $elasticsearch->index_mapping();
+  if (in_array($node->type, $index_list['node'])) {
+    $elasticsearch->es_node_delete($node);
+  }
+}
+
+?>

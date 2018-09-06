@@ -1,0 +1,158 @@
+
+.square, .btn {
+    border-radius: 0px!important;
+}
+
+/* -- color classes -- */
+.coralbg {
+    background-color: #1FAFB1;
+} 
+
+.coral {
+    color: #FA396f;
+}
+
+.turqbg {
+    background-color: #46D8D2;
+}
+
+.turq {
+    color: #46D8D2;
+}
+
+.white {
+    color: #fff!important;
+}
+
+/* -- The "User's Menu Container" specific elements. Custom container for the snippet -- */
+div.user-menu-container {
+    z-index: 10;
+    background-color: #fff;
+    margin-top: 20px;
+    background-clip: padding-box;
+    opacity: 0.97;
+    filter: alpha(opacity=97);
+    -webkit-box-shadow: 0 1px 6px rgba(0, 0, 0, 0.175);
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.175);
+}
+
+div.user-menu-container .btn-lg {
+    padding: 0px 12px;
+}
+
+div.user-menu-container h4 {
+    font-weight: 300;
+    color: #8b8b8b;
+}
+
+div.user-menu-container a, div.user-menu-container .btn  {
+    transition: 1s ease;
+}
+
+div.user-menu-container .thumbnail {
+    width:100%;
+    min-height:200px;
+    border: 0px!important;
+    padding: 0px;
+    border-radius: 0;
+    border: 0px!important;
+}
+
+/* -- Vertical Button Group -- */
+div.user-menu-container .btn-group-vertical {
+    display: block;
+}
+
+div.user-menu-container .btn-group-vertical>a {
+    padding: 20px 25px;
+    background-color: #46D8D2;
+    color: white;
+    border-color: #fff;
+}
+
+div.btn-group-vertical>a:hover {
+    color: white;
+    border-color: white;
+}
+
+div.btn-group-vertical>a.active {
+    background: #FA396F;
+    box-shadow: none;
+    color: white;
+}
+/* -- Individual button styles of vertical btn group -- */
+div.user-menu-btns {
+    padding-right: 0;
+    padding-left: 0;
+    padding-bottom: 0;
+}
+
+div.user-menu-btns div.btn-group-vertical>a.active:after{
+    content: '';
+    position: absolute;
+    left: 100%;
+    top: 50%;
+    margin-top: -13px;
+    border-left: 0;
+    border-bottom: 13px solid transparent;
+    border-top: 13px solid transparent;
+    border-left: 10px solid #46D8D2;
+}
+/* -- The main tab & content styling of the vertical buttons info-- */
+div.user-menu-content {
+    color: #323232;
+}
+
+ul.user-menu-list {
+    list-style: none;
+    margin-top: 20px;
+    margin-bottom: 0;
+    padding: 10px;
+    border: 1px solid #eee;
+}
+.user-image img{
+    width: 300px;
+    margin: auto;
+    border-radius: 165px;
+}
+.user-details .btn-label{
+    background: #535353;
+}
+.user-details .btn-info{
+    background-color:#ccc;
+}
+.page_user_edit_section{
+    margin-top: 30px;
+    padding: 15px;
+    border: 1px solid #1FAFB1;  
+}
+
+.page_user_edit_section .password-suggestions{
+    display:none!important;
+}
+.page_user_edit_section label{
+    width:100%; 
+}
+
+.page_user_edit_section .form-type-password-confirm label{
+    width: auto;
+}
+
+.page_user_edit_section input {
+    max-width:100%;
+}
+.page_user_edit_section  .form-actions input{
+    padding: 5px 40px;
+    background: #1FAFB1;
+    color: white;
+    border: none;
+}
+
+@media  (max-width: 992px) {
+    .page_user_edit_section .form-type-password-confirm label{
+        width: 100%!important;
+    }
+    .page_user_edit_section .password-strength,.page_user_edit_section div.password-confirm{
+         float:left!important;
+    }
+}

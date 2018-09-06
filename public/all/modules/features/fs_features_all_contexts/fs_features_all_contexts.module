@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the All Contexts feature.
+ */
+
+include_once 'fs_features_all_contexts.features.inc';

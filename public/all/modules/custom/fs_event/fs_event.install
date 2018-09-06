@@ -1,0 +1,8 @@
+<?php
+
+function fs_event_install() {
+  db_update('system')
+    ->fields(array('weight' => 130))
+    ->condition('name', 'fs_event', '=')
+    ->execute();
+}

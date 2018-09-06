@@ -1,0 +1,297 @@
+<?php
+
+/**
+ * Implements hook_menu().
+ */
+function fs_base_menu() {
+  $file_path = drupal_get_path('module', 'fs_base');
+  $items = [];
+
+  $items['admin/config/fs'] = [
+    'title' => 'Family Space Settings',
+    'description' => 'Settings for Family Space.',
+    'position' => 'right',
+    'weight' => -15,
+    'page callback' => 'system_admin_menu_block_page',
+    'access arguments' => ['administer site configuration'],
+    'file' => 'system.admin.inc',
+    'file path' => drupal_get_path('module', 'system'),
+  ];
+
+  $items['admin/config/fs/social_links'] = [
+    'title' => 'Family Space Social links',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => ['fs_base_social_settings_form'],
+    'access arguments' => ['administer site configuration'],
+    'type' => MENU_NORMAL_ITEM,
+    'file' => 'fs_base.admin.inc',
+    'file path' => $file_path,
+  ];
+    
+  $items['access'] = [
+    'title' => 'Access denied',
+    'page callback' => 'fs_base_access',
+    'access callback' => TRUE,
+    'type' => MENU_NORMAL_ITEM
+  ];
+
+
+  return $items;
+}
+function fs_base_access(){
+ global $base_url ;
+ $variables["base_url"] = $base_url;
+ $url_q = drupal_get_path('theme', 'family') . '/lib/jquery/jquery.min.js';
+ drupal_add_js($url_q, array('scope' => 'header'));
+ return theme('access_denied', $variables);
+}
+/**
+ * Implements hook_theme().
+ */
+function fs_base_theme() {
+  $module_path = drupal_get_path('module', 'fs_base');
+
+  return [
+    'fs_social_links' => [
+      'variables' => ['links' => NULL],
+      'template' => 'fs_social_links',
+      'path' => $module_path . '/templates',
+    ],
+     'access_denied' => [
+      'variables' => ['links' => NULL],
+      'template' => 'access_denied',
+      'path' => $module_path . '/templates',
+    ],
+    'fs_base_download_magazine_ds_default' => [
+      'variables' => [
+        'first_file_url' => NULL,
+        'first_thumbnail_url' => NULL,
+        'second_file_url' => NULL,
+        'second_file_thumbnail' => NULL,
+      ],
+      'template' => 'fs_base_download_magazine_ds_default',
+      'path' => $module_path . '/templates',
+    ],
+  ];
+}
+
+/**
+ * Implements hook_block_info().
+ */
+function fs_base_block_info() {
+  $blocks['fs_social_links'] = [
+    'info' => t('FS Social Links'),
+    'cache' => DRUPAL_CACHE_PER_PAGE,
+  ];
+
+  return $blocks;
+}
+
+/**
+ * Implements hook_block_view().
+ */
+function fs_base_block_view($delta = '') {
+  $block = [];
+
+  switch ($delta) {
+    case 'fs_social_links' :
+      global $base_url;
+      $block['subject'] = t('FS Social Links');
+      $variables = [
+        'links' => [],
+      ];
+      module_load_include('module', 'fs_city', 'fs_city');
+      if (fs_city_get_selected_city_id() == 1) {
+        $current_city = "shanghai";
+      }
+      else {
+        $current_city = "beijing";
+      }
+
+      $facebook = variable_get('fs_base_social_facebook', '');
+      $twitter = variable_get('fs_base_social_twitter', '');
+      $email = variable_get('fs_base_social_email', '');
+      $weichat = variable_get('fs_base_social_weichat', '');
+
+      $links[] = [
+        'type' => 'wechat',
+        'current_city' => $current_city,
+      ];
+
+      $links[] = [
+        'type' => '<i class="fa fa-facebook" aria-hidden="true"></i>',
+        'btn_type' => 'https://www.facebook.com/SHfam/',
+      ];
+
+      $links[] = [
+        'type' => '<i class="fa fa-twitter" aria-hidden="true"></i>',
+        'btn_type' => 'https://twitter.com/ShanghaiFamily/',
+      ];
+      
+      $links[] = [
+        'type' => '<i class="fa fa-instagram" aria-hidden="true"></i>',
+        'btn_type' => 'https://www.instagram.com/shanghaifamilyofficial/',
+      ];
+      
+      $links[] = [
+        'type' => '<i class="fa fa-video-camera" aria-hidden="true"></i>',
+        'btn_type' => 'http://v.qq.com/vplus/1093d5dade851ec5a3943dada1d257fb',
+      ];
+
+
+      $variables['links'] = $links;
+      $variables['theme_family'] = $base_url . "/" . drupal_get_path('theme', 'family');
+      $block['content'] = theme('fs_social_links', $variables);
+      break;
+  }
+
+  return $block;
+}
+
+function fs_base_download_magazine_ds_default($entity) {
+  module_load_include('inc', 'fs_base', 'fs_base');
+
+  $path = drupal_get_path('module', 'fs_base');
+  drupal_add_css($path . '/css/fs_base_download_magazine.css');
+
+  $bean_wrapper = entity_metadata_wrapper('bean', $entity);
+  $field_magazine_one_file = $bean_wrapper->field_magazine_one_file->value();
+  $field_magazine_one_thumbnail = $bean_wrapper->field_magazine_one_thumb->value();
+  $field_magazine_one_back_cover = $bean_wrapper->field_magazine_one_back_cover->value();
+  $field_magazine_two_file = $bean_wrapper->field_magazine_two_file->value();
+  $field_magazine_two_thumbnail = $bean_wrapper->field_magazine_two_thumb->value();
+  $field_magazine_two_back_cover = $bean_wrapper->field_magazine_two_back_cover->value();
+
+  $field_guide_one_file = $bean_wrapper->field_guide_one_file->value();
+  $field_guide_one_thumbnail = $bean_wrapper->field_guide_one_thumb->value();
+  $field_guide_one_back_cover = $bean_wrapper->field_guide_one_back_cover->value();
+  $field_guide_two_file = $bean_wrapper->field_guide_two_file->value();
+  $field_guide_two_thumbnail = $bean_wrapper->field_guide_two_thumb->value();
+  $field_guide_two_back_cover = $bean_wrapper->field_guide_two_back_cover->value();
+
+  $first_file_url = NULL;
+  if (isset($field_magazine_one_file['uri'])) {
+    $first_file_url = file_create_url($field_magazine_one_file['uri']);
+  }
+
+  $first_thumbnail_url = NULL;
+  if (isset($field_magazine_one_thumbnail['uri'])) {
+    $first_thumbnail_url = image_style_url('bean_download_magazine_default', $field_magazine_one_thumbnail['uri']);
+  }
+
+  $first_back_cover_url = NULL;
+  if (isset($field_magazine_one_back_cover['uri'])) {
+    $first_back_cover_url = image_style_url('bean_download_magazine_default', $field_magazine_one_back_cover['uri']);
+  }
+
+
+  $second_file_url = NULL;
+  if (isset($field_magazine_two_file['uri'])) {
+    $second_file_url = file_create_url($field_magazine_two_file['uri']);
+  }
+
+
+  $second_file_thumbnail = NULL;
+  if (isset($field_magazine_two_thumbnail['uri'])) {
+
+    $second_file_thumbnail = image_style_url('bean_download_magazine_default', $field_magazine_two_thumbnail['uri']);
+  }
+
+  $second_back_cover_url = NULL;
+  if (isset($field_magazine_two_back_cover['uri'])) {
+    $second_back_cover_url = image_style_url('bean_download_magazine_default', $field_magazine_two_back_cover['uri']);
+  }
+
+  $first_file_url_guide = NULL;
+  if (isset($field_guide_one_file['uri'])) {
+    $first_file_url_guide = file_create_url($field_guide_one_file['uri']);
+  }
+
+  $first_thumbnail_url_guide = NULL;
+  if (isset($field_guide_one_thumbnail['uri'])) {
+    $first_thumbnail_url_guide = image_style_url('bean_download_magazine_default', $field_guide_one_thumbnail['uri']);
+  }
+
+  $first_back_cover_url_guide = NULL;
+  if (isset($field_guide_one_back_cover['uri'])) {
+    $first_back_cover_url_guide = image_style_url('bean_download_magazine_default', $field_guide_one_back_cover['uri']);
+  }
+
+  $second_file_url_guide = NULL;
+  if (isset($field_guide_two_file['uri'])) {
+    $second_file_url_guide = file_create_url($field_guide_two_file['uri']);
+  }
+
+  $second_file_thumbnail_guide = NULL;
+  if (isset($field_guide_two_thumbnail['uri'])) {
+    $second_file_thumbnail_guide = image_style_url('bean_download_magazine_default', $field_guide_two_thumbnail['uri']);
+  }
+
+  $second_back_cover_url_guide = NULL;
+  if (isset($field_guide_two_back_cover['uri'])) {
+    $second_back_cover_url_guide = image_style_url('bean_download_magazine_default', $field_guide_two_back_cover['uri']);
+  }
+  $variables = [
+    'first_file_url' => $first_file_url,
+    'first_thumbnail_url' => $first_thumbnail_url,
+    'first_back_cover_url' => $first_back_cover_url,
+    'second_file_url' => $second_file_url,
+    'second_thumbnail_url' => $second_file_thumbnail,
+    'second_back_cover_url' => $second_back_cover_url,
+    'first_file_url_guide' => $first_file_url_guide,
+    'first_thumbnail_url_guide' => $first_thumbnail_url_guide,
+    'first_back_cover_url_guide' => $first_back_cover_url_guide,
+    'second_file_url_guide' => $second_file_url_guide,
+    'second_thumbnail_url_guide' => $second_file_thumbnail_guide,
+    'second_back_cover_url_guide' => $second_back_cover_url_guide,
+  ];
+
+  return theme('fs_base_download_magazine_ds_default', $variables);
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function fs_base_form_alter(&$form, &$form_state, $form_id) {
+
+  if ($form_id == "schools_node_form" ||$form_id == "listings_node_form" || $form_id == "events_node_form") {
+    global $base_url;
+    $path_theme = $base_url . "/" . drupal_get_path('theme', 'family');
+    $form['#attached']['css'] = array(
+      drupal_get_path('module', 'fs_base') . '/css/create_form.css',
+      drupal_get_path('theme', 'family') . '/lib/bootstrap/css/bootstrap-select.min.css'     
+    );
+    $options = array('group' => JS_THEME);
+    $create_js = drupal_get_path('module', 'fs_base') . '/js/create_form.js';
+    $bootstrap_select = $path_theme . '/lib/bootstrap/js/bootstrap-select.min.js';
+    
+    drupal_add_js($bootstrap_select, $options);
+    drupal_add_js($create_js, $options);
+
+    global $user;
+    if(isset($form['field_school_premium'])&&!in_array("administrator", $user->roles)&&!in_array("editor", $user->roles)){
+    $form['field_school_premium']['#access'] = FALSE;   
+    }
+  }
+}
+
+function fs_base_imageinfo_cache_image_generate($field_name = NULL, $style_name = NULL,$uri) {
+  module_load_include('inc', 'imageinfo_cache', 'imageinfo_cache');
+  $image_fields = imageinfo_cache_get_image_fields();
+  $image_styles = image_styles();
+
+  //$files[$field_name] = fs_base_imageinfo_cache_get_all_images_in_field($image_fields, $field_name);
+  
+
+  // Get list of image styles to generate.
+  //foreach ($files as $field_name => $uris) {
+ 
+      $image_styles = array($style_name => $image_styles[$style_name]);
+
+   // foreach ($uris as $fid => $uri) {
+      $return = imageinfo_cache_create_image_styles($uri, array(), $image_styles);
+      
+   // }
+  //}
+  return $return;
+}

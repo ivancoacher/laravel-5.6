@@ -1,0 +1,198 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Jul 5, 2017, 11:35:10 AM
+    Author     : ringier
+*/
+
+.section_add{
+    border: 1px solid #1FAFB1;
+    margin-top: 30px;
+    padding: 0px 30px;
+    border-radius: 5px;
+}
+.title_add{
+    margin: 15px 0px;
+}
+.title_add .thin-text{
+    font-weight: 300;
+}
+.section_add input[type="text"],.section_add select{
+    height:35px;
+    max-width: 100%;
+}
+.section_add input[type="text"]:focus{
+
+    outline-color: #1FAFB1;
+}
+.section_add .form-item-title label{
+    display: block;
+}
+
+
+.section_add  .tabledrag-toggle-weight-wrapper{
+    display:none;
+}
+
+.section_add .field-type-entityreference .field-multiple-table td.field-multiple-drag{
+    width: 10px;
+    padding-right: 0;
+    background-color:#1FAFB1;
+
+}
+
+/*.section_add form > div > div:hover{
+   border:1px dashed #1FAFB1;   
+}*/
+
+.section_add .field-type-entityreference a.tabledrag-handle .handle{
+    height: 40px;
+    width: 30px;
+    background-position: 18px -8px;
+}
+
+.section_add .field-type-entityreference a.tabledrag-handle-hover .handle{
+    background-position: 18px -8px;
+}
+.section_add .field-add-more-submit{
+    background-color: #1FAFB1;
+    border: none;
+    color: white;
+    padding: 6px 20px;
+}
+.section_add .form-checkboxes{
+    width: 75%;
+}
+.section_add .form-checkboxes  .form-type-checkbox{
+    display: inline-block;
+    margin: 5px 10px;
+
+}
+.section_add input[type=checkbox], .section_add input[type=radio]{
+    margin: 0px;
+}
+.section_add  .field-type-datetime{
+    border-bottom: 1px solid rgb(222, 221, 221);
+    margin-bottom: 30px;
+    width:90%; 
+}
+.section_add .form-textarea-wrapper textarea:focus{
+    outline-color: #1FAFB1;
+}
+.section_add label{
+    display: block;
+}
+.section_add label[class="option"]{
+    display:inline-block;
+}
+.section_add .field-type-image input[type="submit"]{
+    background-color: #1FAFB1;
+    border: none;
+    margin: 10px 0px;
+    color: white;
+    padding: 5px 15px;
+}
+.section_add .collapsible{
+    margin: 30px 0px;
+}
+
+.section_add .bootstrap-select.form-select{
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    height: 35px;
+}
+.section_add .bootstrap-select.form-select > button[type="button"]:focus{
+    outline-color: #1FAFB1!important;
+}
+.section_add .bootstrap-select.form-select .bs-searchbox input[type="text"]:focus{
+    outline-color: #1FAFB1!important;
+    box-shadow:none!important; 
+    border: 1px solid #ccc;
+}
+.section_add .bootstrap-select.form-select .bs-searchbox input{
+    outline-color: #1FAFB1!important;
+    box-shadow:none!important; 
+    border: 1px solid #ccc;
+}
+.section_add .bootstrap-select.form-select ul > li.selected.active a{
+    background-color: #1FAFB1;
+}
+.section_add .bootstrap-select.form-select ul > li >  a:focus{
+    outline-color: #1FAFB1!important;
+}
+.section_add  input[type="submit"]{
+    background-color: #1FAFB1;
+    border: none;
+    margin: 10px 0px;
+    color: white;
+    padding: 8px 45px;
+}
+.section_add .form-actions #edit-preview{
+    display:none;
+}
+.section_add .amap-coordinate,.section_add  .amap-picker {
+    width:45%;
+}
+.section_add .amap-coordinate  input{
+    width:90%;
+}
+.section_add .map-search{
+    max-width:100%;
+}
+.section_add .map-search{
+    max-width:100%;
+    min-height: 85px;
+    bottom: 35px;
+    top: initial;
+}
+.section_add .field-type-field-collection .field-multiple-drag .handle {
+    display:none!important ;
+}
+.section_add .field-type-field-collection table td{
+    padding:15px 0px; 
+}
+.section_add .field-type-field-collection table{
+    width:100%;
+}
+.section_add .form-item-field-map-und-0-name, .section_add .form-item-field-map-und-0-description{
+    display:none;
+}
+.title_add{
+    background-color: #f7f7f7;
+        padding-bottom: 20px;
+}
+/**events**/
+/*.events_add .form-item-title{
+    width:50%;
+    float: left;
+}
+.events_add .field-name-field-related-venue{
+    width: 50%;
+    float: left;
+    margin-top: -30px;
+    margin-left: -37px;
+}*/
+@media  (max-width: 1200px) {
+/*    .events_add .form-item-title{
+        width:auto;
+        float: none;
+    }
+    .events_add .field-name-field-related-venue{
+        width: auto;
+        float: none;
+        margin-top: 0px;
+        margin-left: 0px;
+    }*/
+    .section_add .amap-coordinate,.section_add .amap-picker{
+        width:100%;
+    }
+
+}
+@media  (max-width: 992px) {
+    .section_add .field-type-entityreference input[type="text"],.section_add .field-type-entityreference select{
+        width:100%;
+    }
+}

@@ -1,0 +1,59 @@
+<?php
+
+/**
+ * Implements hook_entity_load().
+ */
+/*
+function fs_dfp_entity_load($entities, $type) {
+  if ($type == 'bean') {
+    foreach ($entities as $entity) {
+      if ($entity->type == 'dfp') {
+
+        break;
+      }
+    }
+  }
+}
+*/
+
+/**
+ * Implements hook_theme().
+ */
+function fs_dfp_theme() {
+  $module_path = drupal_get_path('module', 'fs_dfp');
+
+  return [
+    'fs_dfp_ds_default' => [
+      'variables' => ['body' => NULL],
+      'template' => 'fs_dfp_ds_default',
+      'path' => $module_path . '/templates',
+    ],
+  ];
+}
+
+function fs_dfp_ds_default($entity) {
+  $path = drupal_get_path('module', 'fs_dfp');
+ // drupal_add_js($path . '/js/fs_dfp.js', ['weight' => 0]);
+//  $bean->settings['node_view_mode']
+  $bean_wrapper = entity_metadata_wrapper('bean', $entity);
+  $field_dfp_script = $bean_wrapper->field_dfp_script->value();
+  $field_dfp_body = $bean_wrapper->field_dfp_body->value();
+
+  $dpf_script = $field_dfp_script['value'];
+//  if(!empty($dpf_script)) {
+//    drupal_add_js($dpf_script, ['type' => 'inline', 'scope' => 'header', 'weight' => 100]);
+//  }
+  if($bean_wrapper->field_dfp_for_mobile->value()){
+      $dfp_mobile = $bean_wrapper->field_dfp_for_mobile->value();   
+  }else{
+     $dfp_mobile = null; 
+  }
+  $dfp_body = '<script type="text/javascript">'.$dpf_script.'</script>'.$field_dfp_body['value'];
+  
+  $variables = [
+    'body' => $dfp_body,
+    'dfp_mobile' => $dfp_mobile  
+  ];
+
+  return theme('fs_dfp_ds_default', $variables);
+}

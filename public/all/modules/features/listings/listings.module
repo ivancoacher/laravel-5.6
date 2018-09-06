@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Listings feature.
+ */
+
+include_once 'listings.features.inc';

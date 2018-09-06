@@ -1,0 +1,180 @@
+<?php
+
+module_load_include('inc', 'fs_base', 'fs_base');
+/**
+ * Implements hook_form_alter().
+ */
+function fs_user_editor_form_alter(&$form, &$form_state, $form_id) {
+  // dpm(func_get_args());
+}
+
+
+/**
+ * Implements hook_block_info().
+ */
+function fs_user_editor_block_info() {
+  $blocks = [];
+
+  $blocks['fs_user_editor_meet_editors'] = [
+    'info' => t('Meet the editors'),
+    'cache' => DRUPAL_CACHE_PER_PAGE,
+  ];
+
+  $blocks['fs_user_editor_related_articles'] = [
+    'info' => t('Related articles'),
+    'cache' => DRUPAL_CACHE_PER_PAGE,
+  ];
+
+  return $blocks;
+}
+
+/**
+ * Implements hook_block_view().
+ */
+function fs_user_editor_block_view($delta = '') {
+  $block = [];
+
+  switch ($delta) {
+    case 'fs_user_editor_meet_editors':
+      $block['subject'] = t('Meet the editors');
+
+      $queue = entityqueue_subqueue_load('meet_the_editors');
+      $uids = [];
+      $editors = [];
+
+      if (isset($queue->eq_user) && !empty($queue->eq_user)) {
+        foreach ($queue->eq_user['und'] as $eq_item) {
+          $uids[] = $eq_item['target_id'];
+        }
+      }
+
+      if (!empty($uids)) {
+        foreach ($uids as $uid) {
+          $user = user_load($uid);
+          $profile = profile2_load_by_user($user, 'editor');
+          $editor['link'] = url('profile-editor/' . $user->uid);
+
+          if (isset($profile->field_pe_first_name['und']) && !empty($profile->field_pe_first_name['und'])) {
+            $editor['first_name'] = $profile->field_pe_first_name['und'][0]['value'];
+          }
+
+          if (isset($profile->field_pe_last_name['und']) && !empty($profile->field_pe_last_name['und'])) {
+            $editor['last_name'] = $profile->field_pe_last_name['und'][0]['value'];
+          }
+
+          if (isset($profile->field_pe_photo['und']) && !empty($profile->field_pe_photo['und'])) {
+            $editor['photo'] = fs_base_image_rebuild_style('editor_thumbnail', $profile->field_pe_photo['und'][0]['uri']);
+          }
+
+          $editors[] = $editor;
+        }
+      }
+
+
+      $variables = [
+        'items' => $editors,
+      ];
+
+      $block['content'] = theme('fs_user_editor_meet_editors', $variables);
+
+      break;
+
+    case 'fs_user_editor_related_articles':
+      $block['subject'] = 'Editor related articles';
+	    $user = user_load(arg(1));
+      $profile = profile2_load_by_user($user, 'editor');
+	    $fullname = $profile->field_pe_first_name['und'][0]['value'].' '.$profile->field_pe_last_name['und'][0]['value'];
+	    drupal_set_title($fullname);
+      if (arg(0) == 'profile-editor' && is_numeric(arg(1))) {
+        
+        if (isset($profile->field_pe_first_name['und']) && !empty($profile->field_pe_first_name['und'])) {
+            $editor_first_name = $profile->field_pe_first_name['und'][0]['value'];
+        }
+
+        $items = [];
+        $query = new EntityFieldQuery();
+        $query->entityCondition('entity_type', 'node')
+          ->entityCondition('bundle', 'article')
+          ->propertyCondition('status', NODE_PUBLISHED)
+          ->propertyCondition('uid', arg(1))
+          ->propertyOrderBy('created', 'desc')
+          ->addMetaData('account', user_load(1));
+
+        $result = $query->execute();
+        if (isset($result['node'])) {
+          $nids = array_keys($result['node']);
+          $nodes = entity_load('node', $nids);
+        }
+
+        if (isset($nodes)) {
+          foreach ($nodes as $node) {
+            $node_wrapper = entity_metadata_wrapper('node', $node);
+
+            $item['title'] = $node_wrapper->title->value();
+            $item['url'] = $node_wrapper->url->value();
+            $field_article_main_image = $node_wrapper->field_article_main_image->value();
+            if (!empty($field_article_main_image)) {
+              $item['image'] = image_style_url('article_trending_now_normal', $field_article_main_image['uri']);
+            }
+            else {
+              $item['image'] = NULL;
+            }
+
+            $items[] = $item;
+          }
+        }
+
+        $per_page = 9;
+
+        // Initialise the pager
+        $current_page = pager_default_initialize(count($items), $per_page);
+
+        // Split your list into page sized chunks
+        $chunks = array_chunk($items, $per_page, TRUE);
+
+        // Show the pager
+        $pager = theme('pager', [
+          'editor-related-articles',
+          count($items),
+        ]);
+
+        // Show the appropriate items from the list
+        $variables = [
+          'items' => $chunks[$current_page],
+          'pager' => $pager,
+          'editor_first_name'=>$editor_first_name
+        ];
+
+        $block['content'] = theme('fs_user_editor_related_articles', $variables);
+
+      }
+      else {
+        $block['content'] = '';
+      }
+
+      break;
+
+  }
+
+  return $block;
+}
+
+/**
+ * Implements hook_theme().
+ */
+function fs_user_editor_theme() {
+  $module_path = drupal_get_path('module', 'fs_user_editor');
+
+  return [
+    'fs_user_editor_meet_editors' => [
+      'variables' => ['items' => NULL],
+      'template' => 'fs_user_editor_meet_editors',
+      'path' => $module_path . '/templates',
+    ],
+    'fs_user_editor_related_articles' => [
+      'variables' => ['items' => NULL],
+      'template' => 'fs_user_editor_related_articles',
+      'path' => $module_path . '/templates',
+    ],
+  ];
+}

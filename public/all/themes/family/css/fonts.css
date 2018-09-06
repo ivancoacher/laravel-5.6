@@ -1,0 +1,65 @@
+@font-face {font-family: "Helvetica Neue 77 Bold Condensed";
+  src: url("../fonts/d72e521f27450184733d89aa499e531c.eot"); /* IE9*/
+  src: url("../fonts/d72e521f27450184733d89aa499e531c.eot?#iefix") format("embedded-opentype"), /* IE6-IE8 */
+  url("../fonts/d72e521f27450184733d89aa499e531c.woff2") format("woff2"), /* chrome、firefox */
+  url("../fonts/d72e521f27450184733d89aa499e531c.woff") format("woff"), /* chrome、firefox */
+  url("../fonts/d72e521f27450184733d89aa499e531c.ttf") format("truetype"), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+  url("../fonts/d72e521f27450184733d89aa499e531c.svg#Helvetica Neue 77 Bold Condensed") format("svg"); /* iOS 4.1- */
+} 
+
+@font-face {
+    font-family: 'verlag-Black';
+    src: url('../fonts/Verlag-Black.otf') format('otf');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+@font-face {
+    font-family: 'the_only_exceptionregular';
+    src: url('../fonts/theonlyexception-webfont.woff2') format('woff2'),
+         url('../fonts/theonlyexception-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+
+@font-face {
+    font-family: 'verlag-black';
+    src: url('../fonts/verlag-black.woff') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+
+}
+@font-face {
+    font-family: 'karla-regular';
+    src: url('../fonts/Karla-Regular.ttf') format('ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'karla-bold';
+    src: url('../fonts/Karla-Bold.ttf') format('ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'karla-bold-italic';
+    src: url('../fonts/Karla-BoldItalic.ttf') format('ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'karla-italic';
+    src: url('../fonts/Karla-Italic.ttf') format('ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+
+
+ 

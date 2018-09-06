@@ -1,0 +1,8 @@
+<?php
+
+function fs_gallery_install() {
+  db_update('system')
+    ->fields(array('weight' => 120))
+    ->condition('name', 'fs_gallery', '=')
+    ->execute();
+}

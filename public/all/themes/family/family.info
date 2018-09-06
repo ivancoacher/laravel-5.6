@@ -1,0 +1,47 @@
+name = Family
+description = Family Bootstrap Theme.
+version = VERSION
+core = 7.x
+
+
+
+;;;;;;;;;;;;;;;;;;;;;
+;; Regions
+;;;;;;;;;;;;;;;;;;;;;
+regions[header_top_ad] = Header Top Ad
+regions[topbar] = Top Bar
+regions[logo] = Family logo
+regions[megamenu] = Mega menu
+regions[content] = Content
+regions[sidebar_second] = Sidebar second
+regions[gallery_home] = gallery Home page
+regions[pre_footer] = Pre Footer
+regions[highlighted] = Highlighted
+regions[newsletter] = Newsletter
+regions[footer] = Footer
+
+
+;;;;;;;;;;;;;;;;;;;;;
+;; Stylesheets
+;;;;;;;;;;;;;;;;;;;;;
+stylesheets[all][] = css/fonts.css
+stylesheets[all][] = lib/animate/animate.min.css
+stylesheets[all][] = lib/hover/hover.min.css
+stylesheets[all][] = lib/pompiere/css/pompiere.css
+stylesheets[all][] = lib/fontawesome/css/font-awesome.min.css
+stylesheets[all][] = lib/bootstrap/css/bootstrap.min.css
+stylesheets[all][] = lib/bootstrap/css/jasny-bootstrap.min.css
+stylesheets[all][] = css/mega_menu.css
+stylesheets[all][] = css/family.css
+stylesheets[all][] = css/family_responsive.css
+stylesheets[all][] = css/family_fix.css
+
+
+; ;;;;;;;;;;;;;;;;;;;;;
+; ;; Scripts
+; ;;;;;;;;;;;;;;;;;;;;;
+scripts[] =lib/bootstrap/js/bootstrap.min.js
+scripts[] =js/megamenu.js
+scripts[] =js/family_main.js
+scripts[] =lib/bootstrap/js/jasny-bootstrap.min.js
+scripts[] =lib/addtoany/page.js

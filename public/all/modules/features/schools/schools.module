@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Schools feature.
+ */
+
+include_once 'schools.features.inc';

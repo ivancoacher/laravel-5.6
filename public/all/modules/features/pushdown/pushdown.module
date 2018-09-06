@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the pushdown feature.
+ */
+
+include_once 'pushdown.features.inc';

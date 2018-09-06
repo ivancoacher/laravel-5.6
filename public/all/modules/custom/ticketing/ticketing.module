@@ -1,0 +1,103 @@
+<?php
+
+function event_object()
+{
+    static $event_object;
+    if (!$event_object) {
+        require 'ticketing.inc.php';
+        $event_object = new TicketingApi();
+    }
+    return $event_object;
+}
+
+function query_247($table, $conditions = array())
+{
+    $records = array();
+    try {
+        db_set_active('247');
+        if (count($conditions)) {
+            $where = 'where ';
+            $wheres = array();
+            foreach ($conditions as $key => $value) {
+                $wheres[] = " '{$key}' = '{$value}' ";
+            }
+            $where_s = $where . implode(' and ', $wheres);
+        } else {
+            $where_s = false;
+        }
+
+        $sql = "select * from '$table' " . ($where_s ? $where_s : '');
+        $target = cinema247table_target($sql);
+        $results = db_query($sql, array(), array('target' => $target));
+        while ($record = $results->fetchAssoc()) {
+            $records[] = $record;
+        }
+        db_set_active();
+    } catch (Exception $e) {
+        $msg = $e->getMessage();
+        watchdog('error', $msg);
+        db_set_active();
+    } finally {
+        return $records;
+    }
+}
+
+function cinema247table_target($sql)
+{
+    $mapping = array(
+        '247_city' => 'db1',
+        '247_district' => 'db1',
+        '247_cinema' => 'db1',
+        '247_film_show' => 'db2',
+        '247_city_film' => 'db2',
+        '247_film' => 'db2',
+    );
+    $reg = "#[\"'](247_.*?)[\"']#";
+    preg_match($reg, $sql, $m);
+    $table = $m[1];
+    if (isset($mapping[$table])) {
+        return $mapping[$table];
+    } else {
+        return false;
+    }
+}
+
+/**
+ * Implements hook_cronapi().
+ */
+function ticketing_cronapi()
+{
+    $items = array();
+
+    $items['ticketing_get_all_tickets'] = array(
+        'title' => t('Ticketing get all tickets from API'),
+        'file' => 'ticketing.jobs.inc',
+        'file path' => drupal_get_path('module', 'ticketing'),
+        'callback' => 'ticketing_get_all_tickets',
+        'callback arguments' => array(),
+        'enabled' => TRUE,
+        'tags' => array('247tickets'),
+        'scheduler' => array(
+            'name' => 'crontab',
+            'crontab' => array(
+                'rules' => array('0 0 * * *'),
+            ),
+        ),
+    );
+    $items['ticketing_get_cinema_db'] = array(
+        'title' => t('Ticketing Download the SQLite DB for Cinema'),
+        'file' => 'ticketing.jobs.inc',
+        'file path' => drupal_get_path('module', 'ticketing'),
+        'callback' => 'ticketing_download_sqlite_db',
+        'callback arguments' => array(),
+        'enabled' => TRUE,
+        'tags' => array('247tickets'),
+        'scheduler' => array(
+            'name' => 'crontab',
+            'crontab' => array(
+                'rules' => array('0 0 * * *'),
+            ),
+        ),
+    );
+    return $items;
+}

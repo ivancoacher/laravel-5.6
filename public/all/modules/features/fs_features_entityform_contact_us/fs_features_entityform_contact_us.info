@@ -1,0 +1,17 @@
+name = Contact us
+core = 7.x
+package = EntityForm
+version = 7.x-1.0-beta1
+dependencies[] = email
+dependencies[] = entity
+dependencies[] = entityform
+dependencies[] = features
+dependencies[] = text
+features[entityform_type][] = contact_us
+features[features_api][] = api:2
+features[field_base][] = field_ef_email
+features[field_base][] = field_ef_message
+features[field_base][] = field_ef_name
+features[field_instance][] = entityform-contact_us-field_ef_email
+features[field_instance][] = entityform-contact_us-field_ef_message
+features[field_instance][] = entityform-contact_us-field_ef_name

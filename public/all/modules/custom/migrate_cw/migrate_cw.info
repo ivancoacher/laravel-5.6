@@ -1,0 +1,4 @@
+name = "Migrate CW content to Family"
+description = "Migrate CW content to Family"
+package = "Custom Modules"
+core = 7.x
