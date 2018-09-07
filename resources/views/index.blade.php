@@ -337,70 +337,25 @@
                             <div class="field field-name-bean-dfp-default field-type-ds field-label-hidden">
                                 <div class="field-items">
                                     <div class="field-item even">
-
-                                        <!-- THEME DEBUG -->
-                                        <!-- CALL: theme('fs_dfp_ds_default') -->
-                                        <!-- BEGIN OUTPUT from 'sites/all/modules/custom/fs_dfp/templates/fs_dfp_ds_default.tpl.php' -->
                                         <div class="col-xs-12 dfs_family dfs_family_large dfp_fix_main">
-                                            <script type="text/javascript">
-                                            </script>
 
                                             <div id="div-gpt-ad-1476415326611-0" style="">
-                                                <script type="text/javascript">
-                                                    jQuery(document).ready(function () {
-                                                        googletag.cmd.push(function () {
-                                                            googletag.display('div-gpt-ad-1476415326611-0');
-                                                        });
-                                                    });
-                                                </script>
+
                                                 <div id="google_ads_iframe_/129806946/FA_Home1_TopBanner_728x90_0__container__"
                                                      style="border: 0pt none;">
-                                                    <iframe id="google_ads_iframe_/129806946/FA_Home1_TopBanner_728x90_0"
-                                                            title="3rd party ad content"
-                                                            name="google_ads_iframe_/129806946/FA_Home1_TopBanner_728x90_0"
-                                                            width="728" height="90" scrolling="no" marginwidth="0"
-                                                            marginheight="0" frameborder="0"
-                                                            style="border: 0px; vertical-align: bottom;"
-                                                            src="./Family Events, Health and Schools in Shanghai _ Shanghai Family_files/saved_resource.html"></iframe>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-xs-12  dfs_family_mobile  hidden">
                                         </div>
-
-
-                                        <!-- END OUTPUT from 'sites/all/modules/custom/fs_dfp/templates/fs_dfp_ds_default.tpl.php' -->
-
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-
-                        <!-- END OUTPUT from 'sites/all/themes/family/templates/ds-1col.tpl.php' -->
-
                     </div>
                 </div>
 
-
-                <!-- END OUTPUT from 'sites/all/themes/family/templates/block/block--bean.tpl.php' -->
-
-
-                <!-- THEME DEBUG -->
-                <!-- CALL: theme('block') -->
-                <!-- FILE NAME SUGGESTIONS:
-                   * block--fs-article--fs-what-new.tpl.php
-                   * block--fs-article.tpl.php
-                   * block--content.tpl.php
-                   x block.tpl.php
-                -->
-                <!-- BEGIN OUTPUT from 'sites/all/themes/family/templates/block.tpl.php' -->
                 <span class="hidden">split-block</span>
-
-
-                <!-- THEME DEBUG -->
-                <!-- CALL: theme('fs_what_new') -->
-                <!-- BEGIN OUTPUT from 'sites/all/modules/custom/fs_article/templates/fs_what_new.tpl.php' -->
                 <div class="trending_now what_new">
                     <input type="hidden" id="cid" value="1">
                     <input type="hidden" class="current_page" value="0">
@@ -664,42 +619,8 @@
                                 <div class="field-items">
                                     <div class="field-item even">
 
-                                        <!-- THEME DEBUG -->
-                                        <!-- CALL: theme('fs_dfp_ds_default') -->
-                                        <!-- BEGIN OUTPUT from 'sites/all/modules/custom/fs_dfp/templates/fs_dfp_ds_default.tpl.php' -->
-                                        <div class="col-xs-12 dfs_family dfs_family_large dfp_fix_main">
-                                            <script type="text/javascript">  googletag.cmd.push(function () {
-                                                    googletag.defineSlot('/129806946/FA_Home2_TopBanner_728x90', [728, 90], 'div-gpt-ad-1476415566654-0').addService(googletag.pubads());
-                                                    googletag.pubads().enableSingleRequest();
-                                                    googletag.pubads().collapseEmptyDivs();
-                                                    googletag.enableServices();
-                                                });</script>
-                                            <div id="div-gpt-ad-1476415566654-0" style="">
-                                                <script type="text/javascript">
-                                                    jQuery(document).ready(function () {
-                                                        googletag.cmd.push(function () {
-                                                            googletag.display('div-gpt-ad-1476415566654-0');
-                                                        });
-                                                    });
-                                                </script>
-                                                <div id="google_ads_iframe_/129806946/FA_Home2_TopBanner_728x90_0__container__"
-                                                     style="border: 0pt none;">
-                                                    <iframe id="google_ads_iframe_/129806946/FA_Home2_TopBanner_728x90_0"
-                                                            title="3rd party ad content"
-                                                            name="google_ads_iframe_/129806946/FA_Home2_TopBanner_728x90_0"
-                                                            width="728" height="90" scrolling="no" marginwidth="0"
-                                                            marginheight="0" frameborder="0"
-                                                            style="border: 0px; vertical-align: bottom;"
-                                                            src="./Family Events, Health and Schools in Shanghai _ Shanghai Family_files/saved_resource(2).html"></iframe>
-                                                </div>
-                                            </div>
-                                        </div>
                                         <div class="col-xs-12  dfs_family_mobile  hidden">
                                         </div>
-
-
-                                        <!-- END OUTPUT from 'sites/all/modules/custom/fs_dfp/templates/fs_dfp_ds_default.tpl.php' -->
-
                                     </div>
                                 </div>
                             </div>
@@ -1306,34 +1227,7 @@
                                         <!-- CALL: theme('fs_dfp_ds_default') -->
                                         <!-- BEGIN OUTPUT from 'sites/all/modules/custom/fs_dfp/templates/fs_dfp_ds_default.tpl.php' -->
                                         <div class="col-xs-12 dfs_family dfs_family_large">
-                                            <script type="text/javascript"></script>
-                                            <script type="text/javascript">
-                                                googletag.cmd.push(function () {
-                                                    googletag.defineSlot('/129806946/FA_Home1_PremiumBox1_300x600', [300, 600], 'div-gpt-ad-1476339801423-0').addService(googletag.pubads());
-                                                    googletag.pubads().enableSingleRequest();
-                                                    googletag.pubads().collapseEmptyDivs();
-                                                    googletag.enableServices();
-                                                });
-                                            </script>
-                                            <div id="div-gpt-ad-1476339801423-0" style="">
-                                                <script type="text/javascript">
-                                                    jQuery(document).ready(function () {
-                                                        googletag.cmd.push(function () {
-                                                            googletag.display('div-gpt-ad-1476339801423-0');
-                                                        });
-                                                    });
-                                                </script>
-                                                <div id="google_ads_iframe_/129806946/FA_Home1_PremiumBox1_300x600_0__container__"
-                                                     style="border: 0pt none;">
-                                                    <iframe id="google_ads_iframe_/129806946/FA_Home1_PremiumBox1_300x600_0"
-                                                            title="3rd party ad content"
-                                                            name="google_ads_iframe_/129806946/FA_Home1_PremiumBox1_300x600_0"
-                                                            width="300" height="600" scrolling="no" marginwidth="0"
-                                                            marginheight="0" frameborder="0"
-                                                            style="border: 0px; vertical-align: bottom;"
-                                                            src="./Family Events, Health and Schools in Shanghai _ Shanghai Family_files/saved_resource(3).html"></iframe>
-                                                </div>
-                                            </div>
+
                                         </div>
                                         <div class="col-xs-12  dfs_family_mobile  hidden">
                                         </div>
@@ -1402,31 +1296,7 @@
                                         <!-- CALL: theme('fs_dfp_ds_default') -->
                                         <!-- BEGIN OUTPUT from 'sites/all/modules/custom/fs_dfp/templates/fs_dfp_ds_default.tpl.php' -->
                                         <div class="col-xs-12 dfs_family dfs_family_large">
-                                            <script type="text/javascript">  googletag.cmd.push(function () {
-                                                    googletag.defineSlot('/129806946/FA_Home1_MediumRectangle1_300x300', [300, 300], 'div-gpt-ad-1476430730334-0').addService(googletag.pubads());
-                                                    googletag.pubads().enableSingleRequest();
-                                                    googletag.pubads().collapseEmptyDivs();
-                                                    googletag.enableServices();
-                                                });</script>
-                                            <div id="div-gpt-ad-1476430730334-0" style="">
-                                                <script type="text/javascript">
-                                                    jQuery(document).ready(function () {
-                                                        googletag.cmd.push(function () {
-                                                            googletag.display('div-gpt-ad-1476430730334-0');
-                                                        });
-                                                    });
-                                                </script>
-                                                <div id="google_ads_iframe_/129806946/FA_Home1_MediumRectangle1_300x300_0__container__"
-                                                     style="border: 0pt none;">
-                                                    <iframe id="google_ads_iframe_/129806946/FA_Home1_MediumRectangle1_300x300_0"
-                                                            title="3rd party ad content"
-                                                            name="google_ads_iframe_/129806946/FA_Home1_MediumRectangle1_300x300_0"
-                                                            width="300" height="300" scrolling="no" marginwidth="0"
-                                                            marginheight="0" frameborder="0"
-                                                            style="border: 0px; vertical-align: bottom;"
-                                                            src="./Family Events, Health and Schools in Shanghai _ Shanghai Family_files/saved_resource(4).html"></iframe>
-                                                </div>
-                                            </div>
+
                                         </div>
                                         <div class="col-xs-12  dfs_family_mobile  hidden">
                                         </div>
@@ -1495,31 +1365,7 @@
                                         <!-- CALL: theme('fs_dfp_ds_default') -->
                                         <!-- BEGIN OUTPUT from 'sites/all/modules/custom/fs_dfp/templates/fs_dfp_ds_default.tpl.php' -->
                                         <div class="col-xs-12 dfs_family dfs_family_large">
-                                            <script type="text/javascript">googletag.cmd.push(function () {
-                                                    googletag.defineSlot('/129806946/FA_Home2_MediumRectangle1_300x300', [300, 300], 'div-gpt-ad-1476431430739-0').addService(googletag.pubads());
-                                                    googletag.pubads().enableSingleRequest();
-                                                    googletag.pubads().collapseEmptyDivs();
-                                                    googletag.enableServices();
-                                                });</script>
-                                            <div id="div-gpt-ad-1476431430739-0" style="">
-                                                <script type="text/javascript">
-                                                    jQuery(document).ready(function () {
-                                                        googletag.cmd.push(function () {
-                                                            googletag.display('div-gpt-ad-1476431430739-0');
-                                                        });
-                                                    });
-                                                </script>
-                                                <div id="google_ads_iframe_/129806946/FA_Home2_MediumRectangle1_300x300_0__container__"
-                                                     style="border: 0pt none;">
-                                                    <iframe id="google_ads_iframe_/129806946/FA_Home2_MediumRectangle1_300x300_0"
-                                                            title="3rd party ad content"
-                                                            name="google_ads_iframe_/129806946/FA_Home2_MediumRectangle1_300x300_0"
-                                                            width="300" height="300" scrolling="no" marginwidth="0"
-                                                            marginheight="0" frameborder="0"
-                                                            style="border: 0px; vertical-align: bottom;"
-                                                            src="./Family Events, Health and Schools in Shanghai _ Shanghai Family_files/saved_resource(5).html"></iframe>
-                                                </div>
-                                            </div>
+
                                         </div>
                                         <div class="col-xs-12  dfs_family_mobile  hidden">
                                         </div>
@@ -1588,31 +1434,7 @@
                                         <!-- CALL: theme('fs_dfp_ds_default') -->
                                         <!-- BEGIN OUTPUT from 'sites/all/modules/custom/fs_dfp/templates/fs_dfp_ds_default.tpl.php' -->
                                         <div class="col-xs-12 dfs_family dfs_family_large">
-                                            <script type="text/javascript">googletag.cmd.push(function () {
-                                                    googletag.defineSlot('/129806946/FA_Home2_PremiumBox1_300x600', [300, 600], 'div-gpt-ad-1476339880398-0').addService(googletag.pubads());
-                                                    googletag.pubads().enableSingleRequest();
-                                                    googletag.pubads().collapseEmptyDivs();
-                                                    googletag.enableServices();
-                                                });</script>
-                                            <div id="div-gpt-ad-1476339880398-0" style="">
-                                                <script type="text/javascript">
-                                                    jQuery(document).ready(function () {
-                                                        googletag.cmd.push(function () {
-                                                            googletag.display('div-gpt-ad-1476339880398-0');
-                                                        });
-                                                    });
-                                                </script>
-                                                <div id="google_ads_iframe_/129806946/FA_Home2_PremiumBox1_300x600_0__container__"
-                                                     style="border: 0pt none;">
-                                                    <iframe id="google_ads_iframe_/129806946/FA_Home2_PremiumBox1_300x600_0"
-                                                            title="3rd party ad content"
-                                                            name="google_ads_iframe_/129806946/FA_Home2_PremiumBox1_300x600_0"
-                                                            width="300" height="600" scrolling="no" marginwidth="0"
-                                                            marginheight="0" frameborder="0"
-                                                            style="border: 0px; vertical-align: bottom;"
-                                                            src="./Family Events, Health and Schools in Shanghai _ Shanghai Family_files/saved_resource(6).html"></iframe>
-                                                </div>
-                                            </div>
+
                                         </div>
                                         <div class="col-xs-12  dfs_family_mobile  hidden">
                                         </div>
