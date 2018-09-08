@@ -9,50 +9,50 @@
 <meta property="fb:pages" content="691591330903142">
 <title>Family Events, Health and Schools in Shanghai | Shanghai Family</title>
 <style type="text/css" media="all">
-    @import url("/modules/system/system.base.css?pbye4x");
-    @import url("/modules/system/system.menus.css?pbye4x");
-    @import url("/modules/system/system.messages.css?pbye4x");
-    @import url("/modules/system/system.theme.css?pbye4x");
+    @import  url("/modules/system/system.base.css?pbye4x");
+    @import  url("/modules/system/system.menus.css?pbye4x");
+    @import  url("/modules/system/system.messages.css?pbye4x");
+    @import  url("/modules/system/system.theme.css?pbye4x");
 </style>
 <style type="text/css" media="all">
-    @import url("/all/modules/contrib/jquery_update/replace/ui/themes/base/minified/jquery.ui.core.min.css?pbye4x");
-    @import url("/all/modules/contrib/jquery_update/replace/ui/themes/base/minified/jquery.ui.theme.min.css?pbye4x");
-    @import url("/all/modules/contrib/jquery_update/replace/ui/themes/base/minified/jquery.ui.menu.min.css?pbye4x");
-    @import url("/all/modules/contrib/jquery_update/replace/ui/themes/base/minified/jquery.ui.autocomplete.min.css?pbye4x");
+    @import  url("/all/modules/contrib/jquery_update/replace/ui/themes/base/minified/jquery.ui.core.min.css?pbye4x");
+    @import  url("/all/modules/contrib/jquery_update/replace/ui/themes/base/minified/jquery.ui.theme.min.css?pbye4x");
+    @import  url("/all/modules/contrib/jquery_update/replace/ui/themes/base/minified/jquery.ui.menu.min.css?pbye4x");
+    @import  url("/all/modules/contrib/jquery_update/replace/ui/themes/base/minified/jquery.ui.autocomplete.min.css?pbye4x");
 </style>
 <style type="text/css" media="all">
-    @import url("/modules/comment/comment.css?pbye4x");
-    @import url("/all/modules/contrib/date/date_api/date.css?pbye4x");
-    @import url("/all/modules/contrib/date/date_popup/themes/datepicker.1.7.css?pbye4x");
-    @import url("/all/modules/contrib/date/date_repeat_field/date_repeat_field.css?pbye4x");
-    @import url("/modules/field/theme/field.css?pbye4x");
-    @import url("/modules/node/node.css?pbye4x");
-    @import url("/modules/user/user.css?pbye4x");
-    @import url("/all/modules/contrib/views/css/views.css?pbye4x");
-    @import url("/all/modules/contrib/ckeditor/css/ckeditor.css?pbye4x");
+    @import  url("/modules/comment/comment.css?pbye4x");
+    @import  url("/all/modules/contrib/date/date_api/date.css?pbye4x");
+    @import  url("/all/modules/contrib/date/date_popup/themes/datepicker.1.7.css?pbye4x");
+    @import  url("/all/modules/contrib/date/date_repeat_field/date_repeat_field.css?pbye4x");
+    @import  url("/modules/field/theme/field.css?pbye4x");
+    @import  url("/modules/node/node.css?pbye4x");
+    @import  url("/modules/user/user.css?pbye4x");
+    @import  url("/all/modules/contrib/views/css/views.css?pbye4x");
+    @import  url("/all/modules/contrib/ckeditor/css/ckeditor.css?pbye4x");
 </style>
 <style type="text/css" media="all">
-    @import url("http://shfamily.com/sites/all/modules/contrib/ctools/css/ctools.css?pbye4x");
-    @import url("http://shfamily.com/sites/all/libraries/jquery.prettyPhoto/css/prettyPhoto.css?pbye4x");
-    @import url("http://shfamily.com/sites/default/files/honeypot/honeypot.css?pbye4x");
+    @import  url("http://shfamily.com/sites/all/modules/contrib/ctools/css/ctools.css?pbye4x");
+    @import  url("http://shfamily.com/sites/all/libraries/jquery.prettyPhoto/css/prettyPhoto.css?pbye4x");
+    @import  url("http://shfamily.com/sites/default/files/honeypot/honeypot.css?pbye4x");
 </style>
 <style type="text/css" media="all">
-    @import url("/all/themes/family/css/fonts.css?pbye4x");
-    @import url("/all/themes/family/lib/animate/animate.min.css?pbye4x");
-    @import url("/all/themes/family/lib/hover/hover.min.css?pbye4x");
-    @import url("/all/themes/family/lib/pompiere/css/pompiere.css?pbye4x");
-    @import url("/all/themes/family/lib/fontawesome/css/font-awesome.min.css?pbye4x");
-    @import url("/all/themes/family/lib/bootstrap/css/bootstrap.min.css?pbye4x");
-    @import url("/all/themes/family/lib/bootstrap/css/jasny-bootstrap.min.css?pbye4x");
-    @import url("/all/themes/family/css/mega_menu.css?pbye4x");
-    @import url("/all/themes/family/css/family.css?pbye4x");
-    @import url("/all/themes/family/css/family_responsive.css?pbye4x");
-    @import url("/all/themes/family/css/family_fix.css?pbye4x");
+    @import  url("/all/themes/family/css/fonts.css?pbye4x");
+    @import  url("/all/themes/family/lib/animate/animate.min.css?pbye4x");
+    @import  url("/all/themes/family/lib/hover/hover.min.css?pbye4x");
+    @import  url("/all/themes/family/lib/pompiere/css/pompiere.css?pbye4x");
+    @import  url("/all/themes/family/lib/fontawesome/css/font-awesome.min.css?pbye4x");
+    @import  url("/all/themes/family/lib/bootstrap/css/bootstrap.min.css?pbye4x");
+    @import  url("/all/themes/family/lib/bootstrap/css/jasny-bootstrap.min.css?pbye4x");
+    @import  url("/all/themes/family/css/mega_menu.css?pbye4x");
+    @import  url("/all/themes/family/css/family.css?pbye4x");
+    @import  url("/all/themes/family/css/family_responsive.css?pbye4x");
+    @import  url("/all/themes/family/css/family_fix.css?pbye4x");
 </style>
 <style type="text/css" media="all">
-    @import url("/all/themes/family/lib/owl-carousel/owl.carousel.css?pbye4x");
-    @import url("/all/modules/custom/fs_article/css/slide_onhover.css?pbye4x");
-    @import url("/all/themes/family/css/components/home.css?pbye4x");
+    @import  url("/all/themes/family/lib/owl-carousel/owl.carousel.css?pbye4x");
+    @import  url("/all/modules/custom/fs_article/css/slide_onhover.css?pbye4x");
+    @import  url("/all/themes/family/css/components/home.css?pbye4x");
 </style>
 <script type="text/javascript">
     var default_image = "http://shfamily.com/sites/all/themes/family/images/default.jpeg";
@@ -65,7 +65,7 @@
 <script async="" src="/js/gtm.js"></script>
 <script type="text/javascript" async="" src="/js/v1.js"></script>
 <script src="/js/3949.js" async="" type="text/javascript"></script>
-{{--<script async="" type="text/javascript" src="/js/gpt.js"></script>--}}
+
 <script type="text/javascript" src="/js/jquery.min.js"></script>
 <script type="text/javascript" src="/js/jquery.once.js"></script>
 <script type="text/javascript" src="/js/drupal.js"></script>

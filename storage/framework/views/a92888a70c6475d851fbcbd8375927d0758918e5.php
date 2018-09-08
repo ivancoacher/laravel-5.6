@@ -1,6 +1,4 @@
-@extends('layouts.base')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
     <section class=" content">
         <div class="top-section">
             <div class="container">
@@ -239,7 +237,7 @@
                             <div class="item-wrapper col-xs-12">
                                 <div class="col-sm-3 item-directory-img-section"><a
                                             href="http://shfamily.com/event/musiclab"><img
-                                                src="./Events in Shanghai_files/430_103" class="img-responsive"></a></div>
+                                                src="/images/430_103" class="img-responsive"></a></div>
                                 <div class="col-sm-9 description-item-directory-container">
                                     <div class="row title-item-directory">
                                         <span><a href="http://shfamily.com/event/musiclab">MusicLab</a></span>
@@ -278,7 +276,7 @@
                             <div class="item-wrapper col-xs-12">
                                 <div class="col-sm-3 item-directory-img-section"><a
                                             href="http://shfamily.com/event/live-jazz-music-every-friday-kk-vienna"><img
-                                                src="./Events in Shanghai_files/430_107" class="img-responsive"></a></div>
+                                                src="/images/430_107" class="img-responsive"></a></div>
                                 <div class="col-sm-9 description-item-directory-container">
                                     <div class="row title-item-directory">
                                         <span><a href="http://shfamily.com/event/live-jazz-music-every-friday-kk-vienna">Live Jazz Music Every Friday @ K&amp;K Vienna</a></span>
@@ -317,7 +315,7 @@
                             <div class="item-wrapper col-xs-12">
                                 <div class="col-sm-3 item-directory-img-section"><a
                                             href="http://shfamily.com/event/cut-rooftop-brunch"><img
-                                                src="./Events in Shanghai_files/430_108" class="img-responsive"></a></div>
+                                                src="/images/430_108" class="img-responsive"></a></div>
                                 <div class="col-sm-9 description-item-directory-container">
                                     <div class="row title-item-directory">
                                     <span><a
@@ -357,7 +355,7 @@
                             <div class="item-wrapper col-xs-12">
                                 <div class="col-sm-3 item-directory-img-section"><a
                                             href="http://shfamily.com/event/opera-night-every-saturday-kk-vienna"><img
-                                                src="./Events in Shanghai_files/430_109" class="img-responsive"></a></div>
+                                                src="/images/430_109" class="img-responsive"></a></div>
                                 <div class="col-sm-9 description-item-directory-container">
                                     <div class="row title-item-directory">
                                         <span><a href="http://shfamily.com/event/opera-night-every-saturday-kk-vienna">Opera Night Every Saturday @ K&amp;K Vienna</a></span>
@@ -397,7 +395,7 @@
                             <div class="item-wrapper col-xs-12">
                                 <div class="col-sm-3 item-directory-img-section"><a
                                             href="http://shfamily.com/event/oriental-pearl-tower-dongfang-mingzhu"><img
-                                                src="./Events in Shanghai_files/430_0" class="img-responsive"></a></div>
+                                                src="/images/430_0" class="img-responsive"></a></div>
                                 <div class="col-sm-9 description-item-directory-container">
                                     <div class="row title-item-directory">
                                         <span><a href="http://shfamily.com/event/oriental-pearl-tower-dongfang-mingzhu">Oriental Pearl Tower (Dongfang Mingzhu)</a></span>
@@ -437,7 +435,7 @@
                             <div class="item-wrapper col-xs-12">
                                 <div class="col-sm-3 item-directory-img-section"><a
                                             href="http://shfamily.com/event/learn-chinese-kungfu"><img
-                                                src="./Events in Shanghai_files/430_1" class="img-responsive"></a></div>
+                                                src="/images/430_1" class="img-responsive"></a></div>
                                 <div class="col-sm-9 description-item-directory-container">
                                     <div class="row title-item-directory">
                                     <span><a
@@ -476,7 +474,7 @@
                             <div class="item-wrapper col-xs-12">
                                 <div class="col-sm-3 item-directory-img-section"><a
                                             href="http://shfamily.com/event/sailing-experience"><img
-                                                src="./Events in Shanghai_files/430_2" class="img-responsive"></a></div>
+                                                src="/images/430_2" class="img-responsive"></a></div>
                                 <div class="col-sm-9 description-item-directory-container">
                                     <div class="row title-item-directory">
                                         <span><a href="http://shfamily.com/event/sailing-experience">Sailing Experience</a></span>
@@ -514,7 +512,7 @@
                             <div class="item-wrapper col-xs-12">
                                 <div class="col-sm-3 item-directory-img-section"><a
                                             href="http://shfamily.com/event/sounds-great-record-your-own-music"><img
-                                                src="./Events in Shanghai_files/430_4" class="img-responsive"></a></div>
+                                                src="/images/430_4" class="img-responsive"></a></div>
                                 <div class="col-sm-9 description-item-directory-container">
                                     <div class="row title-item-directory">
                                         <span><a href="http://shfamily.com/event/sounds-great-record-your-own-music">SOUNDS GREAT - Record Your Own Music</a></span>
@@ -551,7 +549,7 @@
                             <div class="item-wrapper col-xs-12">
                                 <div class="col-sm-3 item-directory-img-section"><a
                                             href="http://shfamily.com/event/cryo-world"><img
-                                                src="./Events in Shanghai_files/430_5" class="img-responsive"></a></div>
+                                                src="/images/430_5" class="img-responsive"></a></div>
                                 <div class="col-sm-9 description-item-directory-container">
                                     <div class="row title-item-directory">
                                         <span><a href="http://shfamily.com/event/cryo-world">Cryo World</a></span>
@@ -692,30 +690,7 @@
                                                 <!-- CALL: theme('fs_dfp_ds_default') -->
                                                 <!-- BEGIN OUTPUT from 'sites/all/modules/custom/fs_dfp/templates/fs_dfp_ds_default.tpl.php' -->
                                                 <div class="col-xs-12 dfs_family dfs_family_large">
-                                                    <script type="text/javascript">googletag.cmd.push(function () {
-                                                            googletag.defineSlot('/129806946/FA_Events_PremiumBox1_300x600', [300, 600], 'div-gpt-ad-1476338906344-0').addService(googletag.pubads());
-                                                            googletag.pubads().enableSingleRequest();
-                                                            googletag.enableServices();
-                                                        });</script>
-                                                    <div id="div-gpt-ad-1476338906344-0" style="">
-                                                        <script type="text/javascript">
-                                                            jQuery(document).ready(function () {
-                                                                googletag.cmd.push(function () {
-                                                                    googletag.display('div-gpt-ad-1476338906344-0');
-                                                                });
-                                                            });
-                                                        </script>
-                                                        <div id="google_ads_iframe_/129806946/FA_Events_PremiumBox1_300x600_0__container__"
-                                                             style="border: 0pt none;">
-                                                            <iframe id="google_ads_iframe_/129806946/FA_Events_PremiumBox1_300x600_0"
-                                                                    title="3rd party ad content"
-                                                                    name="google_ads_iframe_/129806946/FA_Events_PremiumBox1_300x600_0"
-                                                                    width="300" height="600" scrolling="no" marginwidth="0"
-                                                                    marginheight="0" frameborder="0"
-                                                                    style="border: 0px; vertical-align: bottom;"
-                                                                    src="./Events in Shanghai_files/saved_resource.html"></iframe>
-                                                        </div>
-                                                    </div>
+
                                                 </div>
                                                 <div class="col-xs-12  dfs_family_mobile  hidden">
                                                 </div>
@@ -783,32 +758,7 @@
                                                 <!-- THEME DEBUG -->
                                                 <!-- CALL: theme('fs_dfp_ds_default') -->
                                                 <!-- BEGIN OUTPUT from 'sites/all/modules/custom/fs_dfp/templates/fs_dfp_ds_default.tpl.php' -->
-                                                <div class="col-xs-12 dfs_family dfs_family_large">
-                                                    <script type="text/javascript">googletag.cmd.push(function () {
-                                                            googletag.defineSlot('/129806946/FA_Events_MediumRectangle1_300x300', [300, 300], 'div-gpt-ad-1476338784636-0').addService(googletag.pubads());
-                                                            googletag.pubads().enableSingleRequest();
-                                                            googletag.enableServices();
-                                                        });</script>
-                                                    <div id="div-gpt-ad-1476338784636-0" style="">
-                                                        <script type="text/javascript">
-                                                            jQuery(document).ready(function () {
-                                                                googletag.cmd.push(function () {
-                                                                    googletag.display('div-gpt-ad-1476338784636-0');
-                                                                });
-                                                            });
-                                                        </script>
-                                                        <div id="google_ads_iframe_/129806946/FA_Events_MediumRectangle1_300x300_0__container__"
-                                                             style="border: 0pt none;">
-                                                            <iframe id="google_ads_iframe_/129806946/FA_Events_MediumRectangle1_300x300_0"
-                                                                    title="3rd party ad content"
-                                                                    name="google_ads_iframe_/129806946/FA_Events_MediumRectangle1_300x300_0"
-                                                                    width="300" height="300" scrolling="no" marginwidth="0"
-                                                                    marginheight="0" frameborder="0"
-                                                                    style="border: 0px; vertical-align: bottom;"
-                                                                    src="./Events in Shanghai_files/saved_resource(1).html"></iframe>
-                                                        </div>
-                                                    </div>
-                                                </div>
+
                                                 <div class="col-xs-12  dfs_family_mobile  hidden">
                                                 </div>
 
@@ -876,29 +826,9 @@
                                                 <!-- CALL: theme('fs_dfp_ds_default') -->
                                                 <!-- BEGIN OUTPUT from 'sites/all/modules/custom/fs_dfp/templates/fs_dfp_ds_default.tpl.php' -->
                                                 <div class="col-xs-12 dfs_family dfs_family_large">
-                                                    <script type="text/javascript">googletag.cmd.push(function () {
-                                                            googletag.defineSlot('/129806946/FA_Events_MediumRectangle2_300x300', [300, 300], 'div-gpt-ad-1476338817458-0').addService(googletag.pubads());
-                                                            googletag.pubads().enableSingleRequest();
-                                                            googletag.enableServices();
-                                                        });</script>
+
                                                     <div id="div-gpt-ad-1476338817458-0" style="">
-                                                        <script type="text/javascript">
-                                                            jQuery(document).ready(function () {
-                                                                googletag.cmd.push(function () {
-                                                                    googletag.display('div-gpt-ad-1476338817458-0');
-                                                                });
-                                                            });
-                                                        </script>
-                                                        <div id="google_ads_iframe_/129806946/FA_Events_MediumRectangle2_300x300_0__container__"
-                                                             style="border: 0pt none;">
-                                                            <iframe id="google_ads_iframe_/129806946/FA_Events_MediumRectangle2_300x300_0"
-                                                                    title="3rd party ad content"
-                                                                    name="google_ads_iframe_/129806946/FA_Events_MediumRectangle2_300x300_0"
-                                                                    width="300" height="300" scrolling="no" marginwidth="0"
-                                                                    marginheight="0" frameborder="0"
-                                                                    style="border: 0px; vertical-align: bottom;"
-                                                                    src="./Events in Shanghai_files/saved_resource(2).html"></iframe>
-                                                        </div>
+
                                                     </div>
                                                 </div>
                                                 <div class="col-xs-12  dfs_family_mobile  hidden">
@@ -968,28 +898,14 @@
                                                 <!-- CALL: theme('fs_dfp_ds_default') -->
                                                 <!-- BEGIN OUTPUT from 'sites/all/modules/custom/fs_dfp/templates/fs_dfp_ds_default.tpl.php' -->
                                                 <div class="col-xs-12 dfs_family dfs_family_large">
-                                                    <script type="text/javascript">googletag.cmd.push(function () {
-                                                            googletag.defineSlot('/129806946/FA_Events_PremiumBox2_300x600', [300, 600], 'div-gpt-ad-1476417457937-0').addService(googletag.pubads());
-                                                            googletag.pubads().enableSingleRequest();
-                                                            googletag.enableServices();
-                                                        });</script>
+                                                    <script type="text/javascript"></script>
                                                     <div id="div-gpt-ad-1476417457937-0" style="">
                                                         <script type="text/javascript">
-                                                            jQuery(document).ready(function () {
-                                                                googletag.cmd.push(function () {
-                                                                    googletag.display('div-gpt-ad-1476417457937-0');
-                                                                });
-                                                            });
+
                                                         </script>
                                                         <div id="google_ads_iframe_/129806946/FA_Events_PremiumBox2_300x600_0__container__"
                                                              style="border: 0pt none;">
-                                                            <iframe id="google_ads_iframe_/129806946/FA_Events_PremiumBox2_300x600_0"
-                                                                    title="3rd party ad content"
-                                                                    name="google_ads_iframe_/129806946/FA_Events_PremiumBox2_300x600_0"
-                                                                    width="300" height="600" scrolling="no" marginwidth="0"
-                                                                    marginheight="0" frameborder="0"
-                                                                    style="border: 0px; vertical-align: bottom;"
-                                                                    src="./Events in Shanghai_files/saved_resource(3).html"></iframe>
+
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1024,4 +940,6 @@
 
 
     </section>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.base', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

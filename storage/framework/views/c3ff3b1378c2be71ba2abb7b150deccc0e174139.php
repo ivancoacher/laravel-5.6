@@ -8,9 +8,9 @@
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    @include('layouts.header')
-    @yield('pre_script')
-    @yield('pre_link')
+    <?php echo $__env->make('layouts.header', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+    <?php echo $__env->yieldContent('pre_script'); ?>
+    <?php echo $__env->yieldContent('pre_link'); ?>
 </head>
 <body class="html front not-logged-in one-sidebar sidebar-second page-node page-node- page-node-1 node-type-city og-context og-context-node og-context-node-1"
       style="">
@@ -18,13 +18,13 @@
     <a href="http://shfamily.com/#main-content" class="element-invisible element-focusable">Skip to main content</a>
 </div>
 <section id="topbar">
-    @include('layouts.topbar')
+    <?php echo $__env->make('layouts.topbar', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 </section---
 
 <section id="mega-menu">
-    @include('layouts.menu')
+    <?php echo $__env->make('layouts.menu', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 </section>
-@yield('content')
+<?php echo $__env->yieldContent('content'); ?>
 
 <section id="newsletter">
 
@@ -262,9 +262,9 @@
             class="glyphicon glyphicon-menu-up"></span></a>
 <section id="pre_footer">
 
-    @include('layouts.footer')
+    <?php echo $__env->make('layouts.footer', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 </section>
 
-@yield('after_script')
+<?php echo $__env->yieldContent('after_script'); ?>
 </body>
 </html>
