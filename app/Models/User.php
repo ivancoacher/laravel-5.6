@@ -9,4 +9,6 @@ class User extends Model
     //
     protected $table = 'wxC_user_t';
 
+    const CREATED_AT = 'cdate';
+    const UPDATED_AT = 'udate';
 }

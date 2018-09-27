@@ -8,4 +8,6 @@ class Comment extends Model
 {
     //
     protected $table = 'wxC_comment_t';
+    const CREATED_AT = 'cdate';
+    const UPDATED_AT = 'udate';
 }

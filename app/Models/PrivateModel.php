@@ -8,4 +8,7 @@ class PrivateModel extends Model
 {
     //
     protected $table = 'wxC_private_t';
+
+    const CREATED_AT = 'cdate';
+    const UPDATED_AT = 'udate';
 }

@@ -8,4 +8,7 @@ class Token extends Model
 {
     //
     protected $table = 'wxC_token_t';
+
+    const CREATED_AT = 'cdate';
+    const UPDATED_AT = 'udate';
 }

@@ -8,4 +8,6 @@ class ViewList extends Model
 {
     //
     protected $table = 'wxC_viewlist_t';
+    const CREATED_AT = 'cdate';
+    const UPDATED_AT = 'udate';
 }
