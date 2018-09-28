@@ -9,9 +9,7 @@ class SliderService
 
     public function getSliders()
     {
-        return Slider::all();
-
-
+        return Slider::orderBy('order_id')->get();
     }
 }
 
