@@ -312,4 +312,12 @@ function randString($len = 8)
     return $string;
 }
 
+function generateUserId()
+{
+    $rand_str = randString(5);
+    $userId = 'user_' . time() . '_' . mt_rand(1111, 9999) . '_' . $rand_str;
+    return $userId;
+}
+
+
 ?>

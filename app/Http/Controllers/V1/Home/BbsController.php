@@ -13,14 +13,22 @@ class BbsController extends Controller
 
         $validate = $request->validated();
 
+        $openid = $request['openid'];
 
+        //1、判断用户身份
+
+        //2、判断用户发帖时间
+
+        //3、文字校验
         $titleResult = txtCheck($validate['title']);
         $contentResult = txtCheck($validate['content']);
 
         if (!$titleResult || !$contentResult) {
             return ['code' => self::RETURN_FAIL, 'msg' => '文本检测未通过', 'log1' => $titleResult, 'log2' => $contentResult];
         }
+        //4、添加帖子记录
 
+        //5、更新用户发帖相关信息
         $rand_str_bbs = randString(5);
         $idBBS = 'bbs_' . time() . '_' . mt_rand(1111, 9999) . '_' . $rand_str_bbs;
 
@@ -32,7 +40,8 @@ class BbsController extends Controller
             'title' => htmlspecialchars($validate['title'], ENT_QUOTES),
             'nick_name' => htmlspecialchars($validate['nick_name'], ENT_QUOTES),
             'tag' => htmlspecialchars($validate['tag'], ENT_QUOTES),
-            'tag_content' => htmlspecialchars($validate['tag_content'], ENT_QUOTES)
+            'tag_content' => htmlspecialchars($validate['tag_content'], ENT_QUOTES),
+            'img_list' => $validate['img_list']
         ];
 
 
