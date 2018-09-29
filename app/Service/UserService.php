@@ -24,9 +24,14 @@ class UserService
 
     public function storeUser($data)
     {
-
+        $result = User::create($data);
+        return $result->id;
     }
 
+    public function updateUserThreshTime($openid)
+    {
+        return User::where('openid', $openid)->update(['thresh_time' => time()]);
+    }
 
 }
 
