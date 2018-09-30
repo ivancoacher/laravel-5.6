@@ -15,7 +15,7 @@ class BBSService
 
     public function getBBSById($id)
     {
-        return Bbs::find($id);
+        return Bbs::with(['author','tags','images'])->where('id', $id)->first();
     }
 
     public function storeBBS($data)
@@ -46,6 +46,10 @@ class BBSService
         return Bbs::where('idx', $bbsId)->increment('reply_no');
     }
 
+    public function incrementBBSViewNo($bbsId)
+    {
+        return Bbs::where('id', $bbsId)->increment('view_no');
+    }
 }
 
 

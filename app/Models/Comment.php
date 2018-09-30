@@ -12,10 +12,19 @@ class Comment extends Model
     const CREATED_AT = 'cdate';
     const UPDATED_AT = 'udate';
 
-    public function author(){
-        return $this->hasOne(User::class,'user_id','idx');
+    public function author()
+    {
+        return $this->hasOne(User::class, 'user_id', 'id');
     }
 
+    public function reply()
+    {
+        return $this->hasMany(Reply::class, 'comment_id', 'id');
+    }
 
+    public function toReply()
+    {
+        return $this->hasOne(User::class, 'reply_to_id', 'id');
+    }
 
 }

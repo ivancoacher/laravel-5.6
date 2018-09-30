@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreBbs;
 use App\Service\BBSService;
 use App\Service\TagService;
+use App\Service\UserService;
 use Illuminate\Support\Facades\Request;
 
 class BbsController extends Controller
@@ -81,30 +82,27 @@ class BbsController extends Controller
 
 
         $bbsService = new BBSService();
+    }
 
+    public function show(Request $request)
+    {
+        $bbsId = $request->input('bbs_id', '');
+        $openid = $request->input('openid', '');
 
+        $bbsService = new BBSService();
+        $bbsService->incrementBBSViewNo($bbsId);
 
+        $bbsInfo = $bbsService->getBBSById($bbsId);
 
+        if (empty($bbsInfo) || !empty($bbsInfo->ddate)) {
+            return ['code' => self::RETURN_FAIL, 'msg' => '该帖已隐藏'];
+        }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        $userService = new UserService();
+        $userInfo = $userService->getUserByOpenid($openid);
 
 
     }
+
 
 }

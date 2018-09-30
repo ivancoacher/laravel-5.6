@@ -5,9 +5,11 @@ namespace App\Http\Controllers\V1\Home;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreComment;
 use App\Service\BBSService;
+use App\Service\CommentService;
 use App\Service\SystemService;
 use App\Service\UserService;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Request;
 
 class CommentController extends Controller
 {
@@ -96,5 +98,71 @@ class CommentController extends Controller
         }
 
 
+    }
+
+    public function getComments(Request $request)
+    {
+        $bbsId = $request->input('bbs_id');
+        $openid = $request->input('openid');
+        $handleType = 'next';
+        $page = $request->input('page', 0);
+        $pageSize = $request->input('pageSize', 10);
+
+        $commentService = new CommentService();
+        $commentList = $commentService->getCommentList($bbsId);
+
+        $result = [];
+        $comments = [];
+        if ($commentList->isNotEmpty()) {
+            foreach ($commentList as $k => $v) {
+                $comments[$k] = [
+                    'order' => $v + 1,
+                    'comment_id' => $v->id,
+                    'level' => $v->level,
+                    'good' => $v->good,
+                    'bad' => $v->bad,
+                    'top' => $v->top,
+                    'comment' => $v->comment,
+                    'udate' => $v->udate,
+                    'cdate' => $v->cdate,
+                    'tdate' => $v->tdate,
+                    'user_id' => $v->user_id,
+                    'nick_name' => $v->author->nick_name,
+                    'head_url' => $v->author->head_url,
+                    'company' => $v->author->company,
+                    'user_level' => $v->author->level
+                ];
+
+                if ($v->reply->isNotEmpty()) {
+
+                    foreach ($v->reply as $key => $value) {
+                        $comments[$k]['reply'][$key] = [
+                            'order' => $value + 1,
+                            'reply_id' => $value->id,
+                            'level' => $value->level,
+                            'good' => $value->good,
+                            'bad' => $value->bad,
+                            'top' => $value->top,
+                            'reply_to_id' => $value->toReply->nick_name,
+                            'udate' => $value->udate,
+                            'cdate' => $value->cdate,
+                            'tdate' => $value->tdate,
+                            'user_id' => $value->user_id,
+                            'nick_name' => $value->author->nick_name,
+                            'head_url' => $value->author->head_url,
+                            'company' => $value->author->company,
+                            'position' => $value->author->position,
+                            'user_level' => $value->author->level
+                        ];
+
+
+                    }
+
+
+                }
+
+
+            }
+        }
     }
 }
