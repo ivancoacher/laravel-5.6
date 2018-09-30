@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Replay extends Model
+class Reply extends Model
 {
     //
     protected $table = 'wxC_reply_t';

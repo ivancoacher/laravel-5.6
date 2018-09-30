@@ -72,7 +72,7 @@ class CommentController extends Controller
             $rst1 = $bbsService->incrementBBSCommentNo($validate['bbs_id']);
 
 
-        } elseif ($level == 2) {    //replay表添加数据
+        } elseif ($level == 2) {    //reply表添加数据
             $rand_str_reply = randString();
             $idReply = 'reply_' . time() . '_' . mt_rand(1111, 9999);
 

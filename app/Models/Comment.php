@@ -11,4 +11,11 @@ class Comment extends Model
     protected $primaryKey = 'idx';
     const CREATED_AT = 'cdate';
     const UPDATED_AT = 'udate';
+
+    public function author(){
+        return $this->hasOne(User::class,'user_id','idx');
+    }
+
+
+
 }

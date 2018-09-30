@@ -4,7 +4,7 @@ namespace App\Service;
 
 use App\Models\Bbs;
 use App\Models\Comment;
-use App\Models\Replay;
+use App\Models\Reply;
 
 class BBSService
 {
@@ -30,9 +30,9 @@ class BBSService
         return $result->id;
     }
 
-    public function storeReplay($data)
+    public function storeReply($data)
     {
-        $result = Replay::create($data);
+        $result = Reply::create($data);
         return $result->id;
     }
 

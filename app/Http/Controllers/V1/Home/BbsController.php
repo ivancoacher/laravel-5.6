@@ -4,6 +4,9 @@ namespace App\Http\Controllers\V1\Home;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreBbs;
+use App\Service\BBSService;
+use App\Service\TagService;
+use Illuminate\Support\Facades\Request;
 
 class BbsController extends Controller
 {
@@ -57,6 +60,49 @@ class BbsController extends Controller
         $expert = $request->input('expert', '');
 
         $img_list = $request->input('img_list', '');
+
+
+    }
+
+    public function index(Request $request)
+    {
+        $forumId = $request->input('forum_id');
+        $bbsId = $request->input('bbs_id');
+        $handleType = $request->input('handleType', 'next');
+        $range = $request->input('range', 10);
+
+        $tagService = new TagService();
+
+        $rst = $tagService->getTagList();
+        $tagList = [];
+        foreach ($rst as $k => $v) {
+            $tagList[$v->id] = $v->tname;
+        }
+
+
+        $bbsService = new BBSService();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     }
