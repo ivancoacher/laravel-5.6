@@ -9,7 +9,7 @@ use App\Service\TagService;
 use App\Service\UserService;
 use Illuminate\Support\Facades\Request;
 
-class BbsController extends Controller
+class BBSController extends Controller
 {
     //
     public function store(StoreBbs $request)
@@ -47,7 +47,8 @@ class BbsController extends Controller
             'tag_content' => htmlspecialchars($validate['tag_content'], ENT_QUOTES),
             'img_list' => $validate['img_list']
         ];
-
+        $bbsService = new BBSService();
+        $bbsService->storeBBS($data);
 
         $openid = $request->input('openid', '');
         $nickname = $request->input('nick_name', '');
@@ -67,6 +68,7 @@ class BbsController extends Controller
 
     public function index(Request $request)
     {
+        echo 11111;exit;
         $forumId = $request->input('forum_id');
         $bbsId = $request->input('bbs_id');
         $handleType = $request->input('handleType', 'next');
@@ -80,8 +82,12 @@ class BbsController extends Controller
             $tagList[$v->id] = $v->tname;
         }
 
-
         $bbsService = new BBSService();
+
+        //获取帖子列表
+        $result = $bbsService->getBBSList();
+
+
     }
 
     public function show(Request $request)

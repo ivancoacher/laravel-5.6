@@ -8,8 +8,11 @@ use App\Models\Reply;
 
 class BBSService
 {
-    public function getBBSList()
+    public function getBBSList($param,$page,$pageSize)
     {
+//        $result = Bbs::
+
+
 
     }
 
