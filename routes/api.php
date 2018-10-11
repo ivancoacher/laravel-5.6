@@ -19,15 +19,20 @@ $api->version('v1', function ($api) {
         $api->get('show', 'BBSController@show');
     });
     $api->group(['prefix' => 'comment', 'namespace' => 'App\Http\Controllers\V1\Home'], function ($api) {
-        $api->get('list', 'BBSController@index');
-        $api->get('store', 'BBSController@store');
-        $api->get('show', 'BBSController@show');
+        $api->get('list', 'CommentController@index');
+        $api->get('store', 'CommentController@store');
+        $api->get('show', 'CommentController@show');
+        $api->get('replyList', 'CommentController@show');
+        $api->get('changeAgree', 'CommentController@show');
+        $api->get('changeStore', 'CommentController@show');
     });
 
     $api->group(['prefix' => 'user', 'namespace' => 'App\Http\Controllers\V1\Home'], function ($api) {
-        $api->get('list', 'BBSController@index');
-        $api->get('store', 'BBSController@store');
-        $api->get('show', 'BBSController@show');
+        $api->any('getOpenid', 'UserController@getOpenid'); //done
+        $api->get('userStore', 'UserController@userStore');
+        $api->get('userReply', 'UserController@store');
+        $api->get('userPub', 'UserController@show');
+        $api->get('userSuper', 'UserController@show');
     });
 
 });

@@ -33,6 +33,12 @@ class UserService
         return User::where('openid', $openid)->update(['thresh_time' => time()]);
     }
 
+    public function getUserId($openid)
+    {
+        $result = User::where('openid', $openid)->first();
+        return $result->id;
+    }
+
 }
 
 
