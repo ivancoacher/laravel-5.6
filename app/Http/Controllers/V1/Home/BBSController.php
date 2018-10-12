@@ -5,9 +5,11 @@ namespace App\Http\Controllers\V1\Home;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreBbs;
 use App\Service\BBSService;
+use App\Service\CommentService;
 use App\Service\TagService;
 use App\Service\UserService;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class BBSController extends Controller
 {
@@ -68,11 +70,9 @@ class BBSController extends Controller
 
     public function index(Request $request)
     {
-        echo 11111;exit;
         $forumId = $request->input('forum_id');
-        $bbsId = $request->input('bbs_id');
-        $handleType = $request->input('handleType', 'next');
-        $range = $request->input('range', 10);
+        $page = $request->input('page', '0');
+        $pageSize = $request->input('pageSize', 10);
 
         $tagService = new TagService();
 
@@ -84,8 +84,9 @@ class BBSController extends Controller
 
         $bbsService = new BBSService();
 
+        $param = [];
         //获取帖子列表
-        $result = $bbsService->getBBSList();
+        $result = $bbsService->getBBSList($param, $page, $pageSize);
 
 
     }
@@ -106,7 +107,42 @@ class BBSController extends Controller
 
         $userService = new UserService();
         $userInfo = $userService->getUserByOpenid($openid);
+    }
 
+    public function changeStore(Request $request)
+    {
+        $bbsId = $request->input('bbs_id', '');
+        $openid = $request->input('openid', '');
+        $handleType = $request->input('handleType', 1);
+
+        $userService = new UserService();
+        $userId = $userService->getUserId($openid);
+        if (!$userId) {
+            return ['code' => '-200', 'msg' => '用户信息不存在'];
+        }
+        $commentService = new CommentService();
+        DB::beginTransaction();
+        try {
+            $storeDetail = $commentService->checkoutStore($userId, $bbsId);
+
+            $storeDetail->type = !$storeDetail->type;
+            $storeDetail->save();
+            $bbsService = new BBSService();
+            $bbsDetail = $bbsService->getBBSById($bbsId);
+            $authorId = $bbsDetail->author_id;
+            if ($handleType == 1) {
+                $bbsService->incrementBBSViewNo($bbsId);
+                $userService->incrementUserStoredNo($authorId);
+            } else {
+                $bbsService->decrementBBSStoreNo($bbsId);
+                $userService->decrementUserStoredNo($authorId);
+            }
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return ['code' => '-200', 'msg' => '操作失败'];
+        }
+        DB::commit();
+        return ['code' => "200", 'msg' => '操作成功'];
 
     }
 

@@ -2,12 +2,7 @@
 
 namespace App\Service;
 
-use App\Models\Bbs;
-use App\Models\Comment;
-use App\Models\Reply;
-use App\Models\Store;
 use App\Models\User;
-use Illuminate\Support\Facades\DB;
 
 class UserService
 {
@@ -44,7 +39,15 @@ class UserService
         return $result->id;
     }
 
+    public function incrementUserStoredNo($userId)
+    {
+        return User::where('id', $userId)->increment('stored_no');
+    }
 
+    public function decrementUserStoredNo($userId)
+    {
+        return User::where('id', $userId)->decrement('stored_no');
+    }
 
 
 }

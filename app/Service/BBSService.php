@@ -12,7 +12,7 @@ class BBSService
     public function getBBSList($param, $page, $pageSize)
     {
 //        $result = Bbs::
-
+        return [];
 
     }
 
@@ -52,6 +52,16 @@ class BBSService
     public function incrementBBSViewNo($bbsId)
     {
         return Bbs::where('id', $bbsId)->increment('view_no');
+    }
+
+    public function incrementBBSStoreNo($bbsId)
+    {
+        return Bbs::where('id', $bbsId)->increment('store_no');
+    }
+
+    public function decrementBBSStoreNo($bbsId)
+    {
+        return Bbs::where('id', $bbsId)->decrement('store_no');
     }
 
     public function getBBSListByIds($bbsIds, $page, $pageSize)
@@ -103,7 +113,7 @@ class BBSService
     //获取用户发帖列表
     public function getUserBBSList($userId, $page, $pageSize)
     {
-        $result = Bbs::with(['tags', 'images','author'])
+        $result = Bbs::with(['tags', 'images', 'author'])
             ->where('author_id', $userId)
             ->skip($page * $pageSize)
             ->take($pageSize)

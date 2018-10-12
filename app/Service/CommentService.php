@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Models\Comment;
+use App\Models\Store;
 
 class CommentService
 {
@@ -15,6 +16,11 @@ class CommentService
             ->whereNull('ddate')
             ->orderBy('tdate', 'desc')
             ->get();
+    }
+
+    public function checkoutStore($userId, $bbsId)
+    {
+        return Store::firstOrCreate(['user_id' => $userId, 'bbs_id' => $bbsId]);
     }
 }
 

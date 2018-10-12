@@ -12,6 +12,7 @@ class Store extends Model
     const UPDATED_AT = 'udate';
     public $incrementing = false;
     protected $keyType = 'string';
+    protected $guarded = [];
     public function bbs()
     {
         return $this->hasOne(Bbs::class, 'id', 'bbs_id');
