@@ -2,7 +2,12 @@
 
 namespace App\Service;
 
+use App\Models\Bbs;
+use App\Models\Comment;
+use App\Models\Reply;
+use App\Models\Store;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 class UserService
 {
@@ -38,6 +43,9 @@ class UserService
         $result = User::where('openid', $openid)->first();
         return $result->id;
     }
+
+
+
 
 }
 

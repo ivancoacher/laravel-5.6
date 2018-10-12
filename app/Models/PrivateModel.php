@@ -11,4 +11,6 @@ class PrivateModel extends Model
 
     const CREATED_AT = 'cdate';
     const UPDATED_AT = 'udate';
+    public $incrementing = false;
+    protected $keyType = 'string';
 }

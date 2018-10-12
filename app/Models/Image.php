@@ -8,6 +8,9 @@ class Image extends Model
 {
     //
     protected $table = 'wxC_image_t';
-    const CREATED_AT = 'cdate';
-    const UPDATED_AT = 'udate';
+    public $timestamps = false;
+
+    public $incrementing = false;
+    protected $keyType = 'string';
+    protected $fillable = ['url'];
 }

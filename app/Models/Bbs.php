@@ -23,13 +23,13 @@ class Bbs extends Model
     //作者
     public function author()
     {
-        return $this->hasOne(User::class, 'author_id', 'id');
+        return $this->hasOne(User::class, 'id', 'author_id');
     }
 
     //内部图片
     public function images()
     {
-        return $this->belongsToMany(Image::class, 'wxC_bbs_image_t', 'bbs_id', 'image)id');
+        return $this->belongsToMany(Image::class, 'wxC_bbs_image_t', 'bbs_id', 'image_id');
     }
 
     //封面图

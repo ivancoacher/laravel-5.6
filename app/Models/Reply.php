@@ -10,6 +10,8 @@ class Reply extends Model
     protected $table = 'wxC_reply_t';
     const CREATED_AT = 'cdate';
     const UPDATED_AT = 'udate';
+    public $incrementing = false;
+    protected $keyType = 'string';
 
     public function toReply()
     {
@@ -19,5 +21,10 @@ class Reply extends Model
     public function author()
     {
         return $this->hasOne(User::class, 'user_id', 'id');
+    }
+
+    public function bbs()
+    {
+        return $this->hasOne(Bbs::class, 'id', 'bbs_id');
     }
 }

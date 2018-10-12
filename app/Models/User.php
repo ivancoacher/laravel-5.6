@@ -11,14 +11,15 @@ class User extends Model
 
     const CREATED_AT = 'cdate';
     const UPDATED_AT = 'udate';
-
+    protected $primaryKey = 'id';
+    protected $keyType = 'string';
 
     public function comments()
     {
         return $this->hasMany(Comment::class, 'id', 'user_id');
     }
 
-    public function reply()
+    public function replies()
     {
         return $this->hasMany(Reply::class, 'id', 'user_id');
     }
