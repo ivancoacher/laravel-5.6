@@ -8,8 +8,8 @@ use App\Service\BBSService;
 use App\Service\CommentService;
 use App\Service\SystemService;
 use App\Service\UserService;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Request;
 
 class CommentController extends Controller
 {
@@ -164,5 +164,42 @@ class CommentController extends Controller
 
             }
         }
+    }
+
+    //点赞或者取消
+    public function changeAgree(Request $request)
+    {
+        $bbsId = $request->input('bbs_id', '');
+        $commentId = $request->input('comment_id', '');
+        $handleType = $request->input('handleType', '1');   //0：取消；1：认同；2：反对
+
+        $level = $request->input('level', '1');
+        $openid = $request->input('openid', '');
+        $userService = new UserService();
+        $userId = $userService->getUserId($openid);
+
+        $authorId = $request->input('author_id', '');
+
+        $commentService = new CommentService();
+        $agreeDetail = $commentService->checkoutAgree($userId, $commentId, $level, $bbsId);
+
+        if ($level == 1) {
+            //一级回复
+            if ($handleType == 1) {
+                $commentService->changeCommentGood($commentId, 'increment');
+                $commentService->updateAgree($agreeDetail->id, ['type' => 1]);
+
+            } elseif ($handleType == 2) {
+                $commentService->changeCommentBad($commentId, 'decrement');
+                $commentService->updateAgree($agreeDetail->id, ['type' => 2]);
+            } else {
+                $commentService->updateAgree($agreeDetail->id, ['type' => 0]);
+            }
+        } else {
+            //二级回复
+
+        }
+
+
     }
 }

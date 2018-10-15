@@ -12,4 +12,5 @@ class Agree extends Model
     const UPDATED_AT = 'udate';
     public $incrementing = false;
     protected $keyType = 'string';
+    protected $guarded = [];
 }

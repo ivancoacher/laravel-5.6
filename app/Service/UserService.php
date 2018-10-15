@@ -49,7 +49,25 @@ class UserService
         return User::where('id', $userId)->decrement('stored_no');
     }
 
+    public function changeUserAgreeBad($userId, $type)
+    {
+        if ($type == 'increment') {
+            return User::where('id', $userId)->increment('bad_no');
+        } else {
+            return User::where('id', $userId)->decrement('bad_no');
+        }
+    }
 
+    public function changeUserAgreeGood($userId, $type)
+    {
+        if ($type == 'increment') {
+            return User::where('id', $userId)->increment('good_no');
+
+        } else {
+            return User::where('id', $userId)->decrement('good_no');
+
+        }
+    }
 }
 
 
