@@ -1,222 +1,219 @@
 @extends('layouts.base')
-
+@section('pre_link')
+    <style>
+        @import url("/css/listing_event.less");
+    </style>
+@endsection
 @section('content')
     <section class=" content">
         <div class="top-section">
             <div class="container">
                 <h2 class="element-invisible">You are here</h2>
-                <div class="breadcrumb"><a href="http://shfamily.com/shanghai/event#"></a><a href="http://shfamily.com/">Home</a>
+                <div class="breadcrumb"><a href="http://shfamily.com/shanghai/event#"></a><a
+                            href="http://shfamily.com/">Home</a>
                     | <a href="http://shfamily.com/shanghai/event#">Event list</a></div>
             </div>
         </div>
-
-
-        <!-- THEME DEBUG -->
-        <!-- CALL: theme('region') -->
-        <!-- FILE NAME SUGGESTIONS:
-           * region--content.tpl.php
-           x region.tpl.php
-        -->
-        <!-- BEGIN OUTPUT from 'sites/all/themes/family/templates/region.tpl.php' -->
-
-
-        <!-- THEME DEBUG -->
-        <!-- CALL: theme('block') -->
-        <!-- FILE NAME SUGGESTIONS:
-           * block--system--main.tpl.php
-           * block--system.tpl.php
-           * block--content.tpl.php
-           x block.tpl.php
-        -->
-        <!-- BEGIN OUTPUT from 'sites/all/themes/family/templates/block.tpl.php' -->
         <span class="hidden">split-block</span>
+        {{--<div class="container">--}}
+            {{--<div class="col-xs-12 title_events_search_top">Events Search</div>--}}
+        {{--</div>--}}
+        {{--<div class="pagination-search-day container">--}}
+            {{--<input type="hidden" id="current_city" value="shanghai">--}}
+
+            {{--<div class="col-xs-12 col-sm-12 seach-day ">--}}
+                {{--<div class="wrapper_search_day">--}}
+                    {{--<div class="title_search_day">Scheduled Date</div>--}}
+                    {{--<div class="wrapper_search_day_post">--}}
 
 
-        <!-- THEME DEBUG -->
-        <!-- CALL: theme('fs_search_event_list_page') -->
-        <!-- BEGIN OUTPUT from 'sites/all/modules/custom/fs_search/modules/fs_search_event/templates/fs_search_event_list_page.tpl.php' -->
-        <div class="container">
-            <div class="col-xs-12 title_events_search_top">Events Search</div>
-        </div>
-        <div class="pagination-search-day container">
-            <input type="hidden" id="current_city" value="shanghai">
+                        {{--<a href="http://shfamily.com/shanghai/event?date_start=2018-09-07%2000%3A00%3A00&amp;page=0"--}}
+                           {{--class="item-pagination-day-content">--}}
+                            {{--<div class="col-xs-3 col-sm-2 col-md-1 item-pagination-day  ">--}}
+                                {{--<div class="week_events">FRI</div>--}}
+                                {{--<div class="day_events ">07</div>--}}
+                                {{--<div class="status_events hidden">--}}
+                                    {{--<div class="col-xs-3 color-item color-blue "></div>--}}
+                                    {{--<div class="col-xs-3  color-item color-red "></div>--}}
+                                    {{--<div class="col-xs-3  color-item color-yellow"></div>--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
+                        {{--</a>--}}
 
-            <div class="col-xs-12 col-sm-12 seach-day ">
-                <div class="wrapper_search_day">
-                    <div class="title_search_day">Scheduled Date</div>
-                    <div class="wrapper_search_day_post">
+                        {{--<a href="http://shfamily.com/shanghai/event?date_start=2018-09-08%2000%3A00%3A00&amp;page=0"--}}
+                           {{--class="item-pagination-day-content">--}}
+                            {{--<div class="col-xs-3 col-sm-2 col-md-1 item-pagination-day  ">--}}
+                                {{--<div class="week_events">SAT</div>--}}
+                                {{--<div class="day_events ">08</div>--}}
+                                {{--<div class="status_events hidden">--}}
+                                    {{--<div class="col-xs-3 color-item color-blue "></div>--}}
+                                    {{--<div class="col-xs-3  color-item color-red "></div>--}}
+                                    {{--<div class="col-xs-3  color-item color-yellow"></div>--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
+                        {{--</a>--}}
+
+                        {{--<a href="http://shfamily.com/shanghai/event?date_start=2018-09-09%2000%3A00%3A00&amp;page=0"--}}
+                           {{--class="item-pagination-day-content">--}}
+                            {{--<div class="col-xs-3 col-sm-2 col-md-1 item-pagination-day  ">--}}
+                                {{--<div class="week_events">SUN</div>--}}
+                                {{--<div class="day_events ">09</div>--}}
+                                {{--<div class="status_events hidden">--}}
+                                    {{--<div class="col-xs-3 color-item color-blue "></div>--}}
+                                    {{--<div class="col-xs-3  color-item color-red "></div>--}}
+                                    {{--<div class="col-xs-3  color-item color-yellow"></div>--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
+                        {{--</a>--}}
+
+                        {{--<a href="http://shfamily.com/shanghai/event?date_start=2018-09-10%2000%3A00%3A00&amp;page=0"--}}
+                           {{--class="item-pagination-day-content">--}}
+                            {{--<div class="col-xs-3 col-sm-2 col-md-1 item-pagination-day  ">--}}
+                                {{--<div class="week_events">MON</div>--}}
+                                {{--<div class="day_events ">10</div>--}}
+                                {{--<div class="status_events hidden">--}}
+                                    {{--<div class="col-xs-3 color-item color-blue "></div>--}}
+                                    {{--<div class="col-xs-3  color-item color-red "></div>--}}
+                                    {{--<div class="col-xs-3  color-item color-yellow"></div>--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
+                        {{--</a>--}}
+
+                        {{--<a href="http://shfamily.com/shanghai/event?date_start=2018-09-11%2000%3A00%3A00&amp;page=0"--}}
+                           {{--class="item-pagination-day-content">--}}
+                            {{--<div class="col-xs-3 col-sm-2 col-md-1 item-pagination-day  ">--}}
+                                {{--<div class="week_events">TUE</div>--}}
+                                {{--<div class="day_events ">11</div>--}}
+                                {{--<div class="status_events hidden">--}}
+                                    {{--<div class="col-xs-3 color-item color-blue "></div>--}}
+                                    {{--<div class="col-xs-3  color-item color-red "></div>--}}
+                                    {{--<div class="col-xs-3  color-item color-yellow"></div>--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
+                        {{--</a>--}}
+
+                        {{--<a href="http://shfamily.com/shanghai/event?date_start=2018-09-12%2000%3A00%3A00&amp;page=0"--}}
+                           {{--class="item-pagination-day-content">--}}
+                            {{--<div class="col-xs-3 col-sm-2 col-md-1 item-pagination-day  ">--}}
+                                {{--<div class="week_events">WED</div>--}}
+                                {{--<div class="day_events ">12</div>--}}
+                                {{--<div class="status_events hidden">--}}
+                                    {{--<div class="col-xs-3 color-item color-blue "></div>--}}
+                                    {{--<div class="col-xs-3  color-item color-red "></div>--}}
+                                    {{--<div class="col-xs-3  color-item color-yellow"></div>--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
+                        {{--</a>--}}
+
+                        {{--<a href="http://shfamily.com/shanghai/event?date_start=2018-09-13%2000%3A00%3A00&amp;page=0"--}}
+                           {{--class="item-pagination-day-content">--}}
+                            {{--<div class="col-xs-3 col-sm-2 col-md-1 item-pagination-day  active_day">--}}
+                                {{--<div class="week_events">THU</div>--}}
+                                {{--<div class="day_events ">13</div>--}}
+                                {{--<div class="status_events hidden">--}}
+                                    {{--<div class="col-xs-3 color-item color-blue "></div>--}}
+                                    {{--<div class="col-xs-3  color-item color-red "></div>--}}
+                                    {{--<div class="col-xs-3  color-item color-yellow"></div>--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
+                        {{--</a>--}}
+                    {{--</div>--}}
+                {{--</div>--}}
+
+            {{--</div>--}}
+            {{--<div class="event-search  col-xs-12 col-sm-12">--}}
+                {{--<div class="wrapper_fields_search">--}}
+                    {{--<div class="form-group category_field_container col-sm-8 row">--}}
+                        {{--<select id="category_event" title="Category" name="category_event"--}}
+                                {{--class="form-control bs-select-hidden">--}}
+                            {{--<option class="bs-title-option" value="">Category</option>--}}
+
+                            {{--<option value="1113">Cinema</option>--}}
+                            {{--<option value="1120">Community</option>--}}
+                            {{--<option value="1118">Dance</option>--}}
+                            {{--<option value="1122">Dining</option>--}}
+                            {{--<option value="1123">Education</option>--}}
+                            {{--<option value="1114">Experiences</option>--}}
+                            {{--<option value="1117">Family</option>--}}
+                            {{--<option value="1124">Health &amp; Welness</option>--}}
+                            {{--<option value="1115">Music</option>--}}
+                            {{--<option value="1121">Sport</option>--}}
+                            {{--<option value="1116">Stage</option>--}}
+                            {{--<option value="1119">Travel</option>--}}
+                        {{--</select>--}}
+                        {{--<div class="btn-group bootstrap-select form-control">--}}
+                            {{--<button type="button" class="btn dropdown-toggle btn-default" data-toggle="dropdown"--}}
+                                    {{--data-id="category_event" title="Category"><span--}}
+                                        {{--class="filter-option pull-left">Category</span>&nbsp;<span class="caret"></span>--}}
+                            {{--</button>--}}
+                            {{--<div class="dropdown-menu open">--}}
+                                {{--<div class="bs-searchbox"><input type="text" class="form-control" autocomplete="off">--}}
+                                {{--</div>--}}
+                                {{--<ul class="dropdown-menu inner" role="menu">--}}
+                                    {{--<li data-original-index="1"><a tabindex="0" class="" style=""--}}
+                                                                   {{--data-tokens="null"><span--}}
+                                                    {{--class="text">Cinema</span><span--}}
+                                                    {{--class="glyphicon glyphicon-ok check-mark"></span></a></li>--}}
+                                    {{--<li data-original-index="2"><a tabindex="0" class="" style=""--}}
+                                                                   {{--data-tokens="null"><span--}}
+                                                    {{--class="text">Community</span><span--}}
+                                                    {{--class="glyphicon glyphicon-ok check-mark"></span></a></li>--}}
+                                    {{--<li data-original-index="3"><a tabindex="0" class="" style=""--}}
+                                                                   {{--data-tokens="null"><span--}}
+                                                    {{--class="text">Dance</span><span--}}
+                                                    {{--class="glyphicon glyphicon-ok check-mark"></span></a>--}}
+                                    {{--</li>--}}
+                                    {{--<li data-original-index="4"><a tabindex="0" class="" style=""--}}
+                                                                   {{--data-tokens="null"><span--}}
+                                                    {{--class="text">Dining</span><span--}}
+                                                    {{--class="glyphicon glyphicon-ok check-mark"></span></a></li>--}}
+                                    {{--<li data-original-index="5"><a tabindex="0" class="" style=""--}}
+                                                                   {{--data-tokens="null"><span--}}
+                                                    {{--class="text">Education</span><span--}}
+                                                    {{--class="glyphicon glyphicon-ok check-mark"></span></a></li>--}}
+                                    {{--<li data-original-index="6"><a tabindex="0" class="" style=""--}}
+                                                                   {{--data-tokens="null"><span--}}
+                                                    {{--class="text">Experiences</span><span--}}
+                                                    {{--class="glyphicon glyphicon-ok check-mark"></span></a></li>--}}
+                                    {{--<li data-original-index="7"><a tabindex="0" class="" style=""--}}
+                                                                   {{--data-tokens="null"><span--}}
+                                                    {{--class="text">Family</span><span--}}
+                                                    {{--class="glyphicon glyphicon-ok check-mark"></span></a></li>--}}
+                                    {{--<li data-original-index="8"><a tabindex="0" class="" style=""--}}
+                                                                   {{--data-tokens="null"><span--}}
+                                                    {{--class="text">Health &amp; Welness</span><span--}}
+                                                    {{--class="glyphicon glyphicon-ok check-mark"></span></a></li>--}}
+                                    {{--<li data-original-index="9"><a tabindex="0" class="" style=""--}}
+                                                                   {{--data-tokens="null"><span--}}
+                                                    {{--class="text">Music</span><span--}}
+                                                    {{--class="glyphicon glyphicon-ok check-mark"></span></a>--}}
+                                    {{--</li>--}}
+                                    {{--<li data-original-index="10"><a tabindex="0" class="" style=""--}}
+                                                                    {{--data-tokens="null"><span--}}
+                                                    {{--class="text">Sport</span><span--}}
+                                                    {{--class="glyphicon glyphicon-ok check-mark"></span></a>--}}
+                                    {{--</li>--}}
+                                    {{--<li data-original-index="11"><a tabindex="0" class="" style=""--}}
+                                                                    {{--data-tokens="null"><span--}}
+                                                    {{--class="text">Stage</span><span--}}
+                                                    {{--class="glyphicon glyphicon-ok check-mark"></span></a>--}}
+                                    {{--</li>--}}
+                                    {{--<li data-original-index="12"><a tabindex="0" class="" style=""--}}
+                                                                    {{--data-tokens="null"><span--}}
+                                                    {{--class="text">Travel</span><span--}}
+                                                    {{--class="glyphicon glyphicon-ok check-mark"></span></a></li>--}}
+                                {{--</ul>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+                    {{--<div class="form-group btn_search_container col-sm-4">--}}
+                        {{--<input type="button" id="edit-submit" name="op" value="Search" class="form-submit">--}}
+                    {{--</div>--}}
+                {{--</div>--}}
+            {{--</div>--}}
 
 
-                        <a href="http://shfamily.com/shanghai/event?date_start=2018-09-07%2000%3A00%3A00&amp;page=0"
-                           class="item-pagination-day-content">
-                            <div class="col-xs-3 col-sm-2 col-md-1 item-pagination-day  ">
-                                <div class="week_events">FRI</div>
-                                <div class="day_events ">07</div>
-                                <div class="status_events hidden">
-                                    <div class="col-xs-3 color-item color-blue "></div>
-                                    <div class="col-xs-3  color-item color-red "></div>
-                                    <div class="col-xs-3  color-item color-yellow"></div>
-                                </div>
-                            </div>
-                        </a>
-
-                        <a href="http://shfamily.com/shanghai/event?date_start=2018-09-08%2000%3A00%3A00&amp;page=0"
-                           class="item-pagination-day-content">
-                            <div class="col-xs-3 col-sm-2 col-md-1 item-pagination-day  ">
-                                <div class="week_events">SAT</div>
-                                <div class="day_events ">08</div>
-                                <div class="status_events hidden">
-                                    <div class="col-xs-3 color-item color-blue "></div>
-                                    <div class="col-xs-3  color-item color-red "></div>
-                                    <div class="col-xs-3  color-item color-yellow"></div>
-                                </div>
-                            </div>
-                        </a>
-
-                        <a href="http://shfamily.com/shanghai/event?date_start=2018-09-09%2000%3A00%3A00&amp;page=0"
-                           class="item-pagination-day-content">
-                            <div class="col-xs-3 col-sm-2 col-md-1 item-pagination-day  ">
-                                <div class="week_events">SUN</div>
-                                <div class="day_events ">09</div>
-                                <div class="status_events hidden">
-                                    <div class="col-xs-3 color-item color-blue "></div>
-                                    <div class="col-xs-3  color-item color-red "></div>
-                                    <div class="col-xs-3  color-item color-yellow"></div>
-                                </div>
-                            </div>
-                        </a>
-
-                        <a href="http://shfamily.com/shanghai/event?date_start=2018-09-10%2000%3A00%3A00&amp;page=0"
-                           class="item-pagination-day-content">
-                            <div class="col-xs-3 col-sm-2 col-md-1 item-pagination-day  ">
-                                <div class="week_events">MON</div>
-                                <div class="day_events ">10</div>
-                                <div class="status_events hidden">
-                                    <div class="col-xs-3 color-item color-blue "></div>
-                                    <div class="col-xs-3  color-item color-red "></div>
-                                    <div class="col-xs-3  color-item color-yellow"></div>
-                                </div>
-                            </div>
-                        </a>
-
-                        <a href="http://shfamily.com/shanghai/event?date_start=2018-09-11%2000%3A00%3A00&amp;page=0"
-                           class="item-pagination-day-content">
-                            <div class="col-xs-3 col-sm-2 col-md-1 item-pagination-day  ">
-                                <div class="week_events">TUE</div>
-                                <div class="day_events ">11</div>
-                                <div class="status_events hidden">
-                                    <div class="col-xs-3 color-item color-blue "></div>
-                                    <div class="col-xs-3  color-item color-red "></div>
-                                    <div class="col-xs-3  color-item color-yellow"></div>
-                                </div>
-                            </div>
-                        </a>
-
-                        <a href="http://shfamily.com/shanghai/event?date_start=2018-09-12%2000%3A00%3A00&amp;page=0"
-                           class="item-pagination-day-content">
-                            <div class="col-xs-3 col-sm-2 col-md-1 item-pagination-day  ">
-                                <div class="week_events">WED</div>
-                                <div class="day_events ">12</div>
-                                <div class="status_events hidden">
-                                    <div class="col-xs-3 color-item color-blue "></div>
-                                    <div class="col-xs-3  color-item color-red "></div>
-                                    <div class="col-xs-3  color-item color-yellow"></div>
-                                </div>
-                            </div>
-                        </a>
-
-                        <a href="http://shfamily.com/shanghai/event?date_start=2018-09-13%2000%3A00%3A00&amp;page=0"
-                           class="item-pagination-day-content">
-                            <div class="col-xs-3 col-sm-2 col-md-1 item-pagination-day  active_day">
-                                <div class="week_events">THU</div>
-                                <div class="day_events ">13</div>
-                                <div class="status_events hidden">
-                                    <div class="col-xs-3 color-item color-blue "></div>
-                                    <div class="col-xs-3  color-item color-red "></div>
-                                    <div class="col-xs-3  color-item color-yellow"></div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-
-            </div>
-            <div class="event-search  col-xs-12 col-sm-12">
-                <div class="wrapper_fields_search">
-                    <div class="form-group category_field_container col-sm-8 row">
-                        <select id="category_event" title="Category" name="category_event"
-                                class="form-control bs-select-hidden">
-                            <option class="bs-title-option" value="">Category</option>
-
-                            <option value="1113">Cinema</option>
-                            <option value="1120">Community</option>
-                            <option value="1118">Dance</option>
-                            <option value="1122">Dining</option>
-                            <option value="1123">Education</option>
-                            <option value="1114">Experiences</option>
-                            <option value="1117">Family</option>
-                            <option value="1124">Health &amp; Welness</option>
-                            <option value="1115">Music</option>
-                            <option value="1121">Sport</option>
-                            <option value="1116">Stage</option>
-                            <option value="1119">Travel</option>
-                        </select>
-                        <div class="btn-group bootstrap-select form-control">
-                            <button type="button" class="btn dropdown-toggle btn-default" data-toggle="dropdown"
-                                    data-id="category_event" title="Category"><span
-                                        class="filter-option pull-left">Category</span>&nbsp;<span class="caret"></span>
-                            </button>
-                            <div class="dropdown-menu open">
-                                <div class="bs-searchbox"><input type="text" class="form-control" autocomplete="off"></div>
-                                <ul class="dropdown-menu inner" role="menu">
-                                    <li data-original-index="1"><a tabindex="0" class="" style="" data-tokens="null"><span
-                                                    class="text">Cinema</span><span
-                                                    class="glyphicon glyphicon-ok check-mark"></span></a></li>
-                                    <li data-original-index="2"><a tabindex="0" class="" style="" data-tokens="null"><span
-                                                    class="text">Community</span><span
-                                                    class="glyphicon glyphicon-ok check-mark"></span></a></li>
-                                    <li data-original-index="3"><a tabindex="0" class="" style="" data-tokens="null"><span
-                                                    class="text">Dance</span><span class="glyphicon glyphicon-ok check-mark"></span></a>
-                                    </li>
-                                    <li data-original-index="4"><a tabindex="0" class="" style="" data-tokens="null"><span
-                                                    class="text">Dining</span><span
-                                                    class="glyphicon glyphicon-ok check-mark"></span></a></li>
-                                    <li data-original-index="5"><a tabindex="0" class="" style="" data-tokens="null"><span
-                                                    class="text">Education</span><span
-                                                    class="glyphicon glyphicon-ok check-mark"></span></a></li>
-                                    <li data-original-index="6"><a tabindex="0" class="" style="" data-tokens="null"><span
-                                                    class="text">Experiences</span><span
-                                                    class="glyphicon glyphicon-ok check-mark"></span></a></li>
-                                    <li data-original-index="7"><a tabindex="0" class="" style="" data-tokens="null"><span
-                                                    class="text">Family</span><span
-                                                    class="glyphicon glyphicon-ok check-mark"></span></a></li>
-                                    <li data-original-index="8"><a tabindex="0" class="" style="" data-tokens="null"><span
-                                                    class="text">Health &amp; Welness</span><span
-                                                    class="glyphicon glyphicon-ok check-mark"></span></a></li>
-                                    <li data-original-index="9"><a tabindex="0" class="" style="" data-tokens="null"><span
-                                                    class="text">Music</span><span class="glyphicon glyphicon-ok check-mark"></span></a>
-                                    </li>
-                                    <li data-original-index="10"><a tabindex="0" class="" style="" data-tokens="null"><span
-                                                    class="text">Sport</span><span class="glyphicon glyphicon-ok check-mark"></span></a>
-                                    </li>
-                                    <li data-original-index="11"><a tabindex="0" class="" style="" data-tokens="null"><span
-                                                    class="text">Stage</span><span class="glyphicon glyphicon-ok check-mark"></span></a>
-                                    </li>
-                                    <li data-original-index="12"><a tabindex="0" class="" style="" data-tokens="null"><span
-                                                    class="text">Travel</span><span
-                                                    class="glyphicon glyphicon-ok check-mark"></span></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group btn_search_container col-sm-4">
-                        <input type="button" id="edit-submit" name="op" value="Search" class="form-submit">
-                    </div>
-                </div>
-            </div>
-
-
-        </div>
+        {{--</div>--}}
         <div class="container">
             <div class="events-wrapper row">
 
@@ -252,7 +249,8 @@
                                         December 2018
                                     </div>
                                     <div class="row description-item-directory" style="height: 53px; overflow: hidden;">
-                                        In Music LAB we are people passionate about music that believe that learning music
+                                        In Music LAB we are people passionate about music that believe that learning
+                                        music
                                         must be fun!
                                         We want the children to enjoy music, fostering curiosity in a joyful and
                                         motivational way, using music as a tool for developing skills as creativity...
@@ -291,8 +289,10 @@
                                         October 2018
                                     </div>
                                     <div class="row description-item-directory" style="height: 53px; overflow: hidden;">
-                                        Shanghai Old Keller Jazz Band is one of the most prestigious jazz bands in Shanghai
-                                        that has played in high level venues like several five-star hotels such as Shanghai
+                                        Shanghai Old Keller Jazz Band is one of the most prestigious jazz bands in
+                                        Shanghai
+                                        that has played in high level venues like several five-star hotels such as
+                                        Shanghai
                                         Peace Hotel. Their love and dedication for music shine through and it is so s...
                                     </div>
                                     <div class="row btn-details">
@@ -332,7 +332,8 @@
                                     </div>
                                     <div class="row description-item-directory" style="height: 53px; overflow: hidden;">
                                         It is not ‘bye-bye’ to the buffet, but rather ‘hello’ to an all-new brunching
-                                        experience at THE CUT Rooftop. Placing a refreshing emphasis on many ‘choice-first’
+                                        experience at THE CUT Rooftop. Placing a refreshing emphasis on many
+                                        ‘choice-first’
                                         options to drink &amp; dine, right down to the music selection! #MyBrunch,
                                         Shanghai’s n...
                                     </div>
@@ -370,9 +371,11 @@
                                         December 2018
                                     </div>
                                     <div class="row description-item-directory" style="height: 53px; overflow: hidden;">
-                                        KK Vienna is the meeting place for incredible world-class music. You can discover
+                                        KK Vienna is the meeting place for incredible world-class music. You can
+                                        discover
                                         classical music in a lively, social, casual, drink and food concert experience.
-                                        There’s no veil between the audience and the musicians; you can connect personally
+                                        There’s no veil between the audience and the musicians; you can connect
+                                        personally
                                         ...
                                     </div>
                                     <div class="row btn-details">
@@ -412,7 +415,8 @@
                                     <div class="row description-item-directory" style="height: 53px; overflow: hidden;">
                                         As an old saying goes: one who fails to reach the Great Wall is not a true man.
                                         Similarly, what a pity it is if you miss the Oriental Pearl Tower when visiting
-                                        Shanghai! As the landmark of Shanghai, the Oriental Pearl Tower is located at the
+                                        Shanghai! As the landmark of Shanghai, the Oriental Pearl Tower is located at
+                                        the
                                         Luj...
                                     </div>
                                     <div class="row btn-details">
@@ -451,12 +455,14 @@
                                         December 2018
                                     </div>
                                     <div class="row description-item-directory" style="height: 53px; overflow: hidden;">
-                                        HongWu Kungfu Centre is in the heart of Shanghai’s buzzing Tai Kang Rd artist area
+                                        HongWu Kungfu Centre is in the heart of Shanghai’s buzzing Tai Kang Rd artist
+                                        area
                                         and has rapidly become the studio for anyone and everyone who has an interest in
                                         Chinese Kung Fu.
                                     </div>
                                     <div class="row btn-details">
-                                        <a class="btn btn-default" href="http://shfamily.com/event/learn-chinese-kungfu">Details</a>
+                                        <a class="btn btn-default"
+                                           href="http://shfamily.com/event/learn-chinese-kungfu">Details</a>
                                         <a class="btn btn-error booking_btn"
                                            href="https://www.247tickets.com/t/learn-chinese-kungfu?utm_source=shanghaifamily&amp;utm_medium=onsite"
                                            target="_blank">Book Now</a>
@@ -489,9 +495,12 @@
                                         December 2018
                                     </div>
                                     <div class="row description-item-directory" style="height: 53px; overflow: hidden;">
-                                        Let's enjoy fun sailing with the best coach in Shanghai! This experience is short
-                                        adventuring by small sailboat. Learn the basic concepts about sailing and the boat,
-                                        then we will get hands on experience! Wear live-jackets, take the boat with the...
+                                        Let's enjoy fun sailing with the best coach in Shanghai! This experience is
+                                        short
+                                        adventuring by small sailboat. Learn the basic concepts about sailing and the
+                                        boat,
+                                        then we will get hands on experience! Wear live-jackets, take the boat with
+                                        the...
                                     </div>
                                     <div class="row btn-details">
                                         <a class="btn btn-default" href="http://shfamily.com/event/sailing-experience">Details</a>
@@ -568,7 +577,8 @@
                                         mind.
                                     </div>
                                     <div class="row btn-details">
-                                        <a class="btn btn-default" href="http://shfamily.com/event/cryo-world">Details</a>
+                                        <a class="btn btn-default"
+                                           href="http://shfamily.com/event/cryo-world">Details</a>
                                         <a class="btn btn-error booking_btn"
                                            href="https://www.247tickets.com/t/cryo-world?utm_source=shanghaifamily&amp;utm_medium=onsite"
                                            target="_blank">Book Now</a>

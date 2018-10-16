@@ -1,3 +1,11 @@
+<?php $__env->startSection('pre_script'); ?>
+    <script type="text/javascript" src="/js/jquery.prettyPhoto.js"></script>
+
+
+    <!--幻灯片-->
+    <script type="text/javascript" src="/js/owl.carousel.min.js"></script>
+
+<?php $__env->stopSection(); ?>
 <?php $__env->startSection('content'); ?>
     <section class=" content">
         <span class="hidden">split-block</span>

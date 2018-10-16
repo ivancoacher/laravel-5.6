@@ -19,7 +19,7 @@
 </div>
 <section id="topbar">
     @include('layouts.topbar')
-</section---
+</section>
 
 <section id="mega-menu">
     @include('layouts.menu')
@@ -27,34 +27,13 @@
 @yield('content')
 
 <section id="newsletter">
-
-
-    <!-- THEME DEBUG -->
-    <!-- CALL: theme('region') -->
-    <!-- FILE NAME SUGGESTIONS:
-       * region--newsletter.tpl.php
-       x region.tpl.php
-    -->
-    <!-- BEGIN OUTPUT from 'sites/all/themes/family/templates/region.tpl.php' -->
-
-
-    <!-- THEME DEBUG -->
-    <!-- CALL: theme('block') -->
-    <!-- FILE NAME SUGGESTIONS:
-       * block--fs-newsletter--fs-newsletter-subscribe.tpl.php
-       x block--fs-newsletter.tpl.php
-       * block--newsletter.tpl.php
-       * block.tpl.php
-    -->
-    <!-- BEGIN OUTPUT from 'sites/all/themes/family/templates/block/block--fs-newsletter.tpl.php' -->
-
-
     <div class="container newsletter-container">
 
         <div class="col-xs-12 newsletter-section">
             <div class="newsletter">
                 <div class="title-newsletter"><span>Subscribe to our email</span></div>
-                <div class="subtitle-newsletter"><span>Newsletter for useful tips and valuable resources</span></div>
+                <div class="subtitle-newsletter"><span>Newsletter for useful tips and valuable resources</span>
+                </div>
                 <!--    <form class="form-inline">
                    <div class="form-group">
                     <label class="sr-only" for="exampleInputAmount">Amount (in dollars)</label>
@@ -74,7 +53,8 @@
                             <input placeholder="Enter email address" type="text" id="edit-mail" name="mail" value=""
                                    size="60" maxlength="128" class="form-text">
                         </div>
-                        <input type="submit" id="edit-submit--2" name="op" value="Subscribe" class="form-submit"><input
+                        <input type="submit" id="edit-submit--2" name="op" value="Subscribe"
+                               class="form-submit"><input
                                 type="hidden" name="form_build_id"
                                 value="form-BRULj0ApqYyOJpz6awIoetTzmYfJCUUyfeR8zQgn5qA">
                         <input type="hidden" name="form_id" value="fs_newsletter_subscribe_form">
@@ -89,13 +69,13 @@
                         </div>
                     </div>
                 </form>
-                <div class="footer-newsletter"><p>We'll never share your email address. You might receive promotional
+                <div class="footer-newsletter"><p>We'll never share your email address. You might receive
+                        promotional
                         emails from ShFamily or its partners. You can opt out any time, we promise.</p>
                     <p></p></div>
             </div>
         </div>
     </div>
-
 </section>
 <section>
     <span class="hidden">split-block</span>
@@ -249,15 +229,12 @@
 
 
         </div>
-        <div class="col-xs-12 see_more"><a href="http://shfamily.com/shanghai/gallery"><span>See more</span></a></div>
+        <div class="col-xs-12 see_more"><a href="http://shfamily.com/shanghai/gallery"><span>See more</span></a>
+        </div>
 
     </div>
 
 </section>
-
-<script type="text/javascript"
-        src="/js/prettyphoto_formatters.js"></script>
-
 <a href="http://shfamily.com/#" id="back-to-top" title="Back to top"><span
             class="glyphicon glyphicon-menu-up"></span></a>
 <section id="pre_footer">
