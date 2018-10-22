@@ -35,6 +35,7 @@ Route::namespace('Admin')->prefix('admin')->group(function () {
     Route::get('articles', 'ArticleController@index');
     Route::get('articles/{id}', 'ArticleController@show');
     Route::get('articles/store', 'ArticleController@store');
+
     Route::any('articles/modify', 'ArticleController@modify');
 
     Route::get('schools', 'SchoolController@index');

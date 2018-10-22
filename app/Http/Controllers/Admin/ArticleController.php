@@ -16,7 +16,8 @@ class ArticleController extends Controller
     }
 
     public function store(Request $request)
-    {if ($request->method() == 'GET') {
+    {
+        if ($request->method() == 'GET') {
             $result = collect([]);
             return view('admin.articleAdd')->with(['result' => $result]);
         } else {
@@ -26,6 +27,10 @@ class ArticleController extends Controller
             $tags = $data['tags'];
             $article->tag->createMany($tags);
         }
+    }
+
+    public function modify(){
+        echo 2222;
     }
 
     public function show($id)
