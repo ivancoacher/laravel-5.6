@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Route;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -36,10 +36,7 @@ class RouteServiceProvider extends ServiceProvider
     public function map()
     {
         $this->mapApiRoutes();
-
         $this->mapWebRoutes();
-
-        //
     }
 
     /**
@@ -51,9 +48,30 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapWebRoutes()
     {
-        Route::middleware('web')
-             ->namespace($this->namespace)
-             ->group(base_path('routes/web.php'));
+
+
+        $admin_prefix = config('admin.prefix');
+        $admin_domain = config('admin.domain');
+
+        if (!\App::runningInConsole() && empty($admin_prefix) && empty($admin_domain)) {
+            throw new \Exception('ADMIN PREFIX OR DOMAIN MUST BE SET');
+        }
+        if (!empty($admin_prefix)) {
+            $r = Route::prefix($admin_prefix);
+        } else {
+            $r = Route::domain($admin_domain);
+        }
+        $r->middleware(['web'])
+            ->namespace($this->namespace . '\Admin')
+            ->group(base_path('routes/admin.php'));
+
+
+        $app_url = config('app.url');
+
+        Route::domain($app_url)->middleware('web')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/web.php'));
+
     }
 
     /**
@@ -66,8 +84,7 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapApiRoutes()
     {
         Route::prefix('api')
-             ->middleware('api')
-             ->namespace($this->namespace)
-             ->group(base_path('routes/api.php'));
+            ->namespace($this->namespace)
+            ->group(base_path('routes/api.php'));
     }
 }
